@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${geist.variable} h-full`} data-scroll-behavior="smooth">
       <body className="min-h-full flex flex-col antialiased bg-white text-gray-900">
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1" style={{ paddingTop: '172px' }}>{children}</main>
         <Footer />
       </body>
     </html>

@@ -11,8 +11,13 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: 'THE PRESIDENT', href: '/president' },
-  { label: 'THE DEPUTY PRESIDENT', href: '/deputy-president' },
+  {
+    label: 'ADMINISTRATION',
+    children: [
+      { label: 'The President', href: '/president' },
+      { label: 'The Deputy President', href: '/deputy-president' },
+    ],
+  },
   {
     label: 'GOVERNANCE',
     children: [
@@ -172,7 +177,7 @@ export default function Header() {
   })
 
   return (
-    <header>
+    <header style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, width: '100%', boxShadow: '0 2px 16px rgba(0,0,0,0.18)' }}>
       {/* Top bar */}
       <div style={{ backgroundColor: '#001a52' }} className="text-white text-xs">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-9">
