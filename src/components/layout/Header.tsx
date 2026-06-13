@@ -177,26 +177,17 @@ export default function Header() {
   })
 
   return (
-    <header style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, width: '100%', boxShadow: '0 2px 16px rgba(0,0,0,0.18)' }}>
-      {/* Top bar */}
+    <header style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, width: '100%', boxShadow: '0 2px 20px rgba(0,0,0,0.25)' }}>
+
+      {/* ── Top bar ─────────────────────────────────── */}
       <div style={{ backgroundColor: '#001a52' }} className="text-white text-xs">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-9">
           <span className="hidden sm:block opacity-70">{today}</span>
           <div className="flex items-center gap-4">
-            {/* Social icons */}
             <div className="flex items-center gap-2.5">
               {socialLinks.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  aria-label={s.label}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="opacity-60 hover:opacity-100 transition-opacity"
-                >
-                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                    <path d={s.path} />
-                  </svg>
+                <a key={s.label} href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer" className="opacity-60 hover:opacity-100 transition-opacity">
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d={s.path} /></svg>
                 </a>
               ))}
             </div>
@@ -204,64 +195,48 @@ export default function Header() {
             {user ? (
               <div className="flex items-center gap-2">
                 <Link href="/dashboard" className="hover:text-blue-300 transition-colors">{user.name}</Link>
-                <button onClick={handleLogout} className="px-3 py-1 text-xs font-bold rounded transition-opacity hover:opacity-80" style={{ backgroundColor: 'white', color: '#003087' }}>Logout</button>
+                <button onClick={handleLogout} className="px-3 py-1 text-xs font-bold rounded hover:opacity-80" style={{ backgroundColor: 'white', color: '#003087' }}>Logout</button>
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <Link href="/login" className="px-3 py-1 text-xs font-bold rounded transition-opacity hover:opacity-80" style={{ backgroundColor: 'white', color: '#003087' }}>Login</Link>
-                <Link href="/register" className="px-3 py-1 text-xs font-bold rounded transition-opacity hover:opacity-80" style={{ backgroundColor: 'white', color: '#003087' }}>Join MYC Today</Link>
+                <Link href="/login" className="px-3 py-1 text-xs font-bold rounded hover:opacity-80" style={{ backgroundColor: 'white', color: '#003087' }}>Login</Link>
+                <Link href="/register" className="px-3 py-1 text-xs font-bold rounded hover:opacity-80" style={{ backgroundColor: 'white', color: '#003087' }}>Join MYC Today</Link>
               </div>
             )}
           </div>
         </div>
       </div>
 
-      {/* Logo bar */}
-      <div className="bg-white py-3 sm:py-4 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-4">
+      {/* ── Combined logo + nav bar ─────────────────── */}
+      <div style={{ backgroundColor: '#002673', borderBottom: '2px solid #001a52' }}>
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between gap-6 py-3">
+
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-3 flex-shrink-0">
             <div
-              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center border-4 flex-shrink-0"
-              style={{ backgroundColor: '#003087', borderColor: '#003087' }}
+              className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: '#003087', border: '2.5px solid rgba(255,255,255,0.35)' }}
             >
-              <span className="font-black text-base sm:text-lg leading-none text-white">MYC</span>
+              <span className="font-black text-sm leading-none text-white">MYC</span>
             </div>
             <div>
-              <div className="text-xl sm:text-2xl font-bold leading-tight text-gray-900">
+              <div className="text-white font-black text-base sm:text-lg leading-tight">
                 Mombasa Youth Council
               </div>
-              <div className="text-xs tracking-wide" style={{ color: '#003087', opacity: 0.7 }}>
+              <div className="text-blue-300 text-[10px] tracking-widest uppercase opacity-80">
                 Empowering Youth · Building Mombasa
               </div>
             </div>
           </Link>
 
-          {/* Mobile hamburger */}
-          <button
-            className="lg:hidden p-2"
-            style={{ color: '#003087' }}
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Toggle menu"
-          >
-            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {mobileOpen
-                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      {/* Desktop nav */}
-      <nav className="hidden lg:block shadow-sm" style={{ backgroundColor: '#002673', borderBottom: '2px solid #001a52' }}>
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-stretch">
+          {/* Desktop nav — right side */}
+          <nav className="hidden lg:flex items-stretch flex-1 justify-end">
             {navItems.map((item, idx) =>
               item.href && !item.children ? (
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="flex items-center px-4 py-2.5 text-xs font-bold tracking-wide transition-all whitespace-nowrap text-white hover:text-blue-200 border-b-2 border-transparent hover:border-blue-200"
+                  className="flex items-center px-4 py-3 text-xs font-bold tracking-wide text-white hover:text-blue-200 border-b-2 border-transparent hover:border-blue-300 transition-all whitespace-nowrap"
                 >
                   {item.label}
                 </Link>
@@ -276,29 +251,34 @@ export default function Header() {
               )
             )}
             {user && (
-              <Link
-                href="/dashboard"
-                className="flex items-center px-3 py-2 text-xs font-bold tracking-wide ml-auto transition-colors text-white hover:text-blue-200"
-              >
+              <Link href="/dashboard" className="flex items-center px-3 py-3 text-xs font-bold text-white hover:text-blue-200 transition-colors ml-2">
                 + NEW POST
               </Link>
             )}
-          </div>
-        </div>
-      </nav>
+          </nav>
 
-      {/* Mobile nav */}
+          {/* Mobile hamburger */}
+          <button
+            className="lg:hidden p-2 text-white"
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label="Toggle menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {mobileOpen
+                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* ── Mobile nav ──────────────────────────────── */}
       {mobileOpen && (
         <nav style={{ backgroundColor: '#001a52' }} className="lg:hidden">
           {navItems.map((item, idx) => (
             <div key={item.label}>
               {item.href && !item.children ? (
-                <Link
-                  href={item.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="block px-5 py-3 text-white text-sm font-bold border-b"
-                  style={{ borderColor: '#002673' }}
-                >
+                <Link href={item.href} onClick={() => setMobileOpen(false)} className="block px-5 py-3 text-white text-sm font-bold border-b" style={{ borderColor: '#002673' }}>
                   {item.label}
                 </Link>
               ) : (
@@ -314,13 +294,7 @@ export default function Header() {
                     </svg>
                   </button>
                   {mobileExpanded === idx && item.children?.map((child) => (
-                    <Link
-                      key={child.href}
-                      href={child.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="block px-8 py-2.5 text-sm text-blue-200 hover:text-white border-b transition-colors"
-                      style={{ borderColor: '#002673' }}
-                    >
+                    <Link key={child.href} href={child.href} onClick={() => setMobileOpen(false)} className="block px-8 py-2.5 text-sm text-blue-200 hover:text-white border-b transition-colors" style={{ borderColor: '#002673' }}>
                       {child.label}
                     </Link>
                   ))}
@@ -341,7 +315,6 @@ export default function Header() {
               </>
             )}
           </div>
-          {/* Social links in mobile nav */}
           <div className="px-5 py-3 flex gap-4 flex-wrap">
             {socialLinks.map((s) => (
               <a key={s.label} href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-white transition-colors text-xs">

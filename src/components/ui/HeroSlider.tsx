@@ -51,7 +51,7 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section className="relative overflow-hidden" style={{ minHeight: '100vh', marginTop: '-172px' }}>
+    <section className="relative overflow-hidden" style={{ minHeight: '100vh', marginTop: '-120px' }}>
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -84,7 +84,7 @@ export default function HeroSection() {
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-12 flex flex-col justify-center h-full" style={{ minHeight: '100vh' }}>
-        <div className="max-w-3xl" style={{ paddingTop: '196px', paddingBottom: '80px' }}>
+        <div className="max-w-3xl" style={{ paddingTop: '160px', paddingBottom: '80px' }}>
 
           {/* Eyebrow badge */}
           <div className="inline-flex items-center gap-2 mb-6 hero-fade-1">
