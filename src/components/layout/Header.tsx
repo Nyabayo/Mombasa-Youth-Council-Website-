@@ -117,7 +117,7 @@ function DropdownMenu({
     <div ref={ref} className="relative">
       <button
         onClick={() => (isOpen ? onClose() : onOpen())}
-        className="flex items-center gap-1 px-4 py-3 text-xs font-black tracking-widest transition-all whitespace-nowrap border-b-2 border-transparent"
+        className="flex items-center gap-1 px-6 py-3 text-xs font-black tracking-widest transition-all whitespace-nowrap border-b-2 border-transparent"
         style={{ color: '#002673' }}
         onMouseEnter={(e) => { onOpen(); (e.currentTarget as HTMLButtonElement).style.color = '#003087'; (e.currentTarget as HTMLButtonElement).style.borderBottomColor = '#003087' }}
         onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = '#002673'; if (!isOpen) (e.currentTarget as HTMLButtonElement).style.borderBottomColor = 'transparent' }}
@@ -185,7 +185,7 @@ export default function Header() {
 
       {/* ── Top bar ─────────────────────────────────── */}
       <div style={{ backgroundColor: '#001a52' }} className="text-white text-xs">
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-9">
+        <div className="w-full px-6 flex items-center justify-between h-9">
           <span className="hidden sm:block opacity-70">{today}</span>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2.5">
@@ -213,7 +213,7 @@ export default function Header() {
 
       {/* ── Combined logo + nav bar ─────────────────── */}
       <div style={{ backgroundColor: 'white', borderBottom: '3px solid #003087' }}>
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between gap-6 py-2">
+        <div className="w-full px-6 flex items-center justify-between gap-8 py-2">
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 flex-shrink-0">
@@ -240,7 +240,7 @@ export default function Header() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="flex items-center px-4 py-3 text-xs font-black tracking-widest transition-all whitespace-nowrap border-b-2 border-transparent hover:border-blue-800"
+                  className="flex items-center px-6 py-3 text-xs font-black tracking-widest transition-all whitespace-nowrap border-b-2 border-transparent hover:border-blue-800"
                   style={{ color: '#002673' }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#003087'; (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = '#003087' }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#002673'; (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = 'transparent' }}
