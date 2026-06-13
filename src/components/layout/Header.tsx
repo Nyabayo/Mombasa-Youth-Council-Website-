@@ -11,6 +11,7 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
+  { label: 'HOME', href: '/' },
   {
     label: 'ADMINISTRATION',
     children: [
@@ -116,31 +117,34 @@ function DropdownMenu({
     <div ref={ref} className="relative">
       <button
         onClick={() => (isOpen ? onClose() : onOpen())}
-        onMouseEnter={onOpen}
-        className="flex items-center gap-1 px-3 py-2 text-xs font-semibold tracking-wide transition-colors whitespace-nowrap text-white hover:text-blue-200"
+        className="flex items-center gap-1 px-4 py-3 text-xs font-black tracking-widest transition-all whitespace-nowrap border-b-2 border-transparent"
+        style={{ color: '#002673' }}
+        onMouseEnter={(e) => { onOpen(); (e.currentTarget as HTMLButtonElement).style.color = '#003087'; (e.currentTarget as HTMLButtonElement).style.borderBottomColor = '#003087' }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = '#002673'; if (!isOpen) (e.currentTarget as HTMLButtonElement).style.borderBottomColor = 'transparent' }}
         aria-expanded={isOpen}
       >
         {item.label}
-        <svg className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        <svg className={`w-3 h-3 ml-0.5 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {isOpen && (
         <div
           onMouseLeave={onClose}
-          className="absolute top-full left-0 z-50 min-w-[220px] bg-white shadow-2xl border-t-4"
-          style={{ borderColor: '#003087' }}
+          className="absolute top-full left-0 z-50 min-w-[240px] bg-white"
+          style={{ boxShadow: '0 8px 32px rgba(0,30,100,0.18)', borderTop: '3px solid #003087' }}
         >
           {item.children?.map((child) => (
             <Link
               key={child.href}
               href={child.href}
               onClick={onClose}
-              className="block px-5 py-3 text-sm text-gray-700 border-b border-gray-100 last:border-0 transition-colors"
-              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#003087'; e.currentTarget.style.color = 'white' }}
-              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = ''; e.currentTarget.style.color = '' }}
+              className="flex items-center gap-3 px-5 py-3.5 text-sm font-semibold text-gray-800 border-b border-gray-100 last:border-0 transition-all group"
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#003087'; e.currentTarget.style.color = 'white'; e.currentTarget.style.paddingLeft = '24px' }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = ''; e.currentTarget.style.color = ''; e.currentTarget.style.paddingLeft = '20px' }}
             >
+              <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: '#003087' }} />
               {child.label}
             </Link>
           ))}
@@ -208,22 +212,22 @@ export default function Header() {
       </div>
 
       {/* ── Combined logo + nav bar ─────────────────── */}
-      <div style={{ backgroundColor: '#002673', borderBottom: '2px solid #001a52' }}>
-        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between gap-6 py-3">
+      <div style={{ backgroundColor: 'white', borderBottom: '3px solid #003087' }}>
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between gap-6 py-2">
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 flex-shrink-0">
             <div
               className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: '#003087', border: '2.5px solid rgba(255,255,255,0.35)' }}
+              style={{ backgroundColor: '#003087', border: '3px solid #001a52' }}
             >
               <span className="font-black text-sm leading-none text-white">MYC</span>
             </div>
             <div>
-              <div className="text-white font-black text-base sm:text-lg leading-tight">
+              <div className="font-black text-base sm:text-lg leading-tight" style={{ color: '#001a52' }}>
                 Mombasa Youth Council
               </div>
-              <div className="text-blue-300 text-[10px] tracking-widest uppercase opacity-80">
+              <div className="text-[10px] tracking-widest uppercase font-semibold" style={{ color: '#003087', opacity: 0.75 }}>
                 Empowering Youth · Building Mombasa
               </div>
             </div>
@@ -236,7 +240,10 @@ export default function Header() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="flex items-center px-4 py-3 text-xs font-bold tracking-wide text-white hover:text-blue-200 border-b-2 border-transparent hover:border-blue-300 transition-all whitespace-nowrap"
+                  className="flex items-center px-4 py-3 text-xs font-black tracking-widest transition-all whitespace-nowrap border-b-2 border-transparent hover:border-blue-800"
+                  style={{ color: '#002673' }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#003087'; (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = '#003087' }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#002673'; (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = 'transparent' }}
                 >
                   {item.label}
                 </Link>
@@ -251,7 +258,7 @@ export default function Header() {
               )
             )}
             {user && (
-              <Link href="/dashboard" className="flex items-center px-3 py-3 text-xs font-bold text-white hover:text-blue-200 transition-colors ml-2">
+              <Link href="/dashboard" className="flex items-center px-3 py-3 text-xs font-black tracking-widest ml-2 transition-colors" style={{ color: '#003087' }}>
                 + NEW POST
               </Link>
             )}
@@ -259,7 +266,8 @@ export default function Header() {
 
           {/* Mobile hamburger */}
           <button
-            className="lg:hidden p-2 text-white"
+            className="lg:hidden p-2"
+            style={{ color: '#003087' }}
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Toggle menu"
           >
