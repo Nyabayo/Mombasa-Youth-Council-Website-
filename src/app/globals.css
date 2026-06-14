@@ -109,10 +109,4 @@ body {
   .main-content { padding-top: 100px; }
 }
 
-/* ── Hero section height ──────────────── */
-/* Mobile: full-screen so image + text are both visible  */
-.hero-section { min-height: 100svh; }
-/* Desktop: ghost-image natural ratio sets the height     */
-@media (min-width: 640px) {
-  .hero-section { min-height: 0; }
-}
+/* Hero section height handled via inline style (100svh on all screens) */
