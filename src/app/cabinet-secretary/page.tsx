@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Cabinet Secretary of Finance & Economic Planning | Mombasa Youth Council',
-  description: 'Cabinet Secretary of Finance and Economic Planning, Mombasa Youth Council',
+  description: 'Yusuf Ali, Cabinet Secretary of Finance and Economic Planning, Mombasa Youth Council',
 }
 
 export default function CabinetSecretaryPage() {
@@ -13,8 +13,8 @@ export default function CabinetSecretaryPage() {
       <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
           <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Mombasa Youth Council</p>
-          <h1 className="text-white text-3xl sm:text-4xl font-black mb-1">Cabinet Secretary of Finance &amp; Economic Planning</h1>
-          <p className="text-[#00A8C8] text-sm">Office of the Cabinet Secretary — Mombasa Youth Council (MYC)</p>
+          <h1 className="text-white text-3xl sm:text-4xl font-black mb-1">Yusuf Ali</h1>
+          <p className="text-[#00A8C8] text-sm">Cabinet Secretary of Finance &amp; Economic Planning — Mombasa Youth Council (MYC)</p>
         </div>
       </div>
 
@@ -46,8 +46,9 @@ export default function CabinetSecretaryPage() {
                 </div>
                 <div className="text-white p-8 flex flex-col justify-center">
                   <p className="text-[#00A8C8] text-xs tracking-widest uppercase font-bold mb-2">Cabinet Secretary</p>
-                  <h2 className="text-4xl font-black mb-2">Finance &amp; Economic Planning</h2>
-                  <p className="text-xl font-semibold opacity-90 mb-2">Mombasa Youth Council (MYC)</p>
+                  <h2 className="text-4xl font-black mb-2">Yusuf Ali</h2>
+                  <p className="text-xl font-semibold opacity-90 mb-2">CS Finance &amp; Economic Planning</p>
+                  <p className="opacity-70">Mombasa Youth Council (MYC)</p>
                   <p className="text-sm opacity-70 mt-1">Appointed 2026 · Mombasa County, Kenya</p>
                 </div>
               </div>
