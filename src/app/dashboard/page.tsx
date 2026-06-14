@@ -99,12 +99,12 @@ export default function DashboardPage() {
   return (
     <>
       {/* Header */}
-      <div style={{ backgroundColor: '#004B6B' }} className="py-8">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-8">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between flex-wrap gap-4">
           <div>
-            <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-1">Member Portal</p>
+            <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-1">Member Portal</p>
             <h1 className="text-white text-2xl font-black">Welcome, {user?.name}</h1>
-            <p className="text-teal-200 text-sm">{user?.email} · {user?.role === 'admin' ? 'Administrator' : 'Member'}</p>
+            <p className="text-[#00A8C8] text-sm">{user?.email} · {user?.role === 'admin' ? 'Administrator' : 'Member'}</p>
           </div>
           <button
             onClick={handleLogout}
@@ -141,7 +141,7 @@ export default function DashboardPage() {
           >
             <div
               className="w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl font-black group-hover:scale-110 transition-transform"
-              style={{ backgroundColor: '#004B6B' }}
+              style={{ backgroundColor: 'var(--primary)' }}
             >
               ✏
             </div>
@@ -149,7 +149,7 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-400">Share news, updates, or announcements with the MYC community</p>
             <span
               className="mt-1 px-5 py-2 text-sm font-bold rounded text-white"
-              style={{ backgroundColor: '#004B6B' }}
+              style={{ backgroundColor: 'var(--primary)' }}
             >
               Start Writing
             </span>
@@ -160,12 +160,12 @@ export default function DashboardPage() {
         {showForm && (
           <div className="bg-white border border-gray-200 rounded-xl shadow-md mb-8 overflow-hidden">
             {/* Form header */}
-            <div style={{ backgroundColor: '#004B6B' }} className="px-6 py-4 flex items-center justify-between">
+            <div style={{ backgroundColor: 'var(--primary)' }} className="px-6 py-4 flex items-center justify-between">
               <h2 className="text-white font-black text-lg">New Post</h2>
               <button
                 type="button"
                 onClick={() => { setShowForm(false); setForm({ title: '', excerpt: '', content: '', category: 'News', image: '' }) }}
-                className="text-teal-200 hover:text-white text-sm transition-colors"
+                className="text-[#00A8C8] hover:text-white text-sm transition-colors"
               >
                 ✕ Discard
               </button>
@@ -281,7 +281,7 @@ export default function DashboardPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  style={{ backgroundColor: '#004B6B' }}
+                  style={{ backgroundColor: 'var(--primary)' }}
                   className="px-8 py-2.5 text-white font-bold text-sm rounded disabled:opacity-50 hover:opacity-90 transition-opacity"
                 >
                   {submitting ? 'Publishing…' : 'Publish Post'}
@@ -300,9 +300,9 @@ export default function DashboardPage() {
 
         {/* Posts table */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-          <div style={{ backgroundColor: '#004B6B' }} className="px-6 py-4 flex items-center justify-between">
+          <div style={{ backgroundColor: 'var(--primary)' }} className="px-6 py-4 flex items-center justify-between">
             <h2 className="text-white font-bold">{user?.role === 'admin' ? 'All Posts' : 'My Posts'}</h2>
-            <span className="text-teal-200 text-sm">{myPosts.length} post{myPosts.length !== 1 ? 's' : ''}</span>
+            <span className="text-[#00A8C8] text-sm">{myPosts.length} post{myPosts.length !== 1 ? 's' : ''}</span>
           </div>
 
           {myPosts.length === 0 ? (
@@ -310,7 +310,7 @@ export default function DashboardPage() {
               <p className="text-gray-400 mb-4">You haven&apos;t published any posts yet.</p>
               <button
                 onClick={() => setShowForm(true)}
-                style={{ backgroundColor: '#004B6B' }}
+                style={{ backgroundColor: 'var(--primary)' }}
                 className="px-5 py-2 text-white font-semibold text-sm rounded hover:opacity-90"
               >
                 Write Your First Post
@@ -342,7 +342,7 @@ export default function DashboardPage() {
                         </div>
                       </td>
                       <td className="px-4 py-4">
-                        <span className="text-xs px-2 py-1 rounded font-semibold text-white" style={{ backgroundColor: '#004B6B' }}>
+                        <span className="text-xs px-2 py-1 rounded font-semibold text-white" style={{ backgroundColor: 'var(--primary)' }}>
                           {post.category}
                         </span>
                       </td>

@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Who We Are</p>
+          <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Who We Are</p>
           <h1 className="text-white text-3xl sm:text-4xl font-black mb-1">About MYC</h1>
-          <p className="text-teal-200 text-sm">A structured space where young people lead</p>
+          <p className="text-[#00A8C8] text-sm">A structured space where young people lead</p>
         </div>
       </div>
       <div style={{ backgroundColor: '#f5f5f5' }} className="border-b border-gray-200">
@@ -54,7 +54,7 @@ export default function AboutPage() {
           <div className="flex-1 space-y-6">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7" />
+                <div style={{ backgroundColor: 'var(--primary)' }} className="w-1 h-7" />
                 <h2 className="text-2xl font-black text-gray-900">Our Story</h2>
               </div>
               <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -90,7 +90,7 @@ export default function AboutPage() {
 
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7" />
+                <div style={{ backgroundColor: 'var(--primary)' }} className="w-1 h-7" />
                 <h2 className="text-2xl font-black text-gray-900">Our Vision</h2>
               </div>
               <p className="text-gray-700 leading-relaxed">
@@ -102,7 +102,7 @@ export default function AboutPage() {
           </div>
 
           <div className="lg:w-80">
-            <div style={{ backgroundColor: '#003350' }} className="rounded-xl p-8 text-white mb-6">
+            <div style={{ backgroundColor: 'var(--primary-dark)' }} className="rounded-xl p-8 text-white mb-6">
               <h3 className="text-white font-black text-lg mb-4">Quick Facts</h3>
               <ul className="space-y-3 text-sm">
                 {[
@@ -127,7 +127,7 @@ export default function AboutPage() {
               </p>
               <Link
                 href="/register"
-                style={{ backgroundColor: '#004B6B' }}
+                style={{ backgroundColor: 'var(--primary)' }}
                 className="block text-center text-white font-semibold py-3 rounded hover:opacity-90 transition-opacity"
               >
                 Join MYC Today

@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 export default function GovernancePage() {
   return (
     <>
-      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Council Structure</p>
+          <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Council Structure</p>
           <h1 className="text-white text-3xl sm:text-4xl font-black mb-1">Governance Structure</h1>
-          <p className="text-teal-200 text-sm">Mombasa Youth Council (MYC)</p>
+          <p className="text-[#00A8C8] text-sm">Mombasa Youth Council (MYC)</p>
         </div>
       </div>
       <div style={{ backgroundColor: '#f5f5f5' }} className="border-b border-gray-200">
@@ -35,7 +35,7 @@ export default function GovernancePage() {
             {/* Organ 1 */}
             <section className="mb-10">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: 'white', color: '#004B6B' }} className="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm flex-shrink-0">1</div>
+                <div style={{ backgroundColor: 'white', color: 'var(--primary)' }} className="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm flex-shrink-0">1</div>
                 <h2 className="text-2xl font-black text-gray-900">The Administration (Executive Arm)</h2>
               </div>
               <p className="text-gray-700 leading-relaxed mb-4">
@@ -53,7 +53,7 @@ export default function GovernancePage() {
                   { title: 'Cabinet Secretaries', name: 'Portfolio Holders', href: '/governance/administration' },
                 ].map((m) => (
                   <Link key={m.title} href={m.href} className="group block p-4 bg-white border border-gray-200 rounded hover:border-blue-600 hover:shadow-md transition-all">
-                    <div style={{ backgroundColor: '#004B6B' }} className="w-8 h-8 rounded-full flex items-center justify-center mb-3">
+                    <div style={{ backgroundColor: 'var(--primary)' }} className="w-8 h-8 rounded-full flex items-center justify-center mb-3">
                       <span className="text-white text-xs font-bold">🏛</span>
                     </div>
                     <h4 className="font-bold text-gray-900 text-sm group-hover:text-teal-700 mb-1">{m.title}</h4>
@@ -64,9 +64,9 @@ export default function GovernancePage() {
             </section>
 
             {/* Organ 2 */}
-            <section className="mb-10 p-6 rounded-lg border-l-4" style={{ backgroundColor: '#e8f7fb', borderColor: '#004B6B' }}>
+            <section className="mb-10 p-6 rounded-lg border-l-4" style={{ backgroundColor: 'var(--bg-alt)', borderColor: 'var(--primary)' }}>
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: '#004B6B' }} className="w-8 h-8 rounded-full flex items-center justify-center text-white font-black text-sm flex-shrink-0">2</div>
+                <div style={{ backgroundColor: 'var(--primary)' }} className="w-8 h-8 rounded-full flex items-center justify-center text-white font-black text-sm flex-shrink-0">2</div>
                 <h2 className="text-2xl font-black text-gray-900">The Youth Assembly (Representative &amp; Oversight Arm)</h2>
               </div>
               <p className="text-gray-700 leading-relaxed mb-4">
@@ -89,7 +89,7 @@ export default function GovernancePage() {
                   </li>
                 ))}
               </ul>
-              <p className="text-sm font-semibold text-gray-800 p-3 rounded" style={{ backgroundColor: '#e8f7fb' }}>
+              <p className="text-sm font-semibold text-gray-800 p-3 rounded" style={{ backgroundColor: 'var(--bg-alt)' }}>
                 ⚖️ The Youth Assembly shall operate independently and shall not be subject to interference by the
                 Administration in the execution of its constitutional mandate.
               </p>
@@ -98,7 +98,7 @@ export default function GovernancePage() {
             {/* Organ 3 */}
             <section className="mb-10">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: 'white', color: '#004B6B' }} className="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm flex-shrink-0">3</div>
+                <div style={{ backgroundColor: 'white', color: 'var(--primary)' }} className="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm flex-shrink-0">3</div>
                 <h2 className="text-2xl font-black text-gray-900">Committees</h2>
               </div>
               <p className="text-gray-700 leading-relaxed mb-5">
@@ -128,7 +128,7 @@ export default function GovernancePage() {
 
           <aside className="lg:w-64">
             <div className="bg-white border border-gray-200 mb-4">
-              <div style={{ backgroundColor: '#004B6B' }} className="px-4 py-3">
+              <div style={{ backgroundColor: 'var(--primary)' }} className="px-4 py-3">
                 <h3 className="text-white font-bold text-sm">Governance</h3>
               </div>
               <div className="p-1">

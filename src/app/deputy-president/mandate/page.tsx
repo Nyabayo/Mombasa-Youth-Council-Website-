@@ -6,9 +6,9 @@ export const metadata: Metadata = { title: 'Leadership Mandate | Deputy Presiden
 export default function MandatePage() {
   return (
     <>
-      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Office of the Deputy President</p>
+          <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Office of the Deputy President</p>
           <h1 className="text-white text-3xl font-black">Leadership Mandate</h1>
         </div>
       </div>
@@ -28,7 +28,7 @@ export default function MandatePage() {
             promoting participation in governance, and supporting initiatives in education, entrepreneurship,
             innovation, and leadership development.
           </p>
-          <div className="p-4 rounded-lg border-l-4 border-blue-300" style={{ backgroundColor: '#e8f7fb' }}>
+          <div className="p-4 rounded-lg border-l-4 border-blue-300" style={{ backgroundColor: 'var(--bg-alt)' }}>
             <strong>Constitutional Role:</strong> In the absence of the President, the Deputy President shall
             perform the functions and duties of the Office of the President.
           </div>

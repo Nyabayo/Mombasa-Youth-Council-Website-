@@ -10,11 +10,11 @@ export default function MinorityLeaderPage() {
   return (
     <>
       {/* Banner */}
-      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Mombasa Youth Council</p>
+          <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Mombasa Youth Council</p>
           <h1 className="text-white text-3xl sm:text-4xl font-black mb-1">Minority Leader Kibwana Hamisi Juma</h1>
-          <p className="text-teal-200 text-sm">Minority Leader — Mombasa Youth Council Youth Assembly</p>
+          <p className="text-[#00A8C8] text-sm">Minority Leader — Mombasa Youth Council Youth Assembly</p>
         </div>
       </div>
 
@@ -35,7 +35,7 @@ export default function MinorityLeaderPage() {
           <main className="flex-1 min-w-0">
 
             {/* Profile card */}
-            <div style={{ backgroundColor: '#004B6B' }} className="overflow-hidden mb-12">
+            <div style={{ backgroundColor: 'var(--primary)' }} className="overflow-hidden mb-12">
               <div className="flex flex-col sm:flex-row">
                 <div className="w-full sm:w-80 lg:w-96 aspect-square flex-shrink-0 overflow-hidden border-b-4 sm:border-b-0 sm:border-r-4 border-white">
                   <img
@@ -45,7 +45,7 @@ export default function MinorityLeaderPage() {
                   />
                 </div>
                 <div className="text-white p-8 flex flex-col justify-center">
-                  <p className="text-teal-200 text-xs tracking-widest uppercase font-bold mb-2">Minority Leader</p>
+                  <p className="text-[#00A8C8] text-xs tracking-widest uppercase font-bold mb-2">Minority Leader</p>
                   <h2 className="text-4xl font-black mb-2">Kibwana Hamisi Juma</h2>
                   <p className="text-xl font-semibold opacity-90 mb-2">Minority Leader, Youth Assembly</p>
                   <p className="opacity-70">Mombasa Youth Council (MYC)</p>
@@ -57,7 +57,7 @@ export default function MinorityLeaderPage() {
             {/* Biography */}
             <section className="mb-12">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7 flex-shrink-0" />
+                <div style={{ backgroundColor: 'var(--primary)' }} className="w-1 h-7 flex-shrink-0" />
                 <h2 className="text-2xl font-black text-gray-900">Biography</h2>
               </div>
               <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -83,7 +83,7 @@ export default function MinorityLeaderPage() {
             {/* Role */}
             <section className="mb-12">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7 flex-shrink-0" />
+                <div style={{ backgroundColor: 'var(--primary)' }} className="w-1 h-7 flex-shrink-0" />
                 <h2 className="text-2xl font-black text-gray-900">Role of the Minority Leader</h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -109,10 +109,10 @@ export default function MinorityLeaderPage() {
             {/* Statement */}
             <section className="mb-12">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7 flex-shrink-0" />
+                <div style={{ backgroundColor: 'var(--primary)' }} className="w-1 h-7 flex-shrink-0" />
                 <h2 className="text-2xl font-black text-gray-900">Statement from the Minority Leader</h2>
               </div>
-              <div className="p-6 border-l-4" style={{ borderColor: '#004B6B', backgroundColor: '#e8f7fb' }}>
+              <div className="p-6 border-l-4" style={{ borderColor: 'var(--primary)', backgroundColor: 'var(--bg-alt)' }}>
                 <p className="text-gray-800 italic leading-relaxed text-lg">
                   "A strong democracy needs a strong opposition. We are not here to obstruct — we are here
                   to question, to challenge, and to ensure that the decisions made in this Assembly truly

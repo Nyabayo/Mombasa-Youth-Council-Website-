@@ -1,55 +1,93 @@
 @import "tailwindcss";
 
-@theme inline {
-  --color-background: #ffffff;
-  --color-foreground: #1a1a1a;
-  --font-geist: var(--font-geist);
+/* ═══════════════════════════════════════════
+   MYC LOGO COLOR PALETTE — ONLY THESE COLORS
+   Gold  #F5A300  · Dark Teal #004B6B  · Bright Teal #00A8C8
+   ═══════════════════════════════════════════ */
+
+:root {
+  --gold:         #F5A300;
+  --primary:      #004B6B;
+  --primary-dark: #002B3D;
+  --accent:       #00A8C8;
+
+  --bg:           #ffffff;
+  --bg-alt:       #e8f6fb;
+  --bg-card:      #ffffff;
+  --text:         #1a1a1a;
+  --text-muted:   #4a6672;
+  --text-light:   #7a9aa8;
+  --border:       #c8e4ef;
+  --nav-bg:       #ffffff;
+  --topbar-bg:    #002B3D;
+  --header-h:     148px;
 }
 
-/* ── Base ────────────────────────────────── */
+[data-theme="dark"] {
+  --bg:           #061820;
+  --bg-alt:       #0a2535;
+  --bg-card:      #0c2333;
+  --text:         #dff0f6;
+  --text-muted:   #7ab5c8;
+  --text-light:   #4a7f93;
+  --border:       #1a3d50;
+  --nav-bg:       #0a2535;
+  --topbar-bg:    #030e16;
+}
+
+/* ── Base ─────────────────────────────── */
 html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-geist), system-ui, -apple-system, sans-serif;
-  background-color: #ffffff;
-  color: #1a1a1a;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.25s, color 0.25s;
 }
 
-/* Remove dark mode overrides */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: #ffffff;
-    --color-foreground: #1a1a1a;
-  }
-}
+/* ── Dark mode — Tailwind class overrides ─ */
+[data-theme="dark"] .bg-white          { background-color: var(--bg-card) !important; }
+[data-theme="dark"] .bg-gray-50        { background-color: var(--bg-alt) !important; }
+[data-theme="dark"] .bg-gray-100       { background-color: var(--bg-alt) !important; }
+[data-theme="dark"] .bg-gray-200       { background-color: var(--border) !important; }
+[data-theme="dark"] .text-gray-900     { color: var(--text) !important; }
+[data-theme="dark"] .text-gray-800     { color: var(--text) !important; }
+[data-theme="dark"] .text-gray-700     { color: var(--text-muted) !important; }
+[data-theme="dark"] .text-gray-600     { color: var(--text-muted) !important; }
+[data-theme="dark"] .text-gray-500     { color: var(--text-light) !important; }
+[data-theme="dark"] .text-gray-400     { color: var(--text-light) !important; }
+[data-theme="dark"] .border-gray-200   { border-color: var(--border) !important; }
+[data-theme="dark"] .border-gray-100   { border-color: var(--border) !important; }
+[data-theme="dark"] .text-teal-700     { color: var(--accent) !important; }
+[data-theme="dark"] .text-teal-800     { color: var(--accent) !important; }
+[data-theme="dark"] .hover\:text-teal-700:hover { color: var(--accent) !important; }
 
-/* ── Line clamp ──────────────────────────── */
+/* ── Line clamp ───────────────────────── */
 .line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
 .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
-/* ── Prose ───────────────────────────────── */
+/* ── Prose ────────────────────────────── */
 .prose p { margin-bottom: 1rem; line-height: 1.75; }
 
-/* ── Hero entrance animations ────────────── */
+/* ── Hero animations ──────────────────── */
 @keyframes heroFadeUp {
   from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 .hero-fade-1 { animation: heroFadeUp 0.7s ease both; animation-delay: 0.1s; }
 .hero-fade-2 { animation: heroFadeUp 0.7s ease both; animation-delay: 0.3s; }
 .hero-fade-3 { animation: heroFadeUp 0.7s ease both; animation-delay: 0.55s; }
 .hero-fade-4 { animation: heroFadeUp 0.7s ease both; animation-delay: 0.75s; }
 
-/* ── Floating pulse (decorative) ─────────── */
+/* ── Float pulse ──────────────────────── */
 @keyframes floatPulse {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(-8px); }
 }
 .float-pulse { animation: floatPulse 4s ease-in-out infinite; }
 
-/* ── Profile photo ───────────────────────── */
+/* ── Profile photo ────────────────────── */
 @keyframes photoReveal {
   from { opacity: 0; transform: scale(1.06); }
   to   { opacity: 1; transform: scale(1); }
@@ -61,4 +99,12 @@ body {
 .profile-photo {
   animation: photoReveal 0.9s cubic-bezier(0.22,1,0.36,1) both,
              photoFloat 5s ease-in-out 1s infinite;
+}
+
+/* ── Responsive header offset ─────────── */
+.main-content {
+  padding-top: 148px;
+}
+@media (max-width: 640px) {
+  .main-content { padding-top: 100px; }
 }

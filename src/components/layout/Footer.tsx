@@ -4,9 +4,9 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer style={{ backgroundColor: '#003350' }} className="text-gray-300 mt-auto">
+    <footer style={{ backgroundColor: 'var(--primary-dark)' }} className="text-gray-300 mt-auto">
       {/* Gold accent bar */}
-      <div style={{ backgroundColor: '#004060' }} className="h-1" />
+      <div style={{ backgroundColor: 'var(--primary)' }} className="h-1" />
 
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Brand */}
@@ -14,7 +14,7 @@ export default function Footer() {
           <div className="flex items-center gap-3 mb-4">
             <div
               className="w-12 h-12 rounded-full flex items-center justify-center border-2 flex-shrink-0"
-              style={{ backgroundColor: '#004060', borderColor: 'white' }}
+              style={{ backgroundColor: 'var(--primary)', borderColor: 'white' }}
             >
               <span className="font-black text-sm text-white">MYC</span>
             </div>
@@ -46,7 +46,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-8 h-8 rounded-full flex items-center justify-center transition-opacity hover:opacity-80"
-                style={{ backgroundColor: '#004B6B' }}
+                style={{ backgroundColor: 'var(--primary)' }}
               >
                 <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d={s.path} />
@@ -122,7 +122,7 @@ export default function Footer() {
             <Link
               href="/register"
               className="inline-block px-4 py-2 text-sm font-bold rounded hover:opacity-90 transition-opacity"
-              style={{ backgroundColor: 'white', color: '#004B6B' }}
+              style={{ backgroundColor: 'white', color: 'var(--primary)' }}
             >
               Join MYC Today
             </Link>
@@ -130,7 +130,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div style={{ backgroundColor: '#001230', borderTop: '1px solid #004060' }}>
+      <div style={{ backgroundColor: '#001230', borderTop: '1px solid var(--primary)' }}>
         <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs opacity-50">
           <span>© {year} Mombasa Youth Council. All rights reserved.</span>
           <div className="flex gap-4">

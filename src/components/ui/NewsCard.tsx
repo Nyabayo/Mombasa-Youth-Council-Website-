@@ -17,15 +17,15 @@ interface NewsCardProps {
 }
 
 const categoryColors: Record<string, string> = {
-  News: '#004B6B',
+  News: 'var(--primary)',
   Advocacy: '#005588',
   Programmes: '#005588',
-  Governance: '#004060',
-  Leadership: '#003350',
+  Governance: 'var(--primary)',
+  Leadership: 'var(--primary-dark)',
 }
 
 export default function NewsCard({ post, featured = false }: NewsCardProps) {
-  const color = categoryColors[post.category] ?? '#004B6B'
+  const color = categoryColors[post.category] ?? 'var(--primary)'
   const date = new Date(post.createdAt).toLocaleDateString('en-KE', {
     year: 'numeric',
     month: 'long',

@@ -10,11 +10,11 @@ export default function DeputyPresidentPage() {
   return (
     <>
       {/* Banner */}
-      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Mombasa Youth Council</p>
+          <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Mombasa Youth Council</p>
           <h1 className="text-white text-3xl sm:text-4xl font-black mb-1">Her Excellency Khadija Jilo</h1>
-          <p className="text-teal-200 text-sm">Deputy President of the Mombasa Youth Council (MYC)</p>
+          <p className="text-[#00A8C8] text-sm">Deputy President of the Mombasa Youth Council (MYC)</p>
         </div>
       </div>
 
@@ -33,13 +33,13 @@ export default function DeputyPresidentPage() {
           <main className="flex-1 min-w-0">
 
             {/* ── Profile card ─────────────────────────── */}
-            <div style={{ backgroundColor: '#004B6B' }} className="overflow-hidden mb-12">
+            <div style={{ backgroundColor: 'var(--primary)' }} className="overflow-hidden mb-12">
               <div className="flex flex-col sm:flex-row">
                 <div className="w-full sm:w-80 lg:w-96 aspect-square flex-shrink-0 overflow-hidden profile-photo border-b-4 sm:border-b-0 sm:border-r-4 border-white">
                   <img src="/deputy.jpg" alt="Deputy President Khadija Jilo" className="w-full h-full object-cover" />
                 </div>
                 <div className="text-white p-8 flex flex-col justify-center">
-                  <p className="text-teal-200 text-xs tracking-widest uppercase font-bold mb-2">Her Excellency</p>
+                  <p className="text-[#00A8C8] text-xs tracking-widest uppercase font-bold mb-2">Her Excellency</p>
                   <h2 className="text-4xl font-black mb-2">Khadija Jilo</h2>
                   <p className="text-xl font-semibold opacity-90 mb-2">Deputy President</p>
                   <p className="opacity-70">Mombasa Youth Council (MYC)</p>
@@ -51,7 +51,7 @@ export default function DeputyPresidentPage() {
             {/* ── Biography ────────────────────────────── */}
             <section id="biography" className="mb-12 scroll-mt-4">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7 flex-shrink-0" />
+                <div style={{ backgroundColor: 'var(--primary)' }} className="w-1 h-7 flex-shrink-0" />
                 <h2 className="text-2xl font-black text-gray-900">Biography</h2>
               </div>
               <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -85,7 +85,7 @@ export default function DeputyPresidentPage() {
             {/* ── Leadership Mandate ───────────────────── */}
             <section id="leadership-mandate" className="mb-12 scroll-mt-4">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7 flex-shrink-0" />
+                <div style={{ backgroundColor: 'var(--primary)' }} className="w-1 h-7 flex-shrink-0" />
                 <h2 className="text-2xl font-black text-gray-900">Leadership Mandate</h2>
               </div>
               <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -104,7 +104,7 @@ export default function DeputyPresidentPage() {
                   engagement, promoting participation in governance, and supporting initiatives that create
                   opportunities for education, entrepreneurship, innovation, and leadership development.
                 </p>
-                <div className="p-5 border-l-4" style={{ borderColor: '#004B6B', backgroundColor: '#e8f7fb' }}>
+                <div className="p-5 border-l-4" style={{ borderColor: 'var(--primary)', backgroundColor: 'var(--bg-alt)' }}>
                   <p className="text-gray-800">
                     <strong>Constitutional Provision:</strong> In the absence of the President, the Deputy President
                     shall perform the functions and duties of the Office of the President as provided for in the
@@ -121,7 +121,7 @@ export default function DeputyPresidentPage() {
             {/* ── Key Focus Areas ──────────────────────── */}
             <section id="focus-areas" className="mb-12 scroll-mt-4">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7 flex-shrink-0" />
+                <div style={{ backgroundColor: 'var(--primary)' }} className="w-1 h-7 flex-shrink-0" />
                 <h2 className="text-2xl font-black text-gray-900">Key Focus Areas</h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -147,7 +147,7 @@ export default function DeputyPresidentPage() {
             {/* ── Statements ───────────────────────────── */}
             <section id="statements" className="mb-12 scroll-mt-4">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7 flex-shrink-0" />
+                <div style={{ backgroundColor: 'var(--primary)' }} className="w-1 h-7 flex-shrink-0" />
                 <h2 className="text-2xl font-black text-gray-900">Speeches &amp; Statements</h2>
               </div>
               <div className="space-y-5">
@@ -171,7 +171,7 @@ export default function DeputyPresidentPage() {
                       "On this day we celebrate the courage, resilience, and brilliance of women everywhere. To every young woman in Mombasa: your voice matters, your leadership matters, and MYC is here to amplify it.",
                   },
                 ].map((speech) => (
-                  <div key={speech.title} className="border-l-4 pl-5 py-1" style={{ borderColor: '#004B6B' }}>
+                  <div key={speech.title} className="border-l-4 pl-5 py-1" style={{ borderColor: 'var(--primary)' }}>
                     <p className="text-xs font-bold text-teal-700 uppercase tracking-widest mb-1">{speech.date}</p>
                     <h4 className="font-bold text-gray-900 mb-2">{speech.title}</h4>
                     <p className="text-sm text-gray-600 italic leading-relaxed">"{speech.excerpt}"</p>

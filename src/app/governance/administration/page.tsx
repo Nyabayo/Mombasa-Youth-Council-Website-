@@ -6,11 +6,11 @@ export const metadata: Metadata = { title: 'Administration | Governance | MYC' }
 export default function AdministrationPage() {
   return (
     <>
-      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Governance</p>
+          <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Governance</p>
           <h1 className="text-white text-3xl font-black">The Administration</h1>
-          <p className="text-teal-200 text-sm">Executive Arm of the Mombasa Youth Council</p>
+          <p className="text-[#00A8C8] text-sm">Executive Arm of the Mombasa Youth Council</p>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 py-10">
@@ -34,12 +34,12 @@ export default function AdministrationPage() {
               { title: 'Executive Committee', name: 'Committee Members', href: '#', initials: 'EC' },
             ].map((m) => (
               <Link key={m.title} href={m.href} className="group block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                <div style={{ backgroundColor: '#004B6B' }} className="p-5 flex items-center gap-4">
+                <div style={{ backgroundColor: 'var(--primary)' }} className="p-5 flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
                     <span className="text-white font-black text-sm">{m.initials}</span>
                   </div>
                   <div className="text-white">
-                    <p className="text-xs text-teal-200 uppercase tracking-wide">{m.title}</p>
+                    <p className="text-xs text-[#00A8C8] uppercase tracking-wide">{m.title}</p>
                     <p className="font-bold text-sm">{m.name}</p>
                   </div>
                 </div>

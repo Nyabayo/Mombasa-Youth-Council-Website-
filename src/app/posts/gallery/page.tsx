@@ -6,9 +6,9 @@ export const metadata: Metadata = { title: 'Gallery | Posts & Media | MYC' }
 export default function GalleryPage() {
   return (
     <>
-      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Media Centre</p>
+          <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Media Centre</p>
           <h1 className="text-white text-3xl font-black">Gallery</h1>
         </div>
       </div>
@@ -20,7 +20,7 @@ export default function GalleryPage() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="aspect-square rounded-lg flex items-center justify-center text-white font-bold text-sm" style={{ backgroundColor: i % 2 === 0 ? '#004B6B' : '#003350' }}>
+            <div key={i} className="aspect-square rounded-lg flex items-center justify-center text-white font-bold text-sm" style={{ backgroundColor: i % 2 === 0 ? 'var(--primary)' : 'var(--primary-dark)' }}>
               {i % 2 === 0 ? 'MYC Event' : 'Innovation Festival'}
             </div>
           ))}

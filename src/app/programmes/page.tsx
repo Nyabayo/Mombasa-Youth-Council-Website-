@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 export default function ProgrammesPage() {
   return (
     <>
-      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Our Work</p>
+          <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Our Work</p>
           <h1 className="text-white text-3xl sm:text-4xl font-black mb-1">Programmes</h1>
-          <p className="text-teal-200 text-sm">Driving innovation, advocacy &amp; action</p>
+          <p className="text-[#00A8C8] text-sm">Driving innovation, advocacy &amp; action</p>
         </div>
       </div>
       <div style={{ backgroundColor: '#f5f5f5' }} className="border-b border-gray-200">
@@ -34,10 +34,10 @@ export default function ProgrammesPage() {
           {/* Innovation Festival */}
           <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
             <div className="flex flex-col lg:flex-row">
-              <div style={{ backgroundColor: '#003350' }} className="lg:w-64 p-8 flex flex-col justify-center items-center text-center">
+              <div style={{ backgroundColor: 'var(--primary-dark)' }} className="lg:w-64 p-8 flex flex-col justify-center items-center text-center">
                 <span className="text-5xl mb-3">💡</span>
                 <h3 className="text-white font-black text-xl">Innovation Festival 2026</h3>
-                <p className="text-teal-300 text-sm mt-1">Mombasa · 2026</p>
+                <p className="text-[#00A8C8] text-sm mt-1">Mombasa · 2026</p>
               </div>
               <div className="flex-1 p-8">
                 <p className="text-gray-700 leading-relaxed mb-4">
@@ -48,7 +48,7 @@ export default function ProgrammesPage() {
                   The festival features innovation showcases, pitch competitions, mentorship sessions, networking
                   opportunities, and partnerships with leading organizations committed to youth empowerment.
                 </p>
-                <Link href="/programmes/innovation-festival" style={{ backgroundColor: '#004B6B' }} className="inline-block px-5 py-2.5 text-white font-semibold text-sm rounded hover:opacity-90 transition-opacity">
+                <Link href="/programmes/innovation-festival" style={{ backgroundColor: 'var(--primary)' }} className="inline-block px-5 py-2.5 text-white font-semibold text-sm rounded hover:opacity-90 transition-opacity">
                   Learn More →
                 </Link>
               </div>
@@ -58,10 +58,10 @@ export default function ProgrammesPage() {
           {/* SheriaYaVijana */}
           <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
             <div className="flex flex-col lg:flex-row">
-              <div style={{ backgroundColor: '#004B6B' }} className="lg:w-64 p-8 flex flex-col justify-center items-center text-center">
+              <div style={{ backgroundColor: 'var(--primary)' }} className="lg:w-64 p-8 flex flex-col justify-center items-center text-center">
                 <span className="text-5xl mb-3">📢</span>
                 <h3 className="text-white font-black text-xl">#SheriaYaVijana</h3>
-                <p className="text-teal-300 text-sm mt-1">Youth in Policy</p>
+                <p className="text-[#00A8C8] text-sm mt-1">Youth in Policy</p>
               </div>
               <div className="flex-1 p-8">
                 <p className="text-gray-700 leading-relaxed mb-4">
@@ -74,7 +74,7 @@ export default function ProgrammesPage() {
                   formalized channels for youth input in policy development and resource allocation for
                   youth-led advocacy initiatives.
                 </p>
-                <Link href="/programmes/sheria-ya-vijana" style={{ backgroundColor: '#004B6B' }} className="inline-block px-5 py-2.5 text-white font-semibold text-sm rounded hover:opacity-90 transition-opacity">
+                <Link href="/programmes/sheria-ya-vijana" style={{ backgroundColor: 'var(--primary)' }} className="inline-block px-5 py-2.5 text-white font-semibold text-sm rounded hover:opacity-90 transition-opacity">
                   Learn More →
                 </Link>
               </div>
@@ -84,10 +84,10 @@ export default function ProgrammesPage() {
           {/* Leadership Training */}
           <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
             <div className="flex flex-col lg:flex-row">
-              <div className="lg:w-64 p-8 flex flex-col justify-center items-center text-center" style={{ backgroundColor: '#003350' }}>
+              <div className="lg:w-64 p-8 flex flex-col justify-center items-center text-center" style={{ backgroundColor: 'var(--primary-dark)' }}>
                 <span className="text-5xl mb-3">🌱</span>
                 <h3 className="text-white font-black text-xl">Leadership Training</h3>
-                <p className="text-teal-300 text-sm mt-1">With Kenya Red Cross</p>
+                <p className="text-[#00A8C8] text-sm mt-1">With Kenya Red Cross</p>
               </div>
               <div className="flex-1 p-8">
                 <p className="text-gray-700 leading-relaxed mb-4">
@@ -99,7 +99,7 @@ export default function ProgrammesPage() {
                   Participants engage in practical community projects that directly benefit residents of Mombasa
                   County. Applications for training cohorts open periodically — watch this space.
                 </p>
-                <Link href="/programmes/leadership-training" style={{ backgroundColor: '#004B6B' }} className="inline-block px-5 py-2.5 text-white font-semibold text-sm rounded hover:opacity-90 transition-opacity">
+                <Link href="/programmes/leadership-training" style={{ backgroundColor: 'var(--primary)' }} className="inline-block px-5 py-2.5 text-white font-semibold text-sm rounded hover:opacity-90 transition-opacity">
                   Learn More →
                 </Link>
               </div>

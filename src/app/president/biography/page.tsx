@@ -6,9 +6,9 @@ export const metadata: Metadata = { title: 'Biography | President | MYC' }
 export default function PresidentBioPage() {
   return (
     <>
-      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Office of the President</p>
+          <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Office of the President</p>
           <h1 className="text-white text-3xl font-black">Biography</h1>
         </div>
       </div>

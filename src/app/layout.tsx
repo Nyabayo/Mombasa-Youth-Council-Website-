@@ -3,6 +3,7 @@ import { Geist } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist' })
 
@@ -18,11 +19,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${geist.variable} h-full`} data-scroll-behavior="smooth">
-      <body className="min-h-full flex flex-col antialiased bg-white text-gray-900">
-        <Header />
-        <main className="flex-1" style={{ paddingTop: '178px' }}>{children}</main>
-        <Footer />
+    <html lang="en" className={`${geist.variable} h-full`} suppressHydrationWarning>
+      <body className="min-h-full flex flex-col antialiased">
+        <ThemeProvider>
+          <Header />
+          <main className="flex-1 main-content">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   )

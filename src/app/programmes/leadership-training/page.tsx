@@ -6,11 +6,11 @@ export const metadata: Metadata = { title: 'Leadership Training | Programmes | M
 export default function LeadershipTrainingPage() {
   return (
     <>
-      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Programmes</p>
+          <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Programmes</p>
           <h1 className="text-white text-3xl font-black">Leadership Training</h1>
-          <p className="text-teal-200 text-sm">In partnership with the Kenya Red Cross</p>
+          <p className="text-[#00A8C8] text-sm">In partnership with the Kenya Red Cross</p>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 py-10">
@@ -39,11 +39,11 @@ export default function LeadershipTrainingPage() {
               </div>
             ))}
           </div>
-          <p className="text-gray-600 text-sm p-4 rounded" style={{ backgroundColor: '#e8f7fb' }}>
+          <p className="text-gray-600 text-sm p-4 rounded" style={{ backgroundColor: 'var(--bg-alt)' }}>
             Applications for training cohorts open periodically. Young people from all sub-counties of Mombasa
             are encouraged to apply.
           </p>
-          <Link href="/register" style={{ backgroundColor: '#004B6B' }} className="inline-block px-6 py-3 text-white font-bold rounded hover:opacity-90">
+          <Link href="/register" style={{ backgroundColor: 'var(--primary)' }} className="inline-block px-6 py-3 text-white font-bold rounded hover:opacity-90">
             Join MYC Today
           </Link>
           <div>

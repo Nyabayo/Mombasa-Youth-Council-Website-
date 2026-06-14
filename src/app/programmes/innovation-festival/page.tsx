@@ -6,11 +6,11 @@ export const metadata: Metadata = { title: 'Innovation Festival 2026 | Programme
 export default function InnovationFestivalPage() {
   return (
     <>
-      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Programmes</p>
+          <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Programmes</p>
           <h1 className="text-white text-3xl font-black">Innovation Festival 2026</h1>
-          <p className="text-teal-200 text-sm">Mombasa · 2026 · Young innovators collaborating</p>
+          <p className="text-[#00A8C8] text-sm">Mombasa · 2026 · Young innovators collaborating</p>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 py-10">
@@ -41,7 +41,7 @@ export default function InnovationFestivalPage() {
               </div>
             ))}
           </div>
-          <Link href="/register" style={{ backgroundColor: '#004B6B' }} className="inline-block px-6 py-3 text-white font-bold rounded hover:opacity-90">
+          <Link href="/register" style={{ backgroundColor: 'var(--primary)' }} className="inline-block px-6 py-3 text-white font-bold rounded hover:opacity-90">
             Join MYC Today
           </Link>
           <div className="mt-6">

@@ -6,11 +6,11 @@ export const metadata: Metadata = { title: '#SheriaYaVijana | Programmes | MYC' 
 export default function SheriaYaVijanaPage() {
   return (
     <>
-      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Advocacy</p>
+          <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Advocacy</p>
           <h1 className="text-white text-3xl font-black">#SheriaYaVijana</h1>
-          <p className="text-teal-200 text-sm">Youth voices in policy — shaping the laws that affect our lives</p>
+          <p className="text-[#00A8C8] text-sm">Youth voices in policy — shaping the laws that affect our lives</p>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 py-10">
@@ -32,7 +32,7 @@ export default function SheriaYaVijanaPage() {
             &ldquo;Support from allied leaders has reinforced the council&apos;s legitimacy, pushing back against efforts
             to sideline youth participation in governance.&rdquo;
           </blockquote>
-          <Link href="/register" style={{ backgroundColor: '#004B6B' }} className="inline-block px-6 py-3 text-white font-bold rounded hover:opacity-90">
+          <Link href="/register" style={{ backgroundColor: 'var(--primary)' }} className="inline-block px-6 py-3 text-white font-bold rounded hover:opacity-90">
             Join the Movement
           </Link>
           <div>

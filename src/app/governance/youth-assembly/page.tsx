@@ -6,11 +6,11 @@ export const metadata: Metadata = { title: 'Youth Assembly | MYC' }
 export default function YouthAssemblyPage() {
   return (
     <>
-      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
+      <div style={{ backgroundColor: 'var(--primary)' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Governance</p>
+          <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Governance</p>
           <h1 className="text-white text-3xl font-black">The Youth Assembly</h1>
-          <p className="text-teal-200 text-sm">Representative &amp; Oversight Organ of the MYC</p>
+          <p className="text-[#00A8C8] text-sm">Representative &amp; Oversight Organ of the MYC</p>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 py-10">
@@ -40,7 +40,7 @@ export default function YouthAssemblyPage() {
               </li>
             ))}
           </ul>
-          <div className="p-4 rounded-lg border-l-4 border-blue-300" style={{ backgroundColor: '#e8f7fb' }}>
+          <div className="p-4 rounded-lg border-l-4 border-blue-300" style={{ backgroundColor: 'var(--bg-alt)' }}>
             <strong>Independence Clause:</strong> The Youth Assembly shall operate independently and shall not be
             subject to interference by the Administration in the execution of its constitutional mandate.
           </div>
