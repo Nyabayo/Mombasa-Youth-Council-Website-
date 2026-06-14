@@ -38,7 +38,7 @@ export default function SecretaryGeneralPage() {
               <div className="flex flex-col sm:flex-row">
                 <div className="w-full sm:w-80 lg:w-96 aspect-square flex-shrink-0 overflow-hidden border-b-4 sm:border-b-0 sm:border-r-4 border-white">
                   <img
-                    src="/Secretary General.jpeg"
+                    src="/secretary-general.jpeg"
                     alt="Nasib Juma — Secretary General"
                     className="w-full h-full object-cover object-top"
                   />
