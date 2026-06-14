@@ -36,11 +36,12 @@ export default function SecretaryGeneralPage() {
             {/* Profile card */}
             <div style={{ backgroundColor: 'var(--primary)' }} className="overflow-hidden mb-12">
               <div className="flex flex-col sm:flex-row">
-                <div className="w-full sm:w-80 lg:w-96 aspect-square flex-shrink-0 overflow-hidden border-b-4 sm:border-b-0 sm:border-r-4 border-white flex items-center justify-center" style={{ backgroundColor: 'var(--primary-dark)' }}>
-                  <div className="text-center text-white">
-                    <div className="text-6xl font-black mb-2">NJ</div>
-                    <div className="text-[#00A8C8] text-sm font-semibold">Secretary General</div>
-                  </div>
+                <div className="w-full sm:w-80 lg:w-96 aspect-square flex-shrink-0 overflow-hidden border-b-4 sm:border-b-0 sm:border-r-4 border-white">
+                  <img
+                    src="/Secretary General.jpeg"
+                    alt="Nasib Juma — Secretary General"
+                    className="w-full h-full object-cover object-top"
+                  />
                 </div>
                 <div className="text-white p-8 flex flex-col justify-center">
                   <p className="text-[#00A8C8] text-xs tracking-widest uppercase font-bold mb-2">Secretary General</p>
