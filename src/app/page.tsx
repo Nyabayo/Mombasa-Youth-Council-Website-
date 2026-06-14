@@ -4,10 +4,25 @@ import NewsTicker from '@/components/ui/NewsTicker'
 import NewsCard from '@/components/ui/NewsCard'
 import { store } from '@/lib/store'
 
+const heroImages = ['/hero1.jpg', '/hero2.jpg', '/hero3.jpeg']
+
 export default function HomePage() {
   const allPosts = store.getPublishedPosts()
-  const featured = allPosts.slice(0, 3)
+  const latest3 = allPosts.slice(0, 3)
+  const featured = latest3
   const sidebar = allPosts.slice(3, 8)
+
+  const heroSlides = heroImages.map((bg, i) => ({
+    bg,
+    post: latest3[i]
+      ? {
+          title: latest3[i].title,
+          excerpt: latest3[i].excerpt,
+          category: latest3[i].category,
+          slug: latest3[i].slug,
+        }
+      : null,
+  }))
 
   const quickLinks = [
     { label: "President's Office", href: '/president', icon: '🏛️', desc: 'His Excellency Antigoals Ray' },
@@ -20,7 +35,7 @@ export default function HomePage() {
 
   return (
     <>
-      <HeroSlider />
+      <HeroSlider slides={heroSlides} />
       <NewsTicker />
 
       {/* Quick Links */}

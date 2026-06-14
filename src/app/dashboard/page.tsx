@@ -25,6 +25,7 @@ export default function DashboardPage() {
   const [posts, setPosts] = useState<Post[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [previewing, setPreviewing] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [formError, setFormError] = useState('')
   const [form, setForm] = useState({ title: '', excerpt: '', content: '', category: 'News', image: '' })
@@ -68,6 +69,7 @@ export default function DashboardPage() {
       setPosts((prev) => [data.post, ...prev])
       setForm({ title: '', excerpt: '', content: '', category: 'News', image: '' })
       setShowForm(false)
+      setPreviewing(false)
     } else {
       setFormError(data.error ?? 'Failed to publish post.')
     }
@@ -164,14 +166,64 @@ export default function DashboardPage() {
               <h2 className="text-white font-black text-lg">New Post</h2>
               <button
                 type="button"
-                onClick={() => { setShowForm(false); setForm({ title: '', excerpt: '', content: '', category: 'News', image: '' }) }}
+                onClick={() => { setShowForm(false); setPreviewing(false); setForm({ title: '', excerpt: '', content: '', category: 'News', image: '' }) }}
                 className="text-[#00A8C8] hover:text-white text-sm transition-colors"
               >
                 ✕ Discard
               </button>
             </div>
 
-            <form onSubmit={handleSubmitPost} className="p-6 space-y-5">
+            {/* Edit / Preview tabs */}
+            <div className="flex border-b border-gray-200">
+              <button
+                type="button"
+                onClick={() => setPreviewing(false)}
+                className="px-5 py-2.5 text-sm font-bold border-b-2 transition-colors"
+                style={{ borderColor: !previewing ? 'var(--primary)' : 'transparent', color: !previewing ? 'var(--primary)' : '#888' }}
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                onClick={() => setPreviewing(true)}
+                className="px-5 py-2.5 text-sm font-bold border-b-2 transition-colors flex items-center gap-1.5"
+                style={{ borderColor: previewing ? 'var(--gold)' : 'transparent', color: previewing ? 'var(--primary)' : '#888' }}
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                Preview
+              </button>
+            </div>
+
+            {/* Preview panel */}
+            {previewing && (
+              <div className="p-6 border-b border-gray-100">
+                <div className="max-w-3xl mx-auto">
+                  {/* Preview header */}
+                  <div style={{ backgroundColor: 'var(--primary)' }} className="py-8 px-6 mb-6 rounded-t-lg">
+                    <span className="text-xs font-black tracking-widest uppercase px-2 py-1 rounded mb-3 inline-block" style={{ backgroundColor: 'var(--gold)', color: 'var(--primary-dark)' }}>
+                      {form.category || 'News'}
+                    </span>
+                    <h1 className="text-white text-2xl sm:text-3xl font-black leading-tight mt-2">
+                      {form.title || <span className="opacity-40 italic">Post title will appear here…</span>}
+                    </h1>
+                    {form.excerpt && <p className="text-[#00A8C8] text-sm mt-2">{form.excerpt}</p>}
+                    <p className="text-white/50 text-xs mt-3">{user?.name} · {new Date().toLocaleDateString('en-KE', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+                  </div>
+                  {/* Cover image */}
+                  {form.image && (
+                    <div className="mb-6 rounded overflow-hidden aspect-video">
+                      <img src={form.image} alt="Cover" className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  {/* Content */}
+                  {form.content
+                    ? <div className="prose prose-gray max-w-none text-gray-700 leading-relaxed" dangerouslySetInnerHTML={{ __html: form.content }} />
+                    : <p className="text-gray-400 italic text-center py-12">Your post content will appear here…</p>}
+                </div>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmitPost} className={`p-6 space-y-5 ${previewing ? 'hidden' : ''}`}>
               {formError && (
                 <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded">
                   {formError}
@@ -288,7 +340,7 @@ export default function DashboardPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => { setShowForm(false); setForm({ title: '', excerpt: '', content: '', category: 'News', image: '' }) }}
+                  onClick={() => { setShowForm(false); setPreviewing(false); setForm({ title: '', excerpt: '', content: '', category: 'News', image: '' }) }}
                   className="px-6 py-2.5 border border-gray-300 text-gray-700 font-semibold text-sm rounded hover:bg-gray-50 transition-colors"
                 >
                   Discard

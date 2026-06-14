@@ -19,6 +19,7 @@ const navItems: NavItem[] = [
     children: [
       { label: 'The President', href: '/president' },
       { label: 'The Deputy President', href: '/deputy-president' },
+      { label: 'Secretary General', href: '/secretary-general' },
       { label: 'CS Finance & Economic Planning', href: '/cabinet-secretary' },
       { label: 'Speaker', href: '/speaker' },
       { label: 'Minority Leader', href: '/minority-leader' },
