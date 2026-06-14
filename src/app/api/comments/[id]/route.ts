@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { store } from '@/lib/store'
+import * as db from '@/lib/db'
 import { getSession } from '@/lib/session'
 
 export async function DELETE(_req: NextRequest, ctx: RouteContext<'/api/comments/[id]'>) {
@@ -9,7 +9,7 @@ export async function DELETE(_req: NextRequest, ctx: RouteContext<'/api/comments
   }
 
   const { id } = await ctx.params
-  const comment = store.findCommentById(id)
+  const comment = await db.findCommentById(id)
   if (!comment) {
     return NextResponse.json({ error: 'Comment not found.' }, { status: 404 })
   }
@@ -18,6 +18,6 @@ export async function DELETE(_req: NextRequest, ctx: RouteContext<'/api/comments
     return NextResponse.json({ error: 'Forbidden.' }, { status: 403 })
   }
 
-  store.deleteComment(id)
+  await db.deleteComment(id)
   return NextResponse.json({ message: 'Comment deleted.' })
 }

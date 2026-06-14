@@ -1,6 +1,6 @@
 ﻿import Link from 'next/link'
 import type { Metadata } from 'next'
-import { store } from '@/lib/store'
+import * as db from '@/lib/db'
 import NewsCard from '@/components/ui/NewsCard'
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export default async function PostsPage({
 }) {
   const { category } = await searchParams
   const activeCategory = category ?? 'All'
-  const allPosts = store.getPublishedPosts()
+  const allPosts = await db.getPublishedPosts()
   const posts =
     activeCategory === 'All'
       ? allPosts

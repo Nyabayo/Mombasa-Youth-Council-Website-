@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
-import { store } from '@/lib/store'
+import * as db from '@/lib/db'
 import { createSession } from '@/lib/session'
 
 export async function POST(request: NextRequest) {
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email and password are required.' }, { status: 400 })
     }
 
-    const user = store.findUserByEmail(email.toLowerCase().trim())
+    const user = await db.findUserByEmail(email.toLowerCase().trim())
     if (!user) {
       return NextResponse.json({ error: 'Invalid email or password.' }, { status: 401 })
     }

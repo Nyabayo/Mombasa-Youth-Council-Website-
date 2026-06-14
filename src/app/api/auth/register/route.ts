@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { v4 as uuidv4 } from 'uuid'
-import { store } from '@/lib/store'
+import * as db from '@/lib/db'
 import { createSession } from '@/lib/session'
 
 export async function POST(request: NextRequest) {
@@ -28,12 +28,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (store.findUserByEmail(email)) {
+    const existing = await db.findUserByEmail(email.toLowerCase().trim())
+    if (existing) {
       return NextResponse.json({ error: 'An account with this email already exists.' }, { status: 409 })
     }
 
     const hashed = await bcrypt.hash(password, 12)
-    const user = store.addUser({
+    const user = await db.addUser({
       id: uuidv4(),
       name: name.trim(),
       email: email.toLowerCase().trim(),

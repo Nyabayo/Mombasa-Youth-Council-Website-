@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
-import { store } from '@/lib/store'
+import * as db from '@/lib/db'
 import { getSession } from '@/lib/session'
 
 export async function GET() {
-  const posts = store.getPublishedPosts().map(({ content: _, ...p }) => p)
-  return NextResponse.json({ posts })
+  const posts = await db.getPublishedPosts()
+  return NextResponse.json({ posts: posts.map(({ content: _, ...p }) => p) })
 }
 
 function slugify(title: string) {
@@ -33,11 +33,11 @@ export async function POST(request: NextRequest) {
 
     let slug = slugify(title)
     let counter = 1
-    while (store.slugExists(slug)) {
+    while (await db.slugExists(slug)) {
       slug = `${slugify(title)}-${counter++}`
     }
 
-    const post = store.addPost({
+    const post = await db.addPost({
       id: uuidv4(),
       title: title.trim(),
       slug,

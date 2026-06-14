@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
-import { store } from '@/lib/store'
+import * as db from '@/lib/db'
 import { getSession } from '@/lib/session'
 
 export async function POST(request: NextRequest) {
@@ -21,12 +21,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Comment must be under 1000 characters.' }, { status: 400 })
     }
 
-    const post = store.findPostById(postId)
+    const post = await db.findPostById(postId)
     if (!post || !post.published) {
       return NextResponse.json({ error: 'Post not found.' }, { status: 404 })
     }
 
-    const comment = store.addComment({
+    const comment = await db.addComment({
       id: uuidv4(),
       postId,
       authorId: session.userId,

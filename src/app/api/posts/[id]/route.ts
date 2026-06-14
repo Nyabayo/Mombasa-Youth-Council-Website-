@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { store } from '@/lib/store'
+import * as db from '@/lib/db'
 import { getSession } from '@/lib/session'
 
 export async function GET(_req: NextRequest, ctx: RouteContext<'/api/posts/[id]'>) {
   const { id } = await ctx.params
-  const post = store.findPostById(id) ?? store.findPostBySlug(id)
+  const post = (await db.findPostById(id)) ?? (await db.findPostBySlug(id))
   if (!post || !post.published) {
     return NextResponse.json({ error: 'Post not found.' }, { status: 404 })
   }
-  const comments = store.getCommentsByPost(post.id)
+  const comments = await db.getCommentsByPost(post.id)
   return NextResponse.json({ post, comments })
 }
 
@@ -19,7 +19,7 @@ export async function PUT(request: NextRequest, ctx: RouteContext<'/api/posts/[i
   }
 
   const { id } = await ctx.params
-  const post = store.findPostById(id)
+  const post = await db.findPostById(id)
   if (!post) return NextResponse.json({ error: 'Post not found.' }, { status: 404 })
 
   if (post.authorId !== session.userId && session.role !== 'admin') {
@@ -28,12 +28,12 @@ export async function PUT(request: NextRequest, ctx: RouteContext<'/api/posts/[i
 
   try {
     const body = await request.json()
-    const updated = store.updatePost(id, {
-      title: body.title ?? post.title,
-      excerpt: body.excerpt ?? post.excerpt,
-      content: body.content ?? post.content,
+    const updated = await db.updatePost(id, {
+      title:    body.title    ?? post.title,
+      excerpt:  body.excerpt  ?? post.excerpt,
+      content:  body.content  ?? post.content,
       category: body.category ?? post.category,
-      image: body.image ?? post.image,
+      image:    body.image    ?? post.image,
     })
     return NextResponse.json({ post: updated })
   } catch {
@@ -48,13 +48,13 @@ export async function DELETE(_req: NextRequest, ctx: RouteContext<'/api/posts/[i
   }
 
   const { id } = await ctx.params
-  const post = store.findPostById(id)
+  const post = await db.findPostById(id)
   if (!post) return NextResponse.json({ error: 'Post not found.' }, { status: 404 })
 
   if (post.authorId !== session.userId && session.role !== 'admin') {
     return NextResponse.json({ error: 'Forbidden.' }, { status: 403 })
   }
 
-  store.deletePost(id)
+  await db.deletePost(id)
   return NextResponse.json({ message: 'Post deleted.' })
 }

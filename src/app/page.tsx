@@ -2,7 +2,7 @@
 import HeroSlider from '@/components/ui/HeroSlider'
 import NewsTicker from '@/components/ui/NewsTicker'
 import NewsCard from '@/components/ui/NewsCard'
-import { store } from '@/lib/store'
+import * as db from '@/lib/db'
 
 const heroImages = [
   { bg: '/hero1.jpg',   position: 'center 15%' },
@@ -10,8 +10,8 @@ const heroImages = [
   { bg: '/hero3.jpeg',  position: 'center 30%' },
 ]
 
-export default function HomePage() {
-  const allPosts = store.getPublishedPosts()
+export default async function HomePage() {
+  const allPosts = await db.getPublishedPosts()
   const latest3 = allPosts.slice(0, 3)
   const featured = latest3
   const sidebar = allPosts.slice(3, 8)

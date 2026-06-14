@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/session'
-import { store } from '@/lib/store'
+import * as db from '@/lib/db'
 
 export async function GET() {
   const session = await getSession()
@@ -8,7 +8,7 @@ export async function GET() {
     return NextResponse.json({ user: null }, { status: 401 })
   }
 
-  const user = store.findUserById(session.userId)
+  const user = await db.findUserById(session.userId)
   if (!user) {
     return NextResponse.json({ user: null }, { status: 401 })
   }
