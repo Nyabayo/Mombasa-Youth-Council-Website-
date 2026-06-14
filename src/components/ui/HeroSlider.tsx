@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
@@ -90,7 +90,7 @@ export default function HeroSection() {
           <div className="inline-flex items-center gap-2 mb-6 hero-fade-1">
             <span
               className="px-3 py-1 text-xs font-black tracking-widest uppercase rounded-full"
-              style={{ backgroundColor: 'white', color: '#003087' }}
+              style={{ backgroundColor: 'white', color: '#004B6B' }}
             >
               Mombasa Youth Rising · 2026
             </span>
@@ -115,7 +115,7 @@ export default function HeroSection() {
             <Link
               href="/register"
               className="group relative overflow-hidden px-7 py-3.5 font-bold text-sm rounded-lg transition-all duration-300"
-              style={{ backgroundColor: 'white', color: '#003087' }}
+              style={{ backgroundColor: 'white', color: '#004B6B' }}
             >
               <span className="relative z-10">Join MYC Today</span>
               <div className="absolute inset-0 bg-white/20 translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
@@ -139,7 +139,7 @@ export default function HeroSection() {
                 <div className="w-px h-10 bg-white/20 hidden sm:block" />
                 <div>
                   <div className="text-white font-black text-xl sm:text-2xl leading-none">{s.value}</div>
-                  <div className="text-blue-200 text-xs mt-0.5 uppercase tracking-wide">{s.label}</div>
+                  <div className="text-teal-200 text-xs mt-0.5 uppercase tracking-wide">{s.label}</div>
                 </div>
               </div>
             ))}

@@ -17,15 +17,15 @@ interface NewsCardProps {
 }
 
 const categoryColors: Record<string, string> = {
-  News: '#003087',
+  News: '#004B6B',
   Advocacy: '#005588',
   Programmes: '#005588',
-  Governance: '#002673',
-  Leadership: '#001a52',
+  Governance: '#004060',
+  Leadership: '#003350',
 }
 
 export default function NewsCard({ post, featured = false }: NewsCardProps) {
-  const color = categoryColors[post.category] ?? '#003087'
+  const color = categoryColors[post.category] ?? '#004B6B'
   const date = new Date(post.createdAt).toLocaleDateString('en-KE', {
     year: 'numeric',
     month: 'long',
@@ -56,7 +56,7 @@ export default function NewsCard({ post, featured = false }: NewsCardProps) {
           >
             {post.category}
           </span>
-          <h3 className="text-gray-900 font-bold text-lg leading-snug group-hover:text-blue-700 transition-colors mb-2 line-clamp-2">
+          <h3 className="text-gray-900 font-bold text-lg leading-snug group-hover:text-teal-700 transition-colors mb-2 line-clamp-2">
             {post.title}
           </h3>
           <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4">{post.excerpt}</p>
@@ -81,7 +81,7 @@ export default function NewsCard({ post, featured = false }: NewsCardProps) {
         {post.category.slice(0, 3).toUpperCase()}
       </div>
       <div className="flex-1 min-w-0">
-        <h4 className="text-gray-900 font-semibold text-sm leading-snug group-hover:text-blue-700 transition-colors line-clamp-2 mb-1">
+        <h4 className="text-gray-900 font-semibold text-sm leading-snug group-hover:text-teal-700 transition-colors line-clamp-2 mb-1">
           {post.title}
         </h4>
         <p className="text-xs text-gray-400">{date}</p>

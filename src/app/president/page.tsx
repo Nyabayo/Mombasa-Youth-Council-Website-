@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -10,18 +10,18 @@ export default function PresidentPage() {
   return (
     <>
       {/* Banner */}
-      <div style={{ backgroundColor: '#003087' }} className="py-10">
+      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-blue-200 text-xs font-bold tracking-widest uppercase mb-2">Mombasa Youth Council</p>
+          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Mombasa Youth Council</p>
           <h1 className="text-white text-3xl sm:text-4xl font-black mb-1">His Excellency Antigoals Ray</h1>
-          <p className="text-blue-200 text-sm">President of the Mombasa Youth Council (MYC)</p>
+          <p className="text-teal-200 text-sm">President of the Mombasa Youth Council (MYC)</p>
         </div>
       </div>
 
       {/* Breadcrumb */}
       <div style={{ backgroundColor: '#f5f5f5' }} className="border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-2 flex items-center gap-2 text-xs text-gray-500">
-          <Link href="/" className="hover:text-blue-700">Home</Link>
+          <Link href="/" className="hover:text-teal-700">Home</Link>
           <span>/</span>
           <span className="text-gray-700 font-medium">The President</span>
         </div>
@@ -33,13 +33,13 @@ export default function PresidentPage() {
           <main className="flex-1 min-w-0">
 
             {/* ── Profile card ─────────────────────────── */}
-            <div style={{ backgroundColor: '#003087' }} className="overflow-hidden mb-12">
+            <div style={{ backgroundColor: '#004B6B' }} className="overflow-hidden mb-12">
               <div className="flex flex-col sm:flex-row">
                 <div className="w-full sm:w-80 lg:w-96 aspect-square flex-shrink-0 overflow-hidden profile-photo border-b-4 sm:border-b-0 sm:border-r-4 border-white">
-                  <img src="/president.jpg" alt="President Antigoals Ray" className="w-full h-full object-cover" />
+                  <img src="/president.jpeg" alt="President Antigoals Ray" className="w-full h-full object-cover" />
                 </div>
                 <div className="text-white p-8 flex flex-col justify-center">
-                  <p className="text-blue-200 text-xs tracking-widest uppercase font-bold mb-2">His Excellency</p>
+                  <p className="text-teal-200 text-xs tracking-widest uppercase font-bold mb-2">His Excellency</p>
                   <h2 className="text-4xl font-black mb-2">Antigoals Ray</h2>
                   <p className="text-xl font-semibold opacity-90 mb-2">President</p>
                   <p className="opacity-70">Mombasa Youth Council (MYC)</p>
@@ -51,7 +51,7 @@ export default function PresidentPage() {
             {/* ── Biography ────────────────────────────── */}
             <section id="biography" className="mb-12 scroll-mt-4">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: '#003087' }} className="w-1 h-7 flex-shrink-0" />
+                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7 flex-shrink-0" />
                 <h2 className="text-2xl font-black text-gray-900">Biography</h2>
               </div>
               <div className="prose prose-gray max-w-none space-y-4 text-gray-700 leading-relaxed">
@@ -90,7 +90,7 @@ export default function PresidentPage() {
             {/* ── Policy Platform ──────────────────────── */}
             <section id="policy-platform" className="mb-12 scroll-mt-4">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: '#003087' }} className="w-1 h-7 flex-shrink-0" />
+                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7 flex-shrink-0" />
                 <h2 className="text-2xl font-black text-gray-900">Policy Platform</h2>
               </div>
               <div className="prose prose-gray max-w-none space-y-4 text-gray-700 leading-relaxed">
@@ -121,7 +121,7 @@ export default function PresidentPage() {
             {/* ── Priority Areas ───────────────────────── */}
             <section id="priority-areas" className="mb-12 scroll-mt-4">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: '#003087' }} className="w-1 h-7 flex-shrink-0" />
+                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7 flex-shrink-0" />
                 <h2 className="text-2xl font-black text-gray-900">Priority Areas</h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -147,7 +147,7 @@ export default function PresidentPage() {
             {/* ── Speeches & Statements ────────────────── */}
             <section id="speeches" className="mb-12 scroll-mt-4">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: '#003087' }} className="w-1 h-7 flex-shrink-0" />
+                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7 flex-shrink-0" />
                 <h2 className="text-2xl font-black text-gray-900">Speeches &amp; Statements</h2>
               </div>
               <div className="space-y-5">
@@ -171,8 +171,8 @@ export default function PresidentPage() {
                       'On this International Youth Day, we reaffirm our commitment to building a Mombasa where every young person has a seat at the table, access to opportunities, and the freedom to dream and achieve.',
                   },
                 ].map((speech) => (
-                  <div key={speech.title} className="border-l-4 pl-5 py-1" style={{ borderColor: '#003087' }}>
-                    <p className="text-xs font-bold text-blue-700 uppercase tracking-widest mb-1">{speech.date}</p>
+                  <div key={speech.title} className="border-l-4 pl-5 py-1" style={{ borderColor: '#004B6B' }}>
+                    <p className="text-xs font-bold text-teal-700 uppercase tracking-widest mb-1">{speech.date}</p>
                     <h4 className="font-bold text-gray-900 mb-2">{speech.title}</h4>
                     <p className="text-sm text-gray-600 italic leading-relaxed">"{speech.excerpt}"</p>
                   </div>
@@ -187,9 +187,9 @@ export default function PresidentPage() {
             <div className="bg-white border border-gray-200 p-4">
               <h4 className="font-bold text-gray-900 mb-3">Related</h4>
               <div className="space-y-2">
-                <Link href="/deputy-president" className="block text-sm text-blue-700 hover:underline">The Deputy President →</Link>
-                <Link href="/governance" className="block text-sm text-blue-700 hover:underline">Governance Structure →</Link>
-                <Link href="/programmes" className="block text-sm text-blue-700 hover:underline">Programmes →</Link>
+                <Link href="/deputy-president" className="block text-sm text-teal-700 hover:underline">The Deputy President →</Link>
+                <Link href="/governance" className="block text-sm text-teal-700 hover:underline">Governance Structure →</Link>
+                <Link href="/programmes" className="block text-sm text-teal-700 hover:underline">Programmes →</Link>
               </div>
             </div>
           </aside>

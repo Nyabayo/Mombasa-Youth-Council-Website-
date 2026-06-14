@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import HeroSlider from '@/components/ui/HeroSlider'
 import NewsTicker from '@/components/ui/NewsTicker'
 import NewsCard from '@/components/ui/NewsCard'
@@ -31,10 +31,10 @@ export default function HomePage() {
               <Link
                 key={ql.href}
                 href={ql.href}
-                className="group bg-white border border-gray-200 rounded p-4 text-center hover:border-blue-700 hover:shadow-md transition-all"
+                className="group bg-white border border-gray-200 rounded p-4 text-center hover:border-teal-700 hover:shadow-md transition-all"
               >
                 <div className="text-3xl mb-2">{ql.icon}</div>
-                <div className="text-xs font-bold text-gray-800 group-hover:text-blue-700 leading-tight">
+                <div className="text-xs font-bold text-gray-800 group-hover:text-teal-700 leading-tight">
                   {ql.label}
                 </div>
                 <div className="text-xs text-gray-400 mt-1 hidden sm:block">{ql.desc}</div>
@@ -49,9 +49,9 @@ export default function HomePage() {
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-6">
-              <div style={{ backgroundColor: '#003087' }} className="w-1 h-7" />
+              <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7" />
               <h2 className="text-xl font-bold text-gray-900">Latest Posts</h2>
-              <Link href="/posts" className="ml-auto text-sm text-blue-700 hover:underline font-medium">
+              <Link href="/posts" className="ml-auto text-sm text-teal-700 hover:underline font-medium">
                 View All →
               </Link>
             </div>
@@ -64,7 +64,7 @@ export default function HomePage() {
 
           <div className="lg:w-72">
             <div className="bg-white border border-gray-200 mb-6">
-              <div style={{ backgroundColor: '#003087' }} className="px-4 py-3">
+              <div style={{ backgroundColor: '#004B6B' }} className="px-4 py-3">
                 <h3 className="text-white font-bold text-sm">More Posts</h3>
               </div>
               <div className="px-2">
@@ -89,7 +89,7 @@ export default function HomePage() {
                   <span
                     key={t}
                     className="border px-2 py-1 rounded-full font-medium"
-                    style={{ backgroundColor: '#eff6ff', color: '#003087', borderColor: '#bfdbfe' }}
+                    style={{ backgroundColor: '#e8f7fb', color: '#004B6B', borderColor: '#bfdbfe' }}
                   >
                     {t}
                   </span>
@@ -97,8 +97,8 @@ export default function HomePage() {
               </div>
               <Link
                 href="/about"
-                style={{ backgroundColor: '#003087' }}
-                className="block text-center text-white text-sm font-semibold py-2 rounded hover:opacity-90 transition-opacity"
+                style={{ backgroundColor: '#F5A300', color: '#003350' }}
+                className="block text-center text-sm font-bold py-2 rounded hover:opacity-90 transition-opacity"
               >
                 Learn More
               </Link>
@@ -108,10 +108,10 @@ export default function HomePage() {
       </section>
 
       {/* What We Do */}
-      <section style={{ backgroundColor: '#eff6ff' }} className="py-14 border-t border-blue-100">
+      <section style={{ backgroundColor: '#e8f7fb' }} className="py-14 border-t border-teal-100">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-10">
-            <p className="text-blue-700 text-xs font-bold tracking-widest uppercase mb-2">Our Work</p>
+            <p className="text-teal-700 text-xs font-bold tracking-widest uppercase mb-2">Our Work</p>
             <h2 className="text-3xl font-black text-gray-900 mb-3">What We Do</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">Driving innovation, advocacy &amp; action for young people across Mombasa County.</p>
           </div>
@@ -139,11 +139,11 @@ export default function HomePage() {
                 tag: 'With Kenya Red Cross',
               },
             ].map((item) => (
-              <div key={item.title} className="bg-white border border-blue-100 rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <div key={item.title} className="bg-white border border-teal-100 rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <div className="text-4xl mb-4">{item.icon}</div>
                 <h3 className="font-bold text-gray-900 text-lg mb-2">{item.title}</h3>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">{item.desc}</p>
-                <Link href={item.link} className="text-blue-700 text-sm font-semibold hover:underline">
+                <Link href={item.link} className="text-teal-700 text-sm font-semibold hover:underline">
                   {item.tag} →
                 </Link>
               </div>
@@ -153,11 +153,11 @@ export default function HomePage() {
       </section>
 
       {/* Advocacy Banner */}
-      <section style={{ backgroundColor: '#001a52' }} className="py-14">
+      <section style={{ backgroundColor: '#003350' }} className="py-14">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col lg:flex-row items-center gap-10">
             <div className="flex-1">
-              <p className="text-blue-200 text-xs font-bold tracking-widest uppercase mb-3">Advocacy That Matters</p>
+              <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-3">Advocacy That Matters</p>
               <h2 className="text-white text-3xl font-black mb-4 leading-tight">
                 Youth voices in Mombasa<br />are growing stronger.
               </h2>
@@ -165,12 +165,12 @@ export default function HomePage() {
                 Through initiatives like <strong className="text-white">#SheriaYaVijana</strong>, MYC is actively engaging young
                 people in policy conversations — ensuring they understand and influence the laws that affect their lives.
               </p>
-              <blockquote className="border-l-4 border-blue-400 pl-4 text-gray-300 italic text-sm mb-6">
+              <blockquote className="border-l-4 pl-4 text-gray-300 italic text-sm mb-6" style={{ borderColor: '#F5A300' }}>
                 &ldquo;Support from allied leaders has reinforced the council&apos;s legitimacy, pushing back against efforts to sideline youth participation in governance.&rdquo;
               </blockquote>
               <Link
                 href="/programmes/sheria-ya-vijana"
-                style={{ backgroundColor: 'white', color: '#003087' }}
+                style={{ backgroundColor: '#F5A300', color: '#003350' }}
                 className="inline-block px-6 py-3 font-bold rounded hover:opacity-90 transition-opacity"
               >
                 Our Advocacy Work →
@@ -183,7 +183,7 @@ export default function HomePage() {
                 { number: '3', label: 'Core Organs' },
                 { number: '∞', label: 'Potential' },
               ].map((s) => (
-                <div key={s.label} style={{ backgroundColor: '#001230' }} className="rounded-lg p-6">
+                <div key={s.label} style={{ backgroundColor: '#003350' }} className="rounded-lg p-6">
                   <div className="text-white text-4xl font-black mb-1">{s.number}</div>
                   <div className="text-gray-300 text-sm">{s.label}</div>
                 </div>
@@ -197,7 +197,7 @@ export default function HomePage() {
       <section className="py-14 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-10">
-            <p className="text-blue-700 text-xs font-bold tracking-widest uppercase mb-2">Leadership</p>
+            <p className="text-teal-700 text-xs font-bold tracking-widest uppercase mb-2">Leadership</p>
             <h2 className="text-3xl font-black text-gray-900">Office of the President</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -208,7 +208,7 @@ export default function HomePage() {
                 role: 'President, Mombasa Youth Council',
                 desc: 'President Ray leads on a platform centered on youth empowerment, inclusivity, leadership development, civic participation, innovation, and sustainable opportunities.',
                 href: '/president',
-                photo: '/president.jpg',
+                photo: '/president.jpeg',
               },
               {
                 title: 'Her Excellency',
@@ -220,19 +220,19 @@ export default function HomePage() {
               },
             ].map((leader) => (
               <div key={leader.name} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                <div style={{ backgroundColor: '#003087' }} className="p-8 flex items-center gap-5">
+                <div style={{ backgroundColor: '#004B6B' }} className="p-8 flex items-center gap-5">
                   <div className="w-20 h-20 rounded-full border-4 border-white flex-shrink-0 overflow-hidden">
                     <img src={leader.photo} alt={leader.name} className="w-full h-full object-cover" />
                   </div>
                   <div className="text-white">
-                    <p className="text-blue-200 text-xs tracking-widest uppercase">{leader.title}</p>
+                    <p className="text-teal-200 text-xs tracking-widest uppercase">{leader.title}</p>
                     <h3 className="font-black text-xl">{leader.name}</h3>
                     <p className="text-sm opacity-80">{leader.role}</p>
                   </div>
                 </div>
                 <div className="p-5">
                   <p className="text-gray-600 text-sm leading-relaxed mb-4">{leader.desc}</p>
-                  <Link href={leader.href} className="text-blue-700 text-sm font-semibold hover:underline">
+                  <Link href={leader.href} className="text-teal-700 text-sm font-semibold hover:underline">
                     Read More →
                   </Link>
                 </div>
@@ -243,14 +243,14 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section style={{ background: 'linear-gradient(135deg, #003087, #001a52)' }} className="py-14">
+      <section style={{ background: 'linear-gradient(135deg, #004B6B, #003350)' }} className="py-14">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-white text-3xl font-black mb-4">Join the Mombasa Youth Council</h2>
           <p className="text-white/90 text-lg mb-8">
             Be part of a united, empowered, and progressive youth movement. Open to young people aged 18–34 in Mombasa County.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/register" style={{ backgroundColor: 'white', color: '#003087' }} className="px-8 py-3 font-bold rounded hover:opacity-90 transition-opacity">
+            <Link href="/register" style={{ backgroundColor: '#F5A300', color: '#003350' }} className="px-8 py-3 font-bold rounded hover:opacity-90 transition-opacity">
               Join MYC Today
             </Link>
             <Link href="/about" className="px-8 py-3 border-2 border-white text-white font-semibold rounded hover:bg-white/10 transition-colors">

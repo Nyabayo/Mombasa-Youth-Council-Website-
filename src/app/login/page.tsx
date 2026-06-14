@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -38,7 +38,7 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex flex-col items-center gap-2">
-            <div className="w-16 h-16 rounded-full border-4 border-white flex items-center justify-center" style={{ backgroundColor: '#003087' }}>
+            <div className="w-16 h-16 rounded-full border-4 border-white flex items-center justify-center" style={{ backgroundColor: '#004B6B' }}>
               <span className="text-white font-black text-lg">MYC</span>
             </div>
             <div className="text-gray-700 font-bold">Mombasa Youth Council</div>
@@ -46,9 +46,9 @@ export default function LoginPage() {
         </div>
 
         <div className="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden">
-          <div style={{ backgroundColor: '#003087' }} className="px-6 py-4">
+          <div style={{ backgroundColor: '#004B6B' }} className="px-6 py-4">
             <h1 className="text-white text-xl font-black">Member Login</h1>
-            <p className="text-blue-200 text-xs mt-1">Sign in to access your MYC account</p>
+            <p className="text-teal-200 text-xs mt-1">Sign in to access your MYC account</p>
           </div>
 
           <div className="p-8">
@@ -92,7 +92,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                style={{ backgroundColor: '#003087' }}
+                style={{ backgroundColor: '#004B6B' }}
                 className="w-full py-3 text-white font-bold rounded-lg disabled:opacity-50 hover:opacity-90 transition-opacity"
               >
                 {loading ? 'Signing in...' : 'Sign In'}
@@ -102,7 +102,7 @@ export default function LoginPage() {
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
                 Don&apos;t have an account?{' '}
-                <Link href="/register" className="text-blue-700 font-semibold hover:underline">
+                <Link href="/register" className="text-teal-700 font-semibold hover:underline">
                   Join MYC Today
                 </Link>
               </p>

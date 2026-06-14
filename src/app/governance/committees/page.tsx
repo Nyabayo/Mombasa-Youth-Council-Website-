@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = { title: 'Committees | Governance | MYC' }
@@ -6,16 +6,16 @@ export const metadata: Metadata = { title: 'Committees | Governance | MYC' }
 export default function CommitteesPage() {
   return (
     <>
-      <div style={{ backgroundColor: '#003087' }} className="py-10">
+      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-blue-200 text-xs font-bold tracking-widest uppercase mb-2">Governance</p>
+          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Governance</p>
           <h1 className="text-white text-3xl font-black">Committees</h1>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 py-10">
         <div className="flex items-center gap-2 text-xs text-gray-500 mb-8">
-          <Link href="/" className="hover:text-blue-700">Home</Link><span>/</span>
-          <Link href="/governance" className="hover:text-blue-700">Governance</Link><span>/</span>
+          <Link href="/" className="hover:text-teal-700">Home</Link><span>/</span>
+          <Link href="/governance" className="hover:text-teal-700">Governance</Link><span>/</span>
           <span className="text-gray-700">Committees</span>
         </div>
         <div className="max-w-4xl">
@@ -42,7 +42,7 @@ export default function CommitteesPage() {
             ))}
           </div>
           <div className="mt-8">
-            <Link href="/governance" className="text-blue-700 hover:underline text-sm font-semibold">← Back to Governance</Link>
+            <Link href="/governance" className="text-teal-700 hover:underline text-sm font-semibold">← Back to Governance</Link>
           </div>
         </div>
       </div>

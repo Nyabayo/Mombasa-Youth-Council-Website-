@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -97,7 +97,7 @@ function Btn({
         disabled={disabled}
         className={`flex items-center justify-center w-8 h-8 rounded transition-all ${
           active
-            ? 'bg-blue-700 text-white shadow-sm'
+            ? 'bg-teal-700 text-white shadow-sm'
             : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900'
         } disabled:opacity-30 disabled:cursor-not-allowed`}
       >
@@ -162,7 +162,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
       FontFamily,
       Highlight.configure({ multicolor: true }),
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
-      Link.configure({ openOnClick: false, HTMLAttributes: { class: 'text-blue-700 underline' } }),
+      Link.configure({ openOnClick: false, HTMLAttributes: { class: 'text-teal-700 underline' } }),
       Image.configure({ HTMLAttributes: { class: 'max-w-full rounded my-2' } }),
       Subscript,
       Superscript,
@@ -473,7 +473,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
         {/* Link URL bar */}
         {showLinkInput && (
           <div className="flex items-center gap-2 px-3 py-2 bg-blue-50 border-t border-blue-100">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#003087" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#004B6B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d={ICONS.link} />
             </svg>
             <span className="text-xs text-gray-600 font-medium">URL:</span>
@@ -486,7 +486,7 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
               className="flex-1 text-sm border border-gray-300 rounded px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-blue-500"
               autoFocus
             />
-            <button type="button" onClick={applyLink} className="px-3 py-1.5 text-xs font-bold bg-blue-700 text-white rounded hover:opacity-90">
+            <button type="button" onClick={applyLink} className="px-3 py-1.5 text-xs font-bold bg-teal-700 text-white rounded hover:opacity-90">
               Apply
             </button>
             <button type="button" onClick={() => setShowLinkInput(false)} className="text-xs text-gray-400 hover:text-gray-600 px-1">
@@ -539,14 +539,14 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
         .ProseMirror ul { list-style: disc; padding-left: 1.5em; margin: .4em 0; }
         .ProseMirror ol { list-style: decimal; padding-left: 1.5em; margin: .4em 0; }
         .ProseMirror li { margin: .2em 0; }
-        .ProseMirror blockquote { border-left: 4px solid #003087; padding-left: 1em; color: #555; margin: .8em 0; font-style: italic; }
+        .ProseMirror blockquote { border-left: 4px solid #004B6B; padding-left: 1em; color: #555; margin: .8em 0; font-style: italic; }
         .ProseMirror code { background: #f3f4f6; padding: .1em .35em; border-radius: 4px; font-size: .88em; font-family: monospace; color: #dc2626; }
         .ProseMirror pre { background: #1e293b; color: #e2e8f0; padding: 1em 1.2em; border-radius: 8px; overflow-x: auto; margin: .8em 0; }
         .ProseMirror pre code { background: none; color: inherit; padding: 0; font-size: .9em; }
         .ProseMirror hr { border: none; border-top: 2px solid #e5e7eb; margin: 1.2em 0; }
         .ProseMirror table { border-collapse: collapse; width: 100%; margin: .8em 0; }
         .ProseMirror td, .ProseMirror th { border: 1px solid #d1d5db; padding: .45em .65em; min-width: 60px; vertical-align: top; }
-        .ProseMirror th { background: #eff6ff; font-weight: 700; }
+        .ProseMirror th { background: #e8f7fb; font-weight: 700; }
         .ProseMirror img { max-width: 100%; border-radius: 6px; margin: .6em 0; display: block; }
         .ProseMirror a { color: #1d4ed8; text-decoration: underline; }
         .ProseMirror .selectedCell { outline: 2px solid #3b82f6; }

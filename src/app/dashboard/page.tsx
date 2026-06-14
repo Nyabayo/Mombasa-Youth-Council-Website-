@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
@@ -91,7 +91,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center">
-        <div className="inline-block w-8 h-8 border-4 border-blue-700 border-t-transparent rounded-full animate-spin" />
+        <div className="inline-block w-8 h-8 border-4 border-teal-700 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -99,12 +99,12 @@ export default function DashboardPage() {
   return (
     <>
       {/* Header */}
-      <div style={{ backgroundColor: '#003087' }} className="py-8">
+      <div style={{ backgroundColor: '#004B6B' }} className="py-8">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between flex-wrap gap-4">
           <div>
-            <p className="text-blue-200 text-xs font-bold tracking-widest uppercase mb-1">Member Portal</p>
+            <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-1">Member Portal</p>
             <h1 className="text-white text-2xl font-black">Welcome, {user?.name}</h1>
-            <p className="text-blue-200 text-sm">{user?.email} · {user?.role === 'admin' ? 'Administrator' : 'Member'}</p>
+            <p className="text-teal-200 text-sm">{user?.email} · {user?.role === 'admin' ? 'Administrator' : 'Member'}</p>
           </div>
           <button
             onClick={handleLogout}
@@ -141,15 +141,15 @@ export default function DashboardPage() {
           >
             <div
               className="w-14 h-14 rounded-full flex items-center justify-center text-white text-2xl font-black group-hover:scale-110 transition-transform"
-              style={{ backgroundColor: '#003087' }}
+              style={{ backgroundColor: '#004B6B' }}
             >
               ✏
             </div>
-            <p className="text-lg font-black text-gray-800 group-hover:text-blue-800">Write a New Post</p>
+            <p className="text-lg font-black text-gray-800 group-hover:text-teal-800">Write a New Post</p>
             <p className="text-sm text-gray-400">Share news, updates, or announcements with the MYC community</p>
             <span
               className="mt-1 px-5 py-2 text-sm font-bold rounded text-white"
-              style={{ backgroundColor: '#003087' }}
+              style={{ backgroundColor: '#004B6B' }}
             >
               Start Writing
             </span>
@@ -160,12 +160,12 @@ export default function DashboardPage() {
         {showForm && (
           <div className="bg-white border border-gray-200 rounded-xl shadow-md mb-8 overflow-hidden">
             {/* Form header */}
-            <div style={{ backgroundColor: '#003087' }} className="px-6 py-4 flex items-center justify-between">
+            <div style={{ backgroundColor: '#004B6B' }} className="px-6 py-4 flex items-center justify-between">
               <h2 className="text-white font-black text-lg">New Post</h2>
               <button
                 type="button"
                 onClick={() => { setShowForm(false); setForm({ title: '', excerpt: '', content: '', category: 'News', image: '' }) }}
-                className="text-blue-200 hover:text-white text-sm transition-colors"
+                className="text-teal-200 hover:text-white text-sm transition-colors"
               >
                 ✕ Discard
               </button>
@@ -281,7 +281,7 @@ export default function DashboardPage() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  style={{ backgroundColor: '#003087' }}
+                  style={{ backgroundColor: '#004B6B' }}
                   className="px-8 py-2.5 text-white font-bold text-sm rounded disabled:opacity-50 hover:opacity-90 transition-opacity"
                 >
                   {submitting ? 'Publishing…' : 'Publish Post'}
@@ -300,9 +300,9 @@ export default function DashboardPage() {
 
         {/* Posts table */}
         <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-          <div style={{ backgroundColor: '#003087' }} className="px-6 py-4 flex items-center justify-between">
+          <div style={{ backgroundColor: '#004B6B' }} className="px-6 py-4 flex items-center justify-between">
             <h2 className="text-white font-bold">{user?.role === 'admin' ? 'All Posts' : 'My Posts'}</h2>
-            <span className="text-blue-200 text-sm">{myPosts.length} post{myPosts.length !== 1 ? 's' : ''}</span>
+            <span className="text-teal-200 text-sm">{myPosts.length} post{myPosts.length !== 1 ? 's' : ''}</span>
           </div>
 
           {myPosts.length === 0 ? (
@@ -310,7 +310,7 @@ export default function DashboardPage() {
               <p className="text-gray-400 mb-4">You haven&apos;t published any posts yet.</p>
               <button
                 onClick={() => setShowForm(true)}
-                style={{ backgroundColor: '#003087' }}
+                style={{ backgroundColor: '#004B6B' }}
                 className="px-5 py-2 text-white font-semibold text-sm rounded hover:opacity-90"
               >
                 Write Your First Post
@@ -336,13 +336,13 @@ export default function DashboardPage() {
                           {post.image && (
                             <img src={post.image} alt="" className="w-10 h-10 object-cover rounded flex-shrink-0" />
                           )}
-                          <Link href={`/posts/${post.slug}`} className="font-medium text-gray-900 hover:text-blue-700 line-clamp-1">
+                          <Link href={`/posts/${post.slug}`} className="font-medium text-gray-900 hover:text-teal-700 line-clamp-1">
                             {post.title}
                           </Link>
                         </div>
                       </td>
                       <td className="px-4 py-4">
-                        <span className="text-xs px-2 py-1 rounded font-semibold text-white" style={{ backgroundColor: '#003087' }}>
+                        <span className="text-xs px-2 py-1 rounded font-semibold text-white" style={{ backgroundColor: '#004B6B' }}>
                           {post.category}
                         </span>
                       </td>
@@ -352,7 +352,7 @@ export default function DashboardPage() {
                       </td>
                       <td className="px-4 py-4">
                         <div className="flex items-center gap-2">
-                          <Link href={`/posts/${post.slug}`} className="text-blue-700 hover:underline text-xs font-medium">View</Link>
+                          <Link href={`/posts/${post.slug}`} className="text-teal-700 hover:underline text-xs font-medium">View</Link>
                           {(post.authorId === user?.id || user?.role === 'admin') && (
                             <button
                               onClick={() => handleDelete(post.id)}
@@ -372,7 +372,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="mt-6">
-          <Link href="/" className="text-blue-700 hover:underline text-sm font-semibold">← Back to Homepage</Link>
+          <Link href="/" className="text-teal-700 hover:underline text-sm font-semibold">← Back to Homepage</Link>
         </div>
       </div>
     </>

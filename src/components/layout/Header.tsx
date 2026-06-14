@@ -1,7 +1,8 @@
-'use client'
+﻿'use client'
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter, usePathname } from 'next/navigation'
 
 interface NavItem {
@@ -17,6 +18,9 @@ const navItems: NavItem[] = [
     children: [
       { label: 'The President', href: '/president' },
       { label: 'The Deputy President', href: '/deputy-president' },
+      { label: 'CS Finance & Economic Planning', href: '/cabinet-secretary' },
+      { label: 'Speaker', href: '/speaker' },
+      { label: 'Minority Leader', href: '/minority-leader' },
     ],
   },
   {
@@ -118,9 +122,9 @@ function DropdownMenu({
       <button
         onClick={() => (isOpen ? onClose() : onOpen())}
         className="flex items-center gap-1 px-6 py-3 text-xs font-black tracking-widest transition-all whitespace-nowrap border-b-2 border-transparent"
-        style={{ color: '#002673' }}
-        onMouseEnter={(e) => { onOpen(); (e.currentTarget as HTMLButtonElement).style.color = '#003087'; (e.currentTarget as HTMLButtonElement).style.borderBottomColor = '#003087' }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = '#002673'; if (!isOpen) (e.currentTarget as HTMLButtonElement).style.borderBottomColor = 'transparent' }}
+        style={{ color: '#004060' }}
+        onMouseEnter={(e) => { onOpen(); (e.currentTarget as HTMLButtonElement).style.color = '#004B6B'; (e.currentTarget as HTMLButtonElement).style.borderBottomColor = '#004B6B' }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = '#004060'; if (!isOpen) (e.currentTarget as HTMLButtonElement).style.borderBottomColor = 'transparent' }}
         aria-expanded={isOpen}
       >
         {item.label}
@@ -133,7 +137,7 @@ function DropdownMenu({
         <div
           onMouseLeave={onClose}
           className="absolute top-full left-0 z-50 min-w-[240px] bg-white"
-          style={{ boxShadow: '0 8px 32px rgba(0,30,100,0.18)', borderTop: '3px solid #003087' }}
+          style={{ boxShadow: '0 8px 32px rgba(0,30,100,0.18)', borderTop: '3px solid #004B6B' }}
         >
           {item.children?.map((child) => (
             <Link
@@ -141,10 +145,10 @@ function DropdownMenu({
               href={child.href}
               onClick={onClose}
               className="flex items-center gap-3 px-5 py-3.5 text-sm font-semibold text-gray-800 border-b border-gray-100 last:border-0 transition-all group"
-              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#003087'; e.currentTarget.style.color = 'white'; e.currentTarget.style.paddingLeft = '24px' }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#004B6B'; e.currentTarget.style.color = 'white'; e.currentTarget.style.paddingLeft = '24px' }}
               onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = ''; e.currentTarget.style.color = ''; e.currentTarget.style.paddingLeft = '20px' }}
             >
-              <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: '#003087' }} />
+              <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: '#004B6B' }} />
               {child.label}
             </Link>
           ))}
@@ -184,7 +188,7 @@ export default function Header() {
     <header style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, width: '100%', boxShadow: '0 2px 20px rgba(0,0,0,0.25)' }}>
 
       {/* ── Top bar ─────────────────────────────────── */}
-      <div style={{ backgroundColor: '#001a52' }} className="text-white text-xs">
+      <div style={{ backgroundColor: '#003350' }} className="text-white text-xs">
         <div className="w-full px-6 flex items-center justify-between h-9">
           <span className="hidden sm:block opacity-70">{today}</span>
           <div className="flex items-center gap-4">
@@ -198,13 +202,13 @@ export default function Header() {
             <span className="opacity-30">|</span>
             {user ? (
               <div className="flex items-center gap-2">
-                <Link href="/dashboard" className="hover:text-blue-300 transition-colors">{user.name}</Link>
-                <button onClick={handleLogout} className="px-3 py-1 text-xs font-bold rounded hover:opacity-80" style={{ backgroundColor: 'white', color: '#003087' }}>Logout</button>
+                <Link href="/dashboard" className="hover:text-teal-300 transition-colors">{user.name}</Link>
+                <button onClick={handleLogout} className="px-3 py-1 text-xs font-bold rounded hover:opacity-80" style={{ backgroundColor: 'white', color: '#004B6B' }}>Logout</button>
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <Link href="/login" className="px-3 py-1 text-xs font-bold rounded hover:opacity-80" style={{ backgroundColor: 'white', color: '#003087' }}>Login</Link>
-                <Link href="/register" className="px-3 py-1 text-xs font-bold rounded hover:opacity-80" style={{ backgroundColor: 'white', color: '#003087' }}>Join MYC Today</Link>
+                <Link href="/login" className="px-3 py-1 text-xs font-bold rounded hover:opacity-80" style={{ backgroundColor: 'white', color: '#004B6B' }}>Login</Link>
+                <Link href="/register" className="px-3 py-1 text-xs font-bold rounded hover:opacity-80" style={{ backgroundColor: '#F5A300', color: '#003350' }}>Join MYC Today</Link>
               </div>
             )}
           </div>
@@ -212,25 +216,20 @@ export default function Header() {
       </div>
 
       {/* ── Combined logo + nav bar ─────────────────── */}
-      <div style={{ backgroundColor: 'white', borderBottom: '3px solid #003087' }}>
-        <div className="w-full px-6 flex items-center justify-between gap-8 py-2">
+      <div style={{ backgroundColor: 'white', borderBottom: '3px solid #004B6B' }}>
+        <div className="w-full px-6 flex items-center justify-between gap-8 py-3">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 flex-shrink-0">
-            <div
-              className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: '#003087', border: '3px solid #001a52' }}
-            >
-              <span className="font-black text-sm leading-none text-white">MYC</span>
-            </div>
-            <div>
-              <div className="font-black text-base sm:text-lg leading-tight" style={{ color: '#001a52' }}>
-                Mombasa Youth Council
-              </div>
-              <div className="text-[10px] tracking-widest uppercase font-semibold" style={{ color: '#003087', opacity: 0.75 }}>
-                Empowering Youth · Building Mombasa
-              </div>
-            </div>
+          <Link href="/" className="flex items-center flex-shrink-0">
+            <Image
+              src="/Logo1.png"
+              alt="Mombasa Youth Council"
+              width={340}
+              height={130}
+              priority
+              className="object-contain"
+              style={{ maxHeight: '130px', width: 'auto' }}
+            />
           </Link>
 
           {/* Desktop nav — right side */}
@@ -240,10 +239,10 @@ export default function Header() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className="flex items-center px-6 py-3 text-xs font-black tracking-widest transition-all whitespace-nowrap border-b-2 border-transparent hover:border-blue-800"
-                  style={{ color: '#002673' }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#003087'; (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = '#003087' }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#002673'; (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = 'transparent' }}
+                  className="flex items-center px-6 py-3 text-xs font-black tracking-widest transition-all whitespace-nowrap border-b-2 border-transparent hover:border-teal-800"
+                  style={{ color: '#004060' }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#004B6B'; (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = '#004B6B' }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = '#004060'; (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = 'transparent' }}
                 >
                   {item.label}
                 </Link>
@@ -258,7 +257,7 @@ export default function Header() {
               )
             )}
             {user && (
-              <Link href="/dashboard" className="flex items-center px-3 py-3 text-xs font-black tracking-widest ml-2 transition-colors" style={{ color: '#003087' }}>
+              <Link href="/dashboard" className="flex items-center px-3 py-3 text-xs font-black tracking-widest ml-2 transition-colors" style={{ color: '#004B6B' }}>
                 + NEW POST
               </Link>
             )}
@@ -267,7 +266,7 @@ export default function Header() {
           {/* Mobile hamburger */}
           <button
             className="lg:hidden p-2"
-            style={{ color: '#003087' }}
+            style={{ color: '#004B6B' }}
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Toggle menu"
           >
@@ -282,11 +281,11 @@ export default function Header() {
 
       {/* ── Mobile nav ──────────────────────────────── */}
       {mobileOpen && (
-        <nav style={{ backgroundColor: '#001a52' }} className="lg:hidden">
+        <nav style={{ backgroundColor: '#003350' }} className="lg:hidden">
           {navItems.map((item, idx) => (
             <div key={item.label}>
               {item.href && !item.children ? (
-                <Link href={item.href} onClick={() => setMobileOpen(false)} className="block px-5 py-3 text-white text-sm font-bold border-b" style={{ borderColor: '#002673' }}>
+                <Link href={item.href} onClick={() => setMobileOpen(false)} className="block px-5 py-3 text-white text-sm font-bold border-b" style={{ borderColor: '#004060' }}>
                   {item.label}
                 </Link>
               ) : (
@@ -294,7 +293,7 @@ export default function Header() {
                   <button
                     onClick={() => setMobileExpanded(mobileExpanded === idx ? null : idx)}
                     className="w-full flex items-center justify-between px-5 py-3 text-white text-sm font-semibold border-b"
-                    style={{ borderColor: '#002673' }}
+                    style={{ borderColor: '#004060' }}
                   >
                     {item.label}
                     <svg className={`w-4 h-4 transition-transform ${mobileExpanded === idx ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -302,7 +301,7 @@ export default function Header() {
                     </svg>
                   </button>
                   {mobileExpanded === idx && item.children?.map((child) => (
-                    <Link key={child.href} href={child.href} onClick={() => setMobileOpen(false)} className="block px-8 py-2.5 text-sm text-blue-200 hover:text-white border-b transition-colors" style={{ borderColor: '#002673' }}>
+                    <Link key={child.href} href={child.href} onClick={() => setMobileOpen(false)} className="block px-8 py-2.5 text-sm text-teal-200 hover:text-white border-b transition-colors" style={{ borderColor: '#004060' }}>
                       {child.label}
                     </Link>
                   ))}
@@ -310,7 +309,7 @@ export default function Header() {
               )}
             </div>
           ))}
-          <div className="px-5 py-3 flex gap-4 border-b" style={{ borderColor: '#002673' }}>
+          <div className="px-5 py-3 flex gap-4 border-b" style={{ borderColor: '#004060' }}>
             {user ? (
               <>
                 <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="text-white text-sm">Dashboard</Link>
@@ -325,7 +324,7 @@ export default function Header() {
           </div>
           <div className="px-5 py-3 flex gap-4 flex-wrap">
             {socialLinks.map((s) => (
-              <a key={s.label} href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer" className="text-blue-300 hover:text-white transition-colors text-xs">
+              <a key={s.label} href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer" className="text-teal-300 hover:text-white transition-colors text-xs">
                 {s.label}
               </a>
             ))}

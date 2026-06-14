@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = { title: 'Policy Platform | President | MYC' }
@@ -6,16 +6,16 @@ export const metadata: Metadata = { title: 'Policy Platform | President | MYC' }
 export default function PolicyPlatformPage() {
   return (
     <>
-      <div style={{ backgroundColor: '#003087' }} className="py-10">
+      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-blue-200 text-xs font-bold tracking-widest uppercase mb-2">Office of the President</p>
+          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Office of the President</p>
           <h1 className="text-white text-3xl font-black">Policy Platform</h1>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 py-10">
         <div className="flex items-center gap-2 text-xs text-gray-500 mb-8">
-          <Link href="/" className="hover:text-blue-700">Home</Link><span>/</span>
-          <Link href="/president" className="hover:text-blue-700">The President</Link><span>/</span>
+          <Link href="/" className="hover:text-teal-700">Home</Link><span>/</span>
+          <Link href="/president" className="hover:text-teal-700">The President</Link><span>/</span>
           <span className="text-gray-700">Policy Platform</span>
         </div>
         <div className="max-w-3xl">
@@ -40,7 +40,7 @@ export default function PolicyPlatformPage() {
             ))}
           </div>
           <div className="mt-8">
-            <Link href="/president" className="text-blue-700 hover:underline text-sm font-semibold">← Back to The President</Link>
+            <Link href="/president" className="text-teal-700 hover:underline text-sm font-semibold">← Back to The President</Link>
           </div>
         </div>
       </div>

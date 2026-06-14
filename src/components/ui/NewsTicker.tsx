@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
@@ -32,9 +32,9 @@ export default function NewsTicker() {
   const doubled = [...headlines, ...headlines]
 
   return (
-    <div style={{ backgroundColor: '#001a52' }} className="flex items-stretch overflow-hidden">
+    <div style={{ backgroundColor: '#003350' }} className="flex items-stretch overflow-hidden">
       <div
-        style={{ backgroundColor: '#003087' }}
+        style={{ backgroundColor: '#004B6B' }}
         className="flex-shrink-0 px-4 py-2 text-white text-xs font-bold uppercase tracking-widest flex items-center"
       >
         Latest
@@ -45,7 +45,7 @@ export default function NewsTicker() {
             <Link
               key={i}
               href="/posts"
-              className="text-white text-xs px-2 hover:text-blue-300 transition-colors"
+              className="text-white text-xs px-2 hover:text-teal-300 transition-colors"
             >
               {h}
             </Link>

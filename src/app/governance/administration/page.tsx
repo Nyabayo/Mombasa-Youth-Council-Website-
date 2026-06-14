@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = { title: 'Administration | Governance | MYC' }
@@ -6,17 +6,17 @@ export const metadata: Metadata = { title: 'Administration | Governance | MYC' }
 export default function AdministrationPage() {
   return (
     <>
-      <div style={{ backgroundColor: '#003087' }} className="py-10">
+      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-blue-200 text-xs font-bold tracking-widest uppercase mb-2">Governance</p>
+          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Governance</p>
           <h1 className="text-white text-3xl font-black">The Administration</h1>
-          <p className="text-blue-200 text-sm">Executive Arm of the Mombasa Youth Council</p>
+          <p className="text-teal-200 text-sm">Executive Arm of the Mombasa Youth Council</p>
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 py-10">
         <div className="flex items-center gap-2 text-xs text-gray-500 mb-8">
-          <Link href="/" className="hover:text-blue-700">Home</Link><span>/</span>
-          <Link href="/governance" className="hover:text-blue-700">Governance</Link><span>/</span>
+          <Link href="/" className="hover:text-teal-700">Home</Link><span>/</span>
+          <Link href="/governance" className="hover:text-teal-700">Governance</Link><span>/</span>
           <span className="text-gray-700">Administration</span>
         </div>
         <div className="max-w-4xl">
@@ -34,12 +34,12 @@ export default function AdministrationPage() {
               { title: 'Executive Committee', name: 'Committee Members', href: '#', initials: 'EC' },
             ].map((m) => (
               <Link key={m.title} href={m.href} className="group block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                <div style={{ backgroundColor: '#003087' }} className="p-5 flex items-center gap-4">
+                <div style={{ backgroundColor: '#004B6B' }} className="p-5 flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center" style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}>
                     <span className="text-white font-black text-sm">{m.initials}</span>
                   </div>
                   <div className="text-white">
-                    <p className="text-xs text-blue-200 uppercase tracking-wide">{m.title}</p>
+                    <p className="text-xs text-teal-200 uppercase tracking-wide">{m.title}</p>
                     <p className="font-bold text-sm">{m.name}</p>
                   </div>
                 </div>
@@ -47,7 +47,7 @@ export default function AdministrationPage() {
             ))}
           </div>
           <div className="mt-8">
-            <Link href="/governance" className="text-blue-700 hover:underline text-sm font-semibold">← Back to Governance</Link>
+            <Link href="/governance" className="text-teal-700 hover:underline text-sm font-semibold">← Back to Governance</Link>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -9,16 +9,16 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <div style={{ backgroundColor: '#003087' }} className="py-10">
+      <div style={{ backgroundColor: '#004B6B' }} className="py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <p className="text-blue-200 text-xs font-bold tracking-widest uppercase mb-2">Who We Are</p>
+          <p className="text-teal-200 text-xs font-bold tracking-widest uppercase mb-2">Who We Are</p>
           <h1 className="text-white text-3xl sm:text-4xl font-black mb-1">About MYC</h1>
-          <p className="text-blue-200 text-sm">A structured space where young people lead</p>
+          <p className="text-teal-200 text-sm">A structured space where young people lead</p>
         </div>
       </div>
       <div style={{ backgroundColor: '#f5f5f5' }} className="border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-2 flex items-center gap-2 text-xs text-gray-500">
-          <Link href="/" className="hover:text-blue-700">Home</Link>
+          <Link href="/" className="hover:text-teal-700">Home</Link>
           <span>/</span>
           <span className="text-gray-700 font-medium">About MYC</span>
         </div>
@@ -54,7 +54,7 @@ export default function AboutPage() {
           <div className="flex-1 space-y-6">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div style={{ backgroundColor: '#003087' }} className="w-1 h-7" />
+                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7" />
                 <h2 className="text-2xl font-black text-gray-900">Our Story</h2>
               </div>
               <div className="space-y-4 text-gray-700 leading-relaxed">
@@ -90,7 +90,7 @@ export default function AboutPage() {
 
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div style={{ backgroundColor: '#003087' }} className="w-1 h-7" />
+                <div style={{ backgroundColor: '#004B6B' }} className="w-1 h-7" />
                 <h2 className="text-2xl font-black text-gray-900">Our Vision</h2>
               </div>
               <p className="text-gray-700 leading-relaxed">
@@ -102,7 +102,7 @@ export default function AboutPage() {
           </div>
 
           <div className="lg:w-80">
-            <div style={{ backgroundColor: '#001a52' }} className="rounded-xl p-8 text-white mb-6">
+            <div style={{ backgroundColor: '#003350' }} className="rounded-xl p-8 text-white mb-6">
               <h3 className="text-white font-black text-lg mb-4">Quick Facts</h3>
               <ul className="space-y-3 text-sm">
                 {[
@@ -112,7 +112,7 @@ export default function AboutPage() {
                   ['Status', 'Non-partisan, Independent'],
                   ['Structure', 'Administration + Youth Assembly'],
                 ].map(([k, v]) => (
-                  <li key={k} className="flex justify-between border-b border-blue-800 pb-2">
+                  <li key={k} className="flex justify-between border-b border-teal-800 pb-2">
                     <span className="opacity-70">{k}</span>
                     <span className="font-semibold">{v}</span>
                   </li>
@@ -127,12 +127,12 @@ export default function AboutPage() {
               </p>
               <Link
                 href="/register"
-                style={{ backgroundColor: '#003087' }}
+                style={{ backgroundColor: '#004B6B' }}
                 className="block text-center text-white font-semibold py-3 rounded hover:opacity-90 transition-opacity"
               >
                 Join MYC Today
               </Link>
-              <Link href="/contact" className="block text-center text-blue-700 text-sm mt-3 hover:underline">
+              <Link href="/contact" className="block text-center text-teal-700 text-sm mt-3 hover:underline">
                 Contact Us
               </Link>
             </div>
