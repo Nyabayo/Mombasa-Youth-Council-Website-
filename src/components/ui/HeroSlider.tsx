@@ -13,6 +13,7 @@ interface SlidePost {
 interface Slide {
   bg: string
   post: SlidePost | null
+  position?: string
 }
 
 interface Props {
@@ -83,14 +84,14 @@ export default function HeroSlider({ slides }: Props) {
   return (
     <section className="relative overflow-hidden" style={{ minHeight: '100vh', marginTop: '-100px' }}>
 
-      {/* Background images — crossfade, positioned top so heads are always visible */}
+      {/* Background images — crossfade */}
       {slides.map((s, i) => (
         <div
           key={s.bg}
           className="absolute inset-0 bg-cover bg-no-repeat"
           style={{
             backgroundImage: `url('${s.bg}')`,
-            backgroundPosition: 'center 20%',
+            backgroundPosition: s.position ?? 'center 20%',
             opacity: i === current ? 1 : 0,
             transition: 'opacity 1.2s ease-in-out',
             zIndex: 0,
@@ -98,11 +99,11 @@ export default function HeroSlider({ slides }: Props) {
         />
       ))}
 
-      {/* Teal-gold gradient overlay */}
+      {/* Minimal dark gradient — only behind text, image stays vivid */}
       <div
         className="absolute inset-0"
         style={{
-          background: 'linear-gradient(135deg, rgba(0,75,107,0.91) 0%, rgba(0,168,200,0.62) 50%, rgba(0,43,61,0.94) 100%)',
+          background: 'linear-gradient(to right, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.30) 50%, rgba(0,0,0,0.05) 100%)',
           zIndex: 1,
         }}
       />

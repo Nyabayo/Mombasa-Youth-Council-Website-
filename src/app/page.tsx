@@ -4,7 +4,11 @@ import NewsTicker from '@/components/ui/NewsTicker'
 import NewsCard from '@/components/ui/NewsCard'
 import { store } from '@/lib/store'
 
-const heroImages = ['/hero1.jpg', '/hero2.jpg', '/hero3.jpeg']
+const heroImages = [
+  { bg: '/hero1.jpg',   position: 'center 15%' },
+  { bg: '/hero2.jpg',   position: 'center 10%' },
+  { bg: '/hero3.jpeg',  position: 'center 30%' },
+]
 
 export default function HomePage() {
   const allPosts = store.getPublishedPosts()
@@ -12,8 +16,9 @@ export default function HomePage() {
   const featured = latest3
   const sidebar = allPosts.slice(3, 8)
 
-  const heroSlides = heroImages.map((bg, i) => ({
+  const heroSlides = heroImages.map(({ bg, position }, i) => ({
     bg,
+    position,
     post: latest3[i]
       ? {
           title: latest3[i].title,
