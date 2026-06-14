@@ -79,18 +79,18 @@ export default function HeroSlider({ slides }: Props) {
     return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize) }
   }, [])
 
-  const slide = slides[current]
 
   return (
     <section className="relative overflow-hidden" style={{ minHeight: '100vh', marginTop: '-100px' }}>
 
-      {/* Background images — crossfade */}
+      {/* Background images — crossfade, positioned top so heads are always visible */}
       {slides.map((s, i) => (
         <div
           key={s.bg}
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 bg-cover bg-no-repeat"
           style={{
             backgroundImage: `url('${s.bg}')`,
+            backgroundPosition: 'center 20%',
             opacity: i === current ? 1 : 0,
             transition: 'opacity 1.2s ease-in-out',
             zIndex: 0,
@@ -123,75 +123,35 @@ export default function HeroSlider({ slides }: Props) {
         >
           <div className="max-w-3xl">
 
-            {/* Category badge */}
-            <div
-              className="inline-flex items-center gap-2 mb-5 hero-fade-1"
-              style={{
-                opacity: transitioning ? 0 : 1,
-                transform: transitioning ? 'translateY(12px)' : 'translateY(0)',
-                transition: 'opacity 0.6s ease, transform 0.6s ease',
-              }}
-            >
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 mb-5 hero-fade-1">
               <span
                 className="px-3 py-1 text-xs font-black tracking-widest uppercase rounded-full"
                 style={{ backgroundColor: '#F5A300', color: '#002B3D' }}
               >
-                {slide.post?.category ?? 'Mombasa Youth Council'} · 2026
+                Mombasa Youth Rising · 2026
               </span>
-              {/* Slide counter */}
               <span className="text-white/50 text-xs font-semibold">
                 {String(current + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
               </span>
             </div>
 
-            {/* Title */}
-            <h1
-              className="text-white font-black leading-tight mb-4"
-              style={{
-                fontSize: 'clamp(1.6rem, 4.5vw, 3.5rem)',
-                opacity: transitioning ? 0 : 1,
-                transform: transitioning ? 'translateY(16px)' : 'translateY(0)',
-                transition: 'opacity 0.65s ease 0.05s, transform 0.65s ease 0.05s',
-              }}
-            >
-              {slide.post?.title ?? (
-                <>Inside the Movement <br className="hidden sm:block" />
-                  <span style={{ color: '#F5A300' }}>Powering Innovation,</span><br className="hidden sm:block" />
-                  Governance &amp; Change
-                </>
-              )}
+            {/* Static headline — never changes */}
+            <h1 className="text-white font-black leading-tight mb-4 hero-fade-2" style={{ fontSize: 'clamp(1.6rem, 4.5vw, 3.5rem)' }}>
+              Inside the Movement <br className="hidden sm:block" />
+              <span style={{ color: '#F5A300' }}>Powering Innovation,</span><br className="hidden sm:block" />
+              Governance &amp; Change
             </h1>
 
-            {/* Excerpt */}
-            <p
-              className="text-white/85 text-sm sm:text-base lg:text-lg leading-relaxed mb-7 max-w-2xl"
-              style={{
-                opacity: transitioning ? 0 : 1,
-                transform: transitioning ? 'translateY(12px)' : 'translateY(0)',
-                transition: 'opacity 0.65s ease 0.1s, transform 0.65s ease 0.1s',
-              }}
-            >
-              {slide.post?.excerpt ?? 'The Mombasa Youth Council is redefining youth engagement — turning young voices into leaders of development, not just participants.'}
+            {/* Static body copy */}
+            <p className="text-white/85 text-sm sm:text-base lg:text-lg leading-relaxed mb-7 max-w-2xl hero-fade-3">
+              The Mombasa Youth Council (MYC) is redefining youth engagement across the county —
+              turning young voices into <strong className="text-white">leaders of development</strong>,
+              not just participants.
             </p>
 
-            {/* CTAs */}
-            <div
-              className="flex flex-wrap gap-3 sm:gap-4 mb-10 sm:mb-14"
-              style={{
-                opacity: transitioning ? 0 : 1,
-                transform: transitioning ? 'translateY(10px)' : 'translateY(0)',
-                transition: 'opacity 0.65s ease 0.15s, transform 0.65s ease 0.15s',
-              }}
-            >
-              {slide.post ? (
-                <Link
-                  href={`/posts/${slide.post.slug}`}
-                  className="inline-block px-5 sm:px-7 py-3 font-bold text-sm rounded-lg hover:opacity-90 transition-opacity"
-                  style={{ backgroundColor: '#F5A300', color: '#002B3D' }}
-                >
-                  Read Full Story →
-                </Link>
-              ) : null}
+            {/* Static CTAs */}
+            <div className="flex flex-wrap gap-3 sm:gap-4 mb-10 sm:mb-14 hero-fade-4">
               <Link
                 href="/register"
                 className="inline-block px-5 sm:px-7 py-3 font-bold text-sm rounded-lg hover:opacity-90 transition-opacity"
@@ -204,7 +164,7 @@ export default function HeroSlider({ slides }: Props) {
                 className="inline-block px-5 sm:px-7 py-3 border-2 text-white font-semibold text-sm rounded-lg hover:bg-white/10 transition-all"
                 style={{ borderColor: 'rgba(255,255,255,0.55)' }}
               >
-                About MYC
+                Read the Story
               </Link>
             </div>
 
