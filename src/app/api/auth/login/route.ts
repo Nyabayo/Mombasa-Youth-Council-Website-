@@ -36,6 +36,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid email or password.' }, { status: 401 })
     }
 
+    if (user.status === 'pending') {
+      return NextResponse.json({
+        error: 'Your account is pending approval. Please complete the KES 200 payment to Paybill 400200, Account 01103084324001, then wait for administrator approval.',
+        status: 'pending',
+      }, { status: 403 })
+    }
+
+    if (user.status === 'rejected') {
+      return NextResponse.json({
+        error: 'Your account application has been rejected. Please contact the MYC administrator for assistance.',
+        status: 'rejected',
+      }, { status: 403 })
+    }
+
     await createSession({ userId: user.id, role: user.role, name: user.name, email: user.email })
 
     return NextResponse.json({

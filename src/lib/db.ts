@@ -127,12 +127,35 @@ export async function addUser(user: User): Promise<User> {
       email: user.email,
       password: user.password,
       role: user.role,
+      status: user.status,
       created_at: user.createdAt,
     })
     .select()
     .single()
   if (error) throw new Error(error.message)
   return rowToUser(data)
+}
+
+export async function getAllUsers(): Promise<Omit<User, 'password'>[]> {
+  const { data, error } = await adminDb
+    .from('users')
+    .select('id, name, email, role, status, created_at')
+    .order('created_at', { ascending: false })
+  if (error) { console.error('getAllUsers:', error.message); return [] }
+  return (data ?? []).map((r) => ({
+    id: r.id, name: r.name, email: r.email,
+    role: r.role, status: r.status, createdAt: r.created_at,
+    password: '',
+  }))
+}
+
+export async function updateUser(
+  id: string,
+  updates: { role?: string; status?: string },
+): Promise<boolean> {
+  const { error } = await adminDb.from('users').update(updates).eq('id', id)
+  if (error) { console.error('updateUser:', error.message); return false }
+  return true
 }
 
 // ─────────────────────────────────────────────────────────────────
@@ -226,8 +249,9 @@ function rowToUser(r: any): User {
     id:        r.id,
     name:      r.name,
     email:     r.email,
-    password:  r.password,
+    password:  r.password ?? '',
     role:      r.role,
+    status:    r.status ?? 'approved',
     createdAt: r.created_at,
   }
 }

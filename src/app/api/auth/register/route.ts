@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { v4 as uuidv4 } from 'uuid'
 import * as db from '@/lib/db'
-import { createSession } from '@/lib/session'
 import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function POST(request: NextRequest) {
@@ -47,19 +46,18 @@ export async function POST(request: NextRequest) {
     }
 
     const hashed = await bcrypt.hash(password, 12)
-    const user = await db.addUser({
+    await db.addUser({
       id: uuidv4(),
       name: name.trim(),
       email: email.toLowerCase().trim(),
       password: hashed,
       role: 'user',
+      status: 'pending',
       createdAt: new Date().toISOString(),
     })
 
-    await createSession({ userId: user.id, role: user.role, name: user.name, email: user.email })
-
     return NextResponse.json(
-      { message: 'Account created successfully.', user: { id: user.id, name: user.name, email: user.email, role: user.role } },
+      { message: 'Application submitted successfully.', status: 'pending' },
       { status: 201 },
     )
   } catch {
