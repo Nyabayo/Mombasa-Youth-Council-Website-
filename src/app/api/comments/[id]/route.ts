@@ -2,13 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import * as db from '@/lib/db'
 import { getSession } from '@/lib/session'
 
-export async function DELETE(_req: NextRequest, ctx: RouteContext<'/api/comments/[id]'>) {
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   const session = await getSession()
   if (!session?.userId) {
     return NextResponse.json({ error: 'Authentication required.' }, { status: 401 })
   }
 
-  const { id } = await ctx.params
+  const { id } = await params
   const comment = await db.findCommentById(id)
   if (!comment) {
     return NextResponse.json({ error: 'Comment not found.' }, { status: 404 })

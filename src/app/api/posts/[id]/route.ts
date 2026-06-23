@@ -3,8 +3,11 @@ import * as db from '@/lib/db'
 import { getSession } from '@/lib/session'
 import { sanitizePostContent, isValidImageUrl, ALLOWED_CATEGORIES } from '@/lib/sanitize'
 
-export async function GET(_req: NextRequest, ctx: RouteContext<'/api/posts/[id]'>) {
-  const { id } = await ctx.params
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params
   if (!id || id.length > 200) {
     return NextResponse.json({ error: 'Invalid id.' }, { status: 400 })
   }
@@ -16,13 +19,16 @@ export async function GET(_req: NextRequest, ctx: RouteContext<'/api/posts/[id]'
   return NextResponse.json({ post, comments })
 }
 
-export async function PUT(request: NextRequest, ctx: RouteContext<'/api/posts/[id]'>) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   const session = await getSession()
   if (!session?.userId) {
     return NextResponse.json({ error: 'Authentication required.' }, { status: 401 })
   }
 
-  const { id } = await ctx.params
+  const { id } = await params
   const post = await db.findPostById(id)
   if (!post) return NextResponse.json({ error: 'Post not found.' }, { status: 404 })
 
@@ -47,11 +53,11 @@ export async function PUT(request: NextRequest, ctx: RouteContext<'/api/posts/[i
     }
 
     const updated = await db.updatePost(id, {
-      title:    body.title    !== undefined ? body.title.trim()              : post.title,
-      excerpt:  body.excerpt  !== undefined ? body.excerpt.trim()            : post.excerpt,
+      title:    body.title    !== undefined ? body.title.trim()                 : post.title,
+      excerpt:  body.excerpt  !== undefined ? body.excerpt.trim()               : post.excerpt,
       content:  body.content  !== undefined ? sanitizePostContent(body.content) : post.content,
-      category: body.category !== undefined ? body.category                 : post.category,
-      image:    body.image    !== undefined ? body.image                    : post.image,
+      category: body.category !== undefined ? body.category                     : post.category,
+      image:    body.image    !== undefined ? body.image                        : post.image,
     })
     return NextResponse.json({ post: updated })
   } catch {
@@ -59,13 +65,16 @@ export async function PUT(request: NextRequest, ctx: RouteContext<'/api/posts/[i
   }
 }
 
-export async function DELETE(_req: NextRequest, ctx: RouteContext<'/api/posts/[id]'>) {
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   const session = await getSession()
   if (!session?.userId) {
     return NextResponse.json({ error: 'Authentication required.' }, { status: 401 })
   }
 
-  const { id } = await ctx.params
+  const { id } = await params
   const post = await db.findPostById(id)
   if (!post) return NextResponse.json({ error: 'Post not found.' }, { status: 404 })
 

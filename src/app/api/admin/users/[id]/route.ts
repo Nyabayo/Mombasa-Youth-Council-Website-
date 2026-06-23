@@ -2,12 +2,15 @@ import { NextRequest, NextResponse } from 'next/server'
 import * as db from '@/lib/db'
 import { getSession } from '@/lib/session'
 
-export async function PATCH(request: NextRequest, ctx: RouteContext<'/api/admin/users/[id]'>) {
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   const session = await getSession()
   if (!session?.userId) return NextResponse.json({ error: 'Authentication required.' }, { status: 401 })
   if (session.role !== 'admin') return NextResponse.json({ error: 'Forbidden.' }, { status: 403 })
 
-  const { id } = await ctx.params
+  const { id } = await params
 
   try {
     const body = await request.json()
