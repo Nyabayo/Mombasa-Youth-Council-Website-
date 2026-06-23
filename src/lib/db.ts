@@ -101,7 +101,7 @@ export async function slugExists(slug: string): Promise<boolean> {
 export async function findUserByEmail(email: string): Promise<User | null> {
   const { data, error } = await adminDb
     .from('users')
-    .select('*')
+    .select('id, name, email, password, role, created_at')
     .eq('email', email)
     .single()
   if (error || !data) return null
@@ -111,11 +111,11 @@ export async function findUserByEmail(email: string): Promise<User | null> {
 export async function findUserById(id: string): Promise<User | null> {
   const { data, error } = await adminDb
     .from('users')
-    .select('*')
+    .select('id, name, email, role, created_at')
     .eq('id', id)
     .single()
   if (error || !data) return null
-  return rowToUser(data)
+  return { ...rowToUser(data), password: '' }
 }
 
 export async function addUser(user: User): Promise<User> {

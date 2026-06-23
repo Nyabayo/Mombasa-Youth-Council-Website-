@@ -162,7 +162,12 @@ export default function RichTextEditor({ value, onChange, placeholder }: RichTex
       FontFamily,
       Highlight.configure({ multicolor: true }),
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
-      Link.configure({ openOnClick: false, HTMLAttributes: { class: 'text-teal-700 underline' } }),
+      Link.configure({
+        openOnClick: false,
+        HTMLAttributes: { class: 'text-teal-700 underline', rel: 'noopener noreferrer' },
+        protocols: ['http', 'https', 'mailto'],
+        validate: (href) => /^(https?:\/\/|mailto:)/.test(href),
+      }),
       Image.configure({ HTMLAttributes: { class: 'max-w-full rounded my-2' } }),
       Subscript,
       Superscript,

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
 import * as db from '@/lib/db'
 import { getSession } from '@/lib/session'
+import { sanitizePostContent, isValidImageUrl, ALLOWED_CATEGORIES } from '@/lib/sanitize'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function GET() {
   const posts = await db.getPublishedPosts()
@@ -22,6 +24,18 @@ export async function POST(request: NextRequest) {
   if (!session?.userId) {
     return NextResponse.json({ error: 'Authentication required.' }, { status: 401 })
   }
+  if (session.role !== 'admin') {
+    return NextResponse.json({ error: 'Forbidden.' }, { status: 403 })
+  }
+
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
+  const rl = checkRateLimit(`post:${ip}`, 20, 60_000)
+  if (!rl.allowed) {
+    return NextResponse.json({ error: 'Too many requests.' }, {
+      status: 429,
+      headers: { 'Retry-After': String(rl.retryAfter) },
+    })
+  }
 
   try {
     const body = await request.json()
@@ -30,6 +44,21 @@ export async function POST(request: NextRequest) {
     if (!title || !excerpt || !content || !category) {
       return NextResponse.json({ error: 'title, excerpt, content, and category are required.' }, { status: 400 })
     }
+
+    if (typeof title !== 'string' || title.trim().length > 200) {
+      return NextResponse.json({ error: 'Title must be under 200 characters.' }, { status: 400 })
+    }
+    if (typeof excerpt !== 'string' || excerpt.trim().length > 500) {
+      return NextResponse.json({ error: 'Excerpt must be under 500 characters.' }, { status: 400 })
+    }
+    if (!ALLOWED_CATEGORIES.includes(category)) {
+      return NextResponse.json({ error: 'Invalid category.' }, { status: 400 })
+    }
+    if (image && !isValidImageUrl(image)) {
+      return NextResponse.json({ error: 'Invalid image URL.' }, { status: 400 })
+    }
+
+    const safeContent = sanitizePostContent(content)
 
     let slug = slugify(title)
     let counter = 1
@@ -42,7 +71,7 @@ export async function POST(request: NextRequest) {
       title: title.trim(),
       slug,
       excerpt: excerpt.trim(),
-      content: content.trim(),
+      content: safeContent,
       category: category.trim(),
       image: image ?? undefined,
       authorId: session.userId,

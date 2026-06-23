@@ -3,16 +3,18 @@ import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
 import type { SessionPayload } from './types'
 
+if (!process.env.SESSION_SECRET) {
+  throw new Error('SESSION_SECRET environment variable is required')
+}
+
 const SESSION_COOKIE = 'myc_session'
-const secret = new TextEncoder().encode(
-  process.env.SESSION_SECRET ?? 'myc-super-secret-key-change-in-production-2026',
-)
+const secret = new TextEncoder().encode(process.env.SESSION_SECRET)
 
 export async function encrypt(payload: SessionPayload) {
   return new SignJWT({ ...payload })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
-    .setExpirationTime('7d')
+    .setExpirationTime('24h')
     .sign(secret)
 }
 
@@ -27,13 +29,13 @@ export async function decrypt(token: string | undefined): Promise<SessionPayload
 }
 
 export async function createSession(payload: Omit<SessionPayload, 'expiresAt'>) {
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000)
   const token = await encrypt({ ...payload, expiresAt })
   const jar = await cookies()
   jar.set(SESSION_COOKIE, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    sameSite: 'strict',
     expires: expiresAt,
     path: '/',
   })
