@@ -47,7 +47,6 @@ const navItems: NavItem[] = [
     children: [
       { label: 'What We Do', href: '/programmes' },
       { label: 'Innovation Festival 2026', href: '/programmes/innovation-festival' },
-      { label: 'Get Tickets', href: '/tickets' },
       { label: '#SheriaYaVijana', href: '/programmes/sheria-ya-vijana' },
       { label: 'Leadership Training', href: '/programmes/leadership-training' },
     ],
@@ -301,6 +300,13 @@ export default function Header() {
                 />
               )
             )}
+            <Link
+              href="/tickets"
+              className="flex items-center ml-3 px-4 py-1.5 text-xs font-black tracking-widest rounded whitespace-nowrap transition-opacity hover:opacity-90"
+              style={{ backgroundColor: 'var(--gold)', color: 'var(--primary-dark)' }}
+            >
+              🎟 GET TICKETS
+            </Link>
             {user && (
               <Link href="/dashboard" className="flex items-center px-3 py-3 text-xs font-black tracking-widest ml-2 transition-colors" style={{ color: 'var(--gold)' }}>
                 + NEW POST
@@ -330,6 +336,15 @@ export default function Header() {
           className="lg:hidden overflow-y-auto"
           style={{ backgroundColor: 'var(--primary-dark)', maxHeight: 'calc(100vh - 100px)' }}
         >
+          <Link
+            href="/tickets"
+            onClick={() => setMobileOpen(false)}
+            className="flex items-center justify-center gap-2 px-5 py-4 text-sm font-black border-b"
+            style={{ backgroundColor: 'var(--gold)', color: 'var(--primary-dark)', borderColor: 'var(--gold)' }}
+          >
+            🎟 GET TICKETS — Innovation Festival 2026
+          </Link>
+
           {navItems.map((item, idx) => (
             <div key={item.label}>
               {item.href && !item.children ? (
