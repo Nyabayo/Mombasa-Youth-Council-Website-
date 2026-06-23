@@ -47,6 +47,7 @@ const navItems: NavItem[] = [
     children: [
       { label: 'What We Do', href: '/programmes' },
       { label: 'Innovation Festival 2026', href: '/programmes/innovation-festival' },
+      { label: 'Get Tickets', href: '/tickets' },
       { label: '#SheriaYaVijana', href: '/programmes/sheria-ya-vijana' },
       { label: 'Leadership Training', href: '/programmes/leadership-training' },
     ],
