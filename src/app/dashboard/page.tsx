@@ -21,6 +21,7 @@ interface MemberRecord {
   email: string
   role: string
   status: 'pending' | 'approved' | 'rejected'
+  mpesaRef?: string
   createdAt: string
 }
 
@@ -659,6 +660,7 @@ export default function DashboardPage() {
                         <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Member</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Role</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Status</th>
+                        <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase hidden lg:table-cell">M-Pesa Ref</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase hidden md:table-cell">Joined</th>
                         <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Actions</th>
                       </tr>
@@ -681,6 +683,12 @@ export default function DashboardPage() {
                           </td>
                           <td className="px-4 py-4">
                             <StatusBadge status={m.status} />
+                          </td>
+                          <td className="px-4 py-4 hidden lg:table-cell">
+                            {m.mpesaRef
+                              ? <span className="font-mono text-xs font-bold text-gray-700 bg-gray-100 px-2 py-1 rounded">{m.mpesaRef}</span>
+                              : <span className="text-xs text-gray-300">—</span>
+                            }
                           </td>
                           <td className="px-4 py-4 text-gray-400 text-xs hidden md:table-cell">
                             {new Date(m.createdAt).toLocaleDateString('en-KE', { month: 'short', day: 'numeric', year: 'numeric' })}

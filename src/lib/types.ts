@@ -5,6 +5,7 @@ export interface User {
   password: string
   role: 'admin' | 'user'
   status: 'pending' | 'approved' | 'rejected'
+  mpesaRef?: string
   createdAt: string
 }
 

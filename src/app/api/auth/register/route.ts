@@ -16,10 +16,10 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const { name, email, password } = body
+    const { name, email, password, mpesaRef } = body
 
-    if (!name || !email || !password) {
-      return NextResponse.json({ error: 'All fields are required.' }, { status: 400 })
+    if (!name || !email || !password || !mpesaRef) {
+      return NextResponse.json({ error: 'All fields including M-Pesa transaction code are required.' }, { status: 400 })
     }
     if (typeof name !== 'string' || name.trim().length < 2 || name.trim().length > 100) {
       return NextResponse.json({ error: 'Name must be between 2 and 100 characters.' }, { status: 400 })
@@ -39,6 +39,9 @@ export async function POST(request: NextRequest) {
         { status: 400 },
       )
     }
+    if (typeof mpesaRef !== 'string' || mpesaRef.trim().length < 6 || mpesaRef.trim().length > 30) {
+      return NextResponse.json({ error: 'Please enter a valid M-Pesa transaction code.' }, { status: 400 })
+    }
 
     const existing = await db.findUserByEmail(email.toLowerCase().trim())
     if (existing) {
@@ -53,6 +56,7 @@ export async function POST(request: NextRequest) {
       password: hashed,
       role: 'user',
       status: 'pending',
+      mpesaRef: mpesaRef.trim().toUpperCase(),
       createdAt: new Date().toISOString(),
     })
 

@@ -27,13 +27,14 @@ CREATE TABLE IF NOT EXISTS public.users (
   password   TEXT NOT NULL,
   role       TEXT NOT NULL DEFAULT 'user',
   status     TEXT NOT NULL DEFAULT 'approved',
+  mpesa_ref  TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- Migration: add status column to existing databases
--- Run this manually in Supabase SQL Editor if the table already exists:
+-- !! IMPORTANT: If the users table already exists, run these in Supabase SQL Editor:
 -- ALTER TABLE public.users ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'approved';
--- (existing users default to 'approved'; new registrations are set to 'pending' by the API)
+-- ALTER TABLE public.users ADD COLUMN IF NOT EXISTS mpesa_ref TEXT;
+-- (existing users default to 'approved' so they are not locked out)
 
 -- Comments
 CREATE TABLE IF NOT EXISTS public.comments (

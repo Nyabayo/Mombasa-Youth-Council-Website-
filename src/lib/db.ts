@@ -101,7 +101,7 @@ export async function slugExists(slug: string): Promise<boolean> {
 export async function findUserByEmail(email: string): Promise<User | null> {
   const { data, error } = await adminDb
     .from('users')
-    .select('id, name, email, password, role, created_at')
+    .select('id, name, email, password, role, status, mpesa_ref, created_at')
     .eq('email', email)
     .single()
   if (error || !data) return null
@@ -128,6 +128,7 @@ export async function addUser(user: User): Promise<User> {
       password: user.password,
       role: user.role,
       status: user.status,
+      mpesa_ref: user.mpesaRef ?? null,
       created_at: user.createdAt,
     })
     .select()
@@ -139,12 +140,14 @@ export async function addUser(user: User): Promise<User> {
 export async function getAllUsers(): Promise<Omit<User, 'password'>[]> {
   const { data, error } = await adminDb
     .from('users')
-    .select('id, name, email, role, status, created_at')
+    .select('id, name, email, role, status, mpesa_ref, created_at')
     .order('created_at', { ascending: false })
   if (error) { console.error('getAllUsers:', error.message); return [] }
   return (data ?? []).map((r) => ({
     id: r.id, name: r.name, email: r.email,
-    role: r.role, status: r.status, createdAt: r.created_at,
+    role: r.role, status: r.status,
+    mpesaRef: r.mpesa_ref ?? undefined,
+    createdAt: r.created_at,
     password: '',
   }))
 }
@@ -252,6 +255,7 @@ function rowToUser(r: any): User {
     password:  r.password ?? '',
     role:      r.role,
     status:    r.status ?? 'approved',
+    mpesaRef:  r.mpesa_ref ?? undefined,
     createdAt: r.created_at,
   }
 }
