@@ -217,7 +217,7 @@ export default function HeroSlider({ slides }: Props) {
             <div className="flex flex-wrap gap-x-6 gap-y-3 hero-fade-4">
               {[
                 { value: '18–34', label: 'Age range' },
-                { value: '5 000+', label: 'Youth engaged' },
+                { value: '20 000+', label: 'Youth Engagement' },
                 { value: '2026', label: 'Innovation Festival' },
               ].map((st) => (
                 <div key={st.label} className="flex items-center gap-2">
