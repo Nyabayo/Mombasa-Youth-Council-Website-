@@ -62,7 +62,7 @@ export default function SpeakerPage() {
               </div>
               <div className="space-y-4 text-gray-700 leading-relaxed">
                 <p>
-                  Ali Kubo serves as the Speaker of the Mombasa Youth Council&apos;s Youth Assembly — the
+                  Ali Kubo serves as the Speaker of the Mombasa Youth Council&apos;s Youth Assembly,
                   legislative and deliberative arm of the Council. As Speaker, he is the presiding officer
                   of the Assembly, responsible for maintaining order, impartiality, and the integrity of
                   the Council&apos;s legislative processes.
@@ -115,10 +115,10 @@ export default function SpeakerPage() {
               <div className="p-6 border-l-4" style={{ borderColor: 'var(--primary)', backgroundColor: 'var(--bg-alt)' }}>
                 <p className="text-gray-800 italic leading-relaxed text-lg">
                   "The Youth Assembly is the voice of every young person in Mombasa. My role as Speaker is
-                  to protect that voice — ensuring that our debates are fair, our decisions are just, and
+                  to protect that voice, ensuring that our debates are fair, our decisions are just, and
                   our assembly remains a space where democracy truly lives."
                 </p>
-                <p className="text-sm font-bold text-teal-700 mt-3">— Speaker Ali Kubo, MYC Youth Assembly</p>
+                <p className="text-sm font-bold text-teal-700 mt-3">Speaker Ali Kubo, MYC Youth Assembly</p>
               </div>
             </section>
 

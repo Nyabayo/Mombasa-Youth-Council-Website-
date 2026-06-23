@@ -31,7 +31,7 @@ export default function PresidentBioPage() {
             across all six sub-counties of Mombasa.
           </p>
           <p className="text-gray-700 leading-relaxed">
-            His vision for the Mombasa Youth Council is one of a united and independent youth movement — one that
+            His vision for the Mombasa Youth Council is one of a united and independent youth movement, one that
             champions youth interests through advocacy, capacity building, strategic partnerships, and meaningful
             engagement in governance and development.
           </p>

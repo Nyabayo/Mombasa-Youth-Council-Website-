@@ -27,7 +27,7 @@ export default function ProgrammesPage() {
       <div className="max-w-7xl mx-auto px-4 py-10">
         <p className="text-gray-600 text-lg leading-relaxed mb-12 max-w-3xl">
           MYC brings together young people aged 18 to 34, creating an active platform for engagement in
-          governance, innovation, and community development — designed to empower youth, not to serve political interests.
+          governance, innovation, and community development, designed to empower youth, not to serve political interests.
         </p>
 
         <div className="space-y-10">
@@ -41,7 +41,7 @@ export default function ProgrammesPage() {
               </div>
               <div className="flex-1 p-8">
                 <p className="text-gray-700 leading-relaxed mb-4">
-                  Strategic workplans that turn youth-led ideas — entrepreneurship, creative industries, social impact —
+                  Strategic workplans that turn youth-led ideas in entrepreneurship, creative industries, and social impact
                   into tangible action. Young innovators collaborating at the Mombasa Youth Innovation Festival.
                 </p>
                 <p className="text-gray-700 leading-relaxed mb-5">
@@ -97,7 +97,7 @@ export default function ProgrammesPage() {
                 </p>
                 <p className="text-gray-700 leading-relaxed mb-5">
                   Participants engage in practical community projects that directly benefit residents of Mombasa
-                  County. Applications for training cohorts open periodically — watch this space.
+                  County. Applications for training cohorts open periodically. Watch this space.
                 </p>
                 <Link href="/programmes/leadership-training" style={{ backgroundColor: 'var(--primary)' }} className="inline-block px-5 py-2.5 text-white font-semibold text-sm rounded hover:opacity-90 transition-opacity">
                   Learn More →

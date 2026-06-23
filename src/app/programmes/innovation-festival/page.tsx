@@ -21,7 +21,7 @@ export default function InnovationFestivalPage() {
         </div>
         <div className="max-w-3xl">
           <p className="text-gray-700 leading-relaxed mb-5 text-lg">
-            Strategic workplans that turn youth-led ideas — entrepreneurship, creative industries, social impact —
+            Strategic workplans that turn youth-led ideas in entrepreneurship, creative industries, and social impact
             into tangible action.
           </p>
           <p className="text-gray-700 leading-relaxed mb-5">

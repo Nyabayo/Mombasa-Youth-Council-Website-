@@ -140,7 +140,7 @@ export default async function HomePage() {
               {
                 icon: '💡',
                 title: 'Innovation & Workplans',
-                desc: 'Strategic workplans that turn youth-led ideas — entrepreneurship, creative industries, social impact — into tangible action.',
+                desc: 'Strategic workplans that turn youth-led ideas in entrepreneurship, creative industries, and social impact into tangible action.',
                 link: '/programmes/innovation-festival',
                 tag: 'Innovation Festival 2026',
               },
@@ -183,7 +183,7 @@ export default async function HomePage() {
               </h2>
               <p className="text-gray-300 leading-relaxed mb-4">
                 Through initiatives like <strong className="text-white">#SheriaYaVijana</strong>, MYC is actively engaging young
-                people in policy conversations — ensuring they understand and influence the laws that affect their lives.
+                people in policy conversations, ensuring they understand and influence the laws that affect their lives.
               </p>
               <blockquote className="border-l-4 pl-4 text-gray-300 italic text-sm mb-6" style={{ borderColor: 'var(--gold)' }}>
                 &ldquo;Support from allied leaders has reinforced the council&apos;s legitimacy, pushing back against efforts to sideline youth participation in governance.&rdquo;

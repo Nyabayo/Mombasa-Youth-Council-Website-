@@ -14,7 +14,7 @@ export default function CabinetSecretaryPage() {
         <div className="max-w-7xl mx-auto px-4">
           <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Mombasa Youth Council</p>
           <h1 className="text-white text-3xl sm:text-4xl font-black mb-1">Yusuf Ali</h1>
-          <p className="text-[#00A8C8] text-sm">Cabinet Secretary of Finance &amp; Economic Planning — Mombasa Youth Council (MYC)</p>
+          <p className="text-[#00A8C8] text-sm">Cabinet Secretary of Finance &amp; Economic Planning, Mombasa Youth Council (MYC)</p>
         </div>
       </div>
 
@@ -68,7 +68,7 @@ export default function CabinetSecretaryPage() {
                 </p>
                 <p>
                   This office ensures that MYC&apos;s resources are managed with transparency, accountability, and
-                  efficiency — enabling programmes and initiatives to be delivered effectively for the youth of
+                  efficiency, enabling programmes and initiatives to be delivered effectively for the youth of
                   Mombasa County.
                 </p>
                 <p>
@@ -117,7 +117,7 @@ export default function CabinetSecretaryPage() {
                   is to ensure every shilling entrusted to the Mombasa Youth Council is used to create
                   meaningful change in the lives of young people across our county."
                 </p>
-                <p className="text-sm font-bold text-teal-700 mt-3">— Cabinet Secretary, Finance &amp; Economic Planning, MYC</p>
+                <p className="text-sm font-bold text-teal-700 mt-3">Cabinet Secretary, Finance &amp; Economic Planning, MYC</p>
               </div>
             </section>
 

@@ -181,7 +181,7 @@ export default function HeroSlider({ slides }: Props) {
               }}
             >
               The Mombasa Youth Council is redefining youth engagement across the
-              county — turning young voices into{' '}
+              county, turning young voices into{' '}
               <strong className="text-white">leaders of development</strong>,
               not just participants.
             </p>

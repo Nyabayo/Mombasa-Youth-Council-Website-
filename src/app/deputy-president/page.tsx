@@ -62,7 +62,7 @@ export default function DeputyPresidentPage() {
                 </p>
                 <p>
                   Growing up in Mombasa, Khadija developed a strong sense of civic responsibility and a passion
-                  for uplifting marginalized voices — particularly those of young women and girls who are often
+                  for uplifting marginalized voices, particularly those of young women and girls who are often
                   excluded from leadership and decision-making spaces. Her work in community organizing and
                   youth advocacy brought her to prominence before her election to the Council's second-highest
                   office.
@@ -74,7 +74,7 @@ export default function DeputyPresidentPage() {
                   youth communities.
                 </p>
                 <p>
-                  Deputy President Jilo believes that <strong>true leadership is service</strong> — and that
+                  Deputy President Jilo believes that <strong>true leadership is service</strong>, and that
                   the MYC must be an institution that young people trust, feel represented by, and can turn
                   to for support, advocacy, and opportunities. She is deeply committed to ensuring the
                   Council's work is inclusive, impactful, and driven by the real needs of Mombasa's youth.
@@ -154,15 +154,15 @@ export default function DeputyPresidentPage() {
                 {[
                   {
                     date: 'June 2026',
-                    title: 'Inaugural Address — Deputy President, MYC',
+                    title: 'Inaugural Address, Deputy President, MYC',
                     excerpt:
-                      'I stand here not just as Deputy President, but as a young woman from Mombasa who knows what it means to fight for a seat at the table. We will build a Council that leaves no young person behind — especially those the system has long overlooked.',
+                      'I stand here not just as Deputy President, but as a young woman from Mombasa who knows what it means to fight for a seat at the table. We will build a Council that leaves no young person behind, especially those the system has long overlooked.',
                   },
                   {
                     date: 'May 2026',
                     title: 'Statement on Gender Equality in Youth Leadership',
                     excerpt:
-                      'Meaningful gender equality is not a favour — it is a right. The MYC is committed to creating structures that ensure women and girls in Mombasa have equal access to leadership, resources, and opportunities.',
+                      'Meaningful gender equality is not a favour. It is a right. The MYC is committed to creating structures that ensure women and girls in Mombasa have equal access to leadership, resources, and opportunities.',
                   },
                   {
                     date: 'March 2026',

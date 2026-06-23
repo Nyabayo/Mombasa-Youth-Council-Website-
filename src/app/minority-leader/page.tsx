@@ -14,7 +14,7 @@ export default function MinorityLeaderPage() {
         <div className="max-w-7xl mx-auto px-4">
           <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Mombasa Youth Council</p>
           <h1 className="text-white text-3xl sm:text-4xl font-black mb-1">Minority Leader Kibwana Hamisi Juma</h1>
-          <p className="text-[#00A8C8] text-sm">Minority Leader — Mombasa Youth Council Youth Assembly</p>
+          <p className="text-[#00A8C8] text-sm">Minority Leader, Mombasa Youth Council Youth Assembly</p>
         </div>
       </div>
 
@@ -69,8 +69,8 @@ export default function MinorityLeaderPage() {
                 </p>
                 <p>
                   As Minority Leader, Kibwana provides an essential check on the majority, championing
-                  alternative perspectives and ensuring that the interests of all youth — regardless of
-                  political affiliation — are represented in the Assembly&apos;s deliberations.
+                  alternative perspectives and ensuring that the interests of all youth, regardless of
+                  political affiliation, are represented in the Assembly&apos;s deliberations.
                 </p>
                 <p>
                   Kibwana Hamisi Juma has a strong track record in grassroots advocacy, community
@@ -114,11 +114,11 @@ export default function MinorityLeaderPage() {
               </div>
               <div className="p-6 border-l-4" style={{ borderColor: 'var(--primary)', backgroundColor: 'var(--bg-alt)' }}>
                 <p className="text-gray-800 italic leading-relaxed text-lg">
-                  "A strong democracy needs a strong opposition. We are not here to obstruct — we are here
+                  "A strong democracy needs a strong opposition. We are not here to obstruct. We are here
                   to question, to challenge, and to ensure that the decisions made in this Assembly truly
                   serve every young person in Mombasa, not just the majority."
                 </p>
-                <p className="text-sm font-bold text-teal-700 mt-3">— Minority Leader Kibwana Hamisi Juma, MYC</p>
+                <p className="text-sm font-bold text-teal-700 mt-3">Minority Leader Kibwana Hamisi Juma, MYC</p>
               </div>
             </section>
 

@@ -23,7 +23,7 @@ export default function MissionPage() {
             <h2 className="text-xl font-black text-gray-900 mb-3">Our Mission</h2>
             <p className="text-gray-700 leading-relaxed">
               To champion the interests of young people in Mombasa County through advocacy, capacity building,
-              strategic partnerships, and meaningful engagement in governance and development processes —
+              strategic partnerships, and meaningful engagement in governance and development processes,
               positioning youth as active agents of change.
             </p>
           </div>
@@ -31,7 +31,7 @@ export default function MissionPage() {
             <h2 className="text-xl font-black text-gray-900 mb-3">Our Vision</h2>
             <p className="text-gray-700 leading-relaxed">
               A united, empowered, and progressive youth movement that serves as the strong and credible voice
-              for the youth of Mombasa County — one that promotes transparency, accountability, equal
+              for the youth of Mombasa County, one that promotes transparency, accountability, equal
               representation, and active participation in decision-making.
             </p>
           </div>

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     template: '%s | Mombasa Youth Council',
   },
   description:
-    'Official website of the Mombasa Youth Council. By youth, for youth — empowering young people aged 18–34 across Mombasa County through governance, innovation, and advocacy.',
+    'Official website of the Mombasa Youth Council. By youth, for youth. Empowering young people aged 18–34 across Mombasa County through governance, innovation, and advocacy.',
   keywords: ['Mombasa Youth Council', 'MYC', 'Antigoals Ray', 'Khadija Jilo', 'Youth Kenya', 'SheriaYaVijana'],
 }
 

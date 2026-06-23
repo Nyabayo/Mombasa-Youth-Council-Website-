@@ -13,7 +13,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4">
           <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Get In Touch</p>
           <h1 className="text-white text-3xl sm:text-4xl font-black mb-1">Contact Us</h1>
-          <p className="text-[#00A8C8] text-sm">Mombasa Youth Council — We&apos;d love to hear from you</p>
+          <p className="text-[#00A8C8] text-sm">Mombasa Youth Council. We&apos;d love to hear from you</p>
         </div>
       </div>
       <div style={{ backgroundColor: '#f5f5f5' }} className="border-b border-gray-200">

@@ -258,7 +258,7 @@ export default function DashboardPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1">
-                    Summary <span className="text-gray-400 font-normal text-xs">(optional — shown in post listings)</span>
+                    Summary <span className="text-gray-400 font-normal text-xs">(optional, shown in post listings)</span>
                   </label>
                   <textarea
                     name="excerpt"
@@ -323,7 +323,7 @@ export default function DashboardPage() {
                   </div>
                 ) : (
                   <p className="text-sm text-gray-400 italic">
-                    Insert images into your post content — they will appear here for you to select as the cover.
+                    Insert images into your post content. They will appear here for you to select as the cover.
                   </p>
                 )}
               </div>

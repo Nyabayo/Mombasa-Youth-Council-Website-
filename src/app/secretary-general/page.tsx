@@ -14,7 +14,7 @@ export default function SecretaryGeneralPage() {
         <div className="max-w-7xl mx-auto px-4">
           <p className="text-[#00A8C8] text-xs font-bold tracking-widest uppercase mb-2">Mombasa Youth Council</p>
           <h1 className="text-white text-3xl sm:text-4xl font-black mb-1">Nasib Juma</h1>
-          <p className="text-[#00A8C8] text-sm">Secretary General — Mombasa Youth Council (MYC)</p>
+          <p className="text-[#00A8C8] text-sm">Secretary General, Mombasa Youth Council (MYC)</p>
         </div>
       </div>
 
@@ -39,7 +39,7 @@ export default function SecretaryGeneralPage() {
                 <div className="w-full sm:w-80 lg:w-96 aspect-square flex-shrink-0 overflow-hidden border-b-4 sm:border-b-0 sm:border-r-4 border-white">
                   <img
                     src="/secretary-general.jpeg"
-                    alt="Nasib Juma — Secretary General"
+                    alt="Nasib Juma, Secretary General"
                     className="w-full h-full object-cover object-top"
                   />
                 </div>
@@ -115,10 +115,10 @@ export default function SecretaryGeneralPage() {
                 <p className="text-gray-800 italic leading-relaxed text-lg">
                   "The strength of any organization lies in how well it is administered. My commitment is to
                   ensure that the Mombasa Youth Council operates with the highest standards of professionalism,
-                  efficiency, and transparency — so that our leadership can focus on what matters most: serving
+                  efficiency, and transparency, so that our leadership can focus on what matters most: serving
                   the youth of Mombasa County."
                 </p>
-                <p className="text-sm font-bold text-teal-700 mt-3">— Nasib Juma, Secretary General, MYC</p>
+                <p className="text-sm font-bold text-teal-700 mt-3">Nasib Juma, Secretary General, MYC</p>
               </div>
             </section>
 

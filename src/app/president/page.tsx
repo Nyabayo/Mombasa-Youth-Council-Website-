@@ -69,14 +69,14 @@ export default function PresidentPage() {
                 </p>
                 <p>
                   Prior to his election as President, he served in various leadership roles that shaped his
-                  understanding of the challenges and opportunities facing Mombasa's youth — including youth
+                  understanding of the challenges and opportunities facing Mombasa's youth, including youth
                   unemployment, access to quality education, limited economic opportunities, and the need for
                   stronger representation in county and national governance structures.
                 </p>
                 <p>
                   President Ray holds a strong belief that <strong>youth are not just leaders of tomorrow, but
                   active agents of change today</strong>. He envisions a Mombasa Youth Council that is
-                  accountable, transparent, and deeply connected to the communities it serves — one that delivers
+                  accountable, transparent, and deeply connected to the communities it serves, one that delivers
                   real, measurable impact for young people across all sub-counties of Mombasa.
                 </p>
                 <p>
@@ -154,9 +154,9 @@ export default function PresidentPage() {
                 {[
                   {
                     date: 'June 2026',
-                    title: 'Inaugural Address — Mombasa Youth Council',
+                    title: 'Inaugural Address, Mombasa Youth Council',
                     excerpt:
-                      'Fellow young people of Mombasa, today marks the beginning of a new chapter. We did not come here to occupy seats — we came to serve, to deliver, and to transform the reality of every young person in this county.',
+                      'Fellow young people of Mombasa, today marks the beginning of a new chapter. We did not come here to occupy seats. We came to serve, to deliver, and to transform the reality of every young person in this county.',
                   },
                   {
                     date: 'May 2026',

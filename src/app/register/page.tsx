@@ -68,7 +68,7 @@ export default function RegisterPage() {
         <div className="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden">
           <div style={{ backgroundColor: 'var(--primary)' }} className="px-6 py-4">
             <h1 className="text-white text-xl font-black">Join MYC Today</h1>
-            <p className="text-[#00A8C8] text-xs mt-1">Create your member account — open to youth aged 18–34 in Mombasa County</p>
+            <p className="text-[#00A8C8] text-xs mt-1">Create your member account. Open to youth aged 18–34 in Mombasa County</p>
           </div>
 
           <div className="p-8">

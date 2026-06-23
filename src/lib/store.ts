@@ -16,7 +16,7 @@ const seedPosts: Post[] = [
 
 Speaking at the launch ceremony, President Ray emphasized the importance of youth-led innovation in driving sustainable development and economic growth in the region.
 
-"The Innovation Festival is more than just an event — it is a declaration that the youth of Mombasa are ready, capable, and determined to shape the future of this county," President Ray said. "We want to see ideas become businesses, innovations become solutions, and dreams become reality."
+"The Innovation Festival is more than just an event. It is a declaration that the youth of Mombasa are ready, capable, and determined to shape the future of this county," President Ray said. "We want to see ideas become businesses, innovations become solutions, and dreams become reality."
 
 The festival, scheduled to take place later this year, will feature innovation showcases, pitch competitions, mentorship sessions, networking opportunities, and partnerships with leading organizations committed to youth empowerment.
 
@@ -38,9 +38,9 @@ The Mombasa Youth Council continues to position itself as a credible platform fo
       'Hundreds of young people from across Mombasa County converged for the #SheriaYaVijana rally, demanding greater youth participation in policy-making and governance processes.',
     content: `Hundreds of young people from across Mombasa County converged in a powerful display of civic engagement at the #SheriaYaVijana rally, organized by the Mombasa Youth Council under the leadership of President Antigoals Ray and Deputy President Khadija Jilo.
 
-The rally, which brought together youth from all six sub-counties of Mombasa, was a declaration that young people are not passive recipients of governance — they are active participants in shaping the laws and policies that govern their lives.
+The rally, which brought together youth from all six sub-counties of Mombasa, was a declaration that young people are not passive recipients of governance. They are active participants in shaping the laws and policies that govern their lives.
 
-"#SheriaYaVijana is about ensuring that the youth of Mombasa understand, engage with, and influence the laws that affect them," Deputy President Khadija Jilo said in her address. "We are not asking for a seat at the table — we are building our own table."
+"#SheriaYaVijana is about ensuring that the youth of Mombasa understand, engage with, and influence the laws that affect them," Deputy President Khadija Jilo said in her address. "We are not asking for a seat at the table. We are building our own table."
 
 The event featured policy forums, legal awareness sessions, and presentations by youth advocates on issues ranging from youth unemployment and entrepreneurship to climate action and social inclusion.
 
@@ -64,7 +64,7 @@ The Mombasa Youth Council called on the county government and national governmen
 
 The partnership was announced by President Antigoals Ray during a meeting with Kenya Red Cross leadership in Mombasa, with both parties committing to a structured programme of leadership training, community volunteerism, and capacity building for young people aged 18 to 34.
 
-"Leadership is not a title — it is a service," President Ray said. "Through this partnership with the Kenya Red Cross, we are investing in the next generation of community leaders who will drive change at the grassroots level."
+"Leadership is not a title. It is a service," President Ray said. "Through this partnership with the Kenya Red Cross, we are investing in the next generation of community leaders who will drive change at the grassroots level."
 
 The training programme will cover disaster response and management, community health advocacy, leadership and organizational skills, conflict resolution, and social cohesion. Participants will also engage in practical community projects that directly benefit residents of Mombasa County.
 
@@ -114,7 +114,7 @@ The adoption of this framework marks a significant milestone in the institutiona
 
 Speaking before hundreds of youth delegates, DP Jilo called on organizations, institutions, and communities to move beyond rhetoric and take concrete action to dismantle barriers that prevent women and girls from fully participating in leadership and decision-making.
 
-"Gender equality is not a women's issue — it is a human issue and a development imperative," Deputy President Jilo said. "A council, a community, or a country that sidelines half of its population cannot achieve its full potential."
+"Gender equality is not a women's issue. It is a human issue and a development imperative," Deputy President Jilo said. "A council, a community, or a country that sidelines half of its population cannot achieve its full potential."
 
 She highlighted the Mombasa Youth Council's deliberate efforts to ensure gender balance in its governance structures, including reserved positions for women in the Executive Committee and Youth Assembly, and dedicated programmes to support women's leadership development.
 

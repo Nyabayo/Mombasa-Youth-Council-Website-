@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'About MYC | Mombasa Youth Council',
-  description: 'About the Mombasa Youth Council — By youth, for youth, rooted in Mombasa',
+  description: 'About the Mombasa Youth Council. By youth, for youth, rooted in Mombasa',
 }
 
 export default function AboutPage() {
@@ -29,7 +29,7 @@ export default function AboutPage() {
         <div className="max-w-3xl mx-auto text-center mb-14">
           <p className="text-gray-700 text-xl leading-relaxed">
             MYC brings together young people aged <strong>18 to 34</strong>, creating an active platform for
-            engagement in governance, innovation, and community development — designed to empower youth, not
+            engagement in governance, innovation, and community development, designed to empower youth, not
             to serve political interests.
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function AboutPage() {
               </div>
               <p className="text-gray-700 leading-relaxed">
                 To champion the interests of young people in Mombasa County through advocacy, capacity building,
-                strategic partnerships, and meaningful engagement in governance and development processes —
+                strategic partnerships, and meaningful engagement in governance and development processes,
                 positioning youth as active agents of change, not passive recipients.
               </p>
             </div>
@@ -95,7 +95,7 @@ export default function AboutPage() {
               </div>
               <p className="text-gray-700 leading-relaxed">
                 A united, empowered, and progressive youth movement that serves as the strong and credible voice
-                for the youth of Mombasa County — one that promotes transparency, accountability, equal
+                for the youth of Mombasa County, one that promotes transparency, accountability, equal
                 representation, and active participation in decision-making.
               </p>
             </div>
