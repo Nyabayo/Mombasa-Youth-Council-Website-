@@ -266,40 +266,41 @@ export default function RegisterPage() {
               <form onSubmit={handleSubmit} className="space-y-5">
 
                 {/* M-Pesa payment instructions */}
-                <div className="rounded-xl border-2 border-yellow-400 bg-yellow-50 overflow-hidden">
-                  <div className="bg-yellow-400 px-4 py-2.5">
-                    <p className="font-black text-yellow-900 text-xs uppercase tracking-wide">Step 1 of 2 — Make Payment via M-Pesa</p>
-                  </div>
-                  <div className="p-4 space-y-3">
-                    <div className="grid grid-cols-3 gap-2 text-center">
-                      <div className="bg-white rounded border border-yellow-200 p-3">
-                        <p className="text-xs text-gray-400 font-semibold mb-1">Paybill</p>
-                        <p className="text-xl font-black text-gray-900">400200</p>
-                      </div>
-                      <div className="bg-white rounded border border-yellow-200 p-3">
-                        <p className="text-xs text-gray-400 font-semibold mb-1">Account No.</p>
-                        <p className="text-xs font-black text-gray-900 break-all leading-tight">01103084324001</p>
-                      </div>
-                      <div className="bg-white rounded border border-yellow-200 p-3">
-                        <p className="text-xs text-gray-400 font-semibold mb-1">Amount</p>
-                        <p className="text-xl font-black text-green-600">200</p>
-                      </div>
+                <div>
+                  <p className="text-sm text-gray-700 mb-3">
+                    Send <strong>KES 200</strong> via M-Pesa using the details below, then paste your confirmation code to complete registration.
+                  </p>
+
+                  <div className="rounded-lg bg-green-50 border border-green-200 p-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500">Business number</span>
+                      <span className="text-xl font-black text-gray-900 tracking-wide">400200</span>
                     </div>
-                    <div className="text-xs text-gray-600 bg-white rounded border border-yellow-100 p-3">
-                      <strong>How to pay:</strong> M-Pesa &rarr; Lipa na M-Pesa &rarr; Pay Bill &rarr; Paybill <strong>400200</strong> &rarr; Acc <strong>01103084324001</strong> &rarr; Amount <strong>200</strong>
+                    <div className="border-t border-green-100" />
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500">Account number</span>
+                      <span className="text-sm font-black text-gray-900 tracking-wider">01103084324001</span>
+                    </div>
+                    <div className="border-t border-green-100" />
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500">Amount</span>
+                      <span className="text-xl font-black text-green-700">KES 200</span>
                     </div>
                   </div>
+
+                  <p className="text-xs text-gray-400 mt-2">
+                    On your phone: M-Pesa &rarr; Lipa na M-Pesa &rarr; Pay Bill &rarr; enter the details above
+                  </p>
                 </div>
 
                 {/* M-Pesa reference input */}
-                <div className="rounded-xl border-2 border-teal-400 bg-teal-50 overflow-hidden">
-                  <div className="bg-teal-400 px-4 py-2.5">
-                    <p className="font-black text-teal-900 text-xs uppercase tracking-wide">Step 2 of 2 — Enter Your M-Pesa Transaction Code</p>
-                  </div>
-                  <div className="p-4">
-                    <p className="text-xs text-gray-600 mb-3">
-                      After paying, M-Pesa sends an SMS with a confirmation code like <strong>QFG4XXXXX</strong>. Enter it below.
-                    </p>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                    M-Pesa confirmation code *
+                  </label>
+                  <p className="text-xs text-gray-400 mb-2">
+                    Check your SMS from M-Pesa — it looks like <strong>QFG4XXXXXW</strong>
+                  </p>
                     <input
                       type="text"
                       name="mpesaRef"
@@ -311,8 +312,7 @@ export default function RegisterPage() {
                       className="w-full border-2 border-teal-300 rounded-lg px-4 py-3 text-sm font-mono uppercase focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent bg-white"
                       style={{ letterSpacing: '0.1em' }}
                     />
-                    <p className="text-xs text-gray-400 mt-2">Your administrator will verify this code before activating your account.</p>
-                  </div>
+                  <p className="text-xs text-gray-400 mt-2">An administrator will verify this before activating your account.</p>
                 </div>
 
                 <div className="flex items-center gap-3">
