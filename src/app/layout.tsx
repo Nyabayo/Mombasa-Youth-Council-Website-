@@ -4,6 +4,8 @@ import './globals.css'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import TicketBanner from '@/components/ui/TicketBanner'
+import TicketFloatingButton from '@/components/ui/TicketFloatingButton'
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-geist' })
 
@@ -22,9 +24,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${geist.variable} h-full`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col antialiased">
         <ThemeProvider>
+          <TicketBanner />
           <Header />
           <main className="flex-1 main-content">{children}</main>
           <Footer />
+          <TicketFloatingButton />
         </ThemeProvider>
       </body>
     </html>
