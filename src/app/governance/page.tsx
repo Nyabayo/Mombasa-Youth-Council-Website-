@@ -16,7 +16,7 @@ export default function GovernancePage() {
           <p className="text-[#00A8C8] text-sm">Mombasa Youth Council (MYC)</p>
         </div>
       </div>
-      <div style={{ backgroundColor: '#f5f5f5' }} className="border-b border-gray-200">
+      <div style={{ backgroundColor: 'var(--bg-alt)' }} className="border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-2 flex items-center gap-2 text-xs text-gray-500">
           <Link href="/" className="hover:text-teal-700">Home</Link>
           <span>/</span>
@@ -35,7 +35,7 @@ export default function GovernancePage() {
             {/* Organ 1 */}
             <section className="mb-10">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: 'white', color: 'var(--primary)' }} className="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm flex-shrink-0">1</div>
+                <div style={{ backgroundColor: 'var(--bg-card)', color: 'var(--primary)', border: '2px solid var(--primary)' }} className="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm flex-shrink-0">1</div>
                 <h2 className="text-2xl font-black text-gray-900">The Administration (Executive Arm)</h2>
               </div>
               <p className="text-gray-700 leading-relaxed mb-4">
@@ -98,7 +98,7 @@ export default function GovernancePage() {
             {/* Organ 3 */}
             <section className="mb-10">
               <div className="flex items-center gap-3 mb-5">
-                <div style={{ backgroundColor: 'white', color: 'var(--primary)' }} className="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm flex-shrink-0">3</div>
+                <div style={{ backgroundColor: 'var(--bg-card)', color: 'var(--primary)', border: '2px solid var(--primary)' }} className="w-8 h-8 rounded-full flex items-center justify-center font-black text-sm flex-shrink-0">3</div>
                 <h2 className="text-2xl font-black text-gray-900">Committees</h2>
               </div>
               <p className="text-gray-700 leading-relaxed mb-5">

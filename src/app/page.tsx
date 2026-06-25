@@ -109,7 +109,7 @@ export default async function HomePage() {
                   <span
                     key={t}
                     className="border px-2 py-1 rounded-full font-medium"
-                    style={{ backgroundColor: 'var(--bg-alt)', color: 'var(--primary)', borderColor: '#bfdbfe' }}
+                    style={{ backgroundColor: 'var(--bg-alt)', color: 'var(--accent)', borderColor: 'var(--border)' }}
                   >
                     {t}
                   </span>

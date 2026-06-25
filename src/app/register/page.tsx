@@ -71,7 +71,7 @@ export default function RegisterPage() {
 
   if (submitted) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center px-4 py-12" style={{ backgroundColor: '#f5f5f5' }}>
+      <div className="min-h-[80vh] flex items-center justify-center px-4 py-12" style={{ backgroundColor: 'var(--bg)' }}>
         <div className="w-full max-w-md">
           <div className="text-center mb-8">
             <Link href="/" className="inline-flex flex-col items-center gap-2">
@@ -128,7 +128,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12" style={{ backgroundColor: '#f5f5f5' }}>
+    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12" style={{ backgroundColor: 'var(--bg)' }}>
       <div className="w-full max-w-md">
 
         {/* Logo */}

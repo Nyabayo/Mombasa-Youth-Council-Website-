@@ -32,7 +32,7 @@ export default async function PostsPage({
           <p className="text-[#00A8C8] text-sm">Latest updates from the Mombasa Youth Council</p>
         </div>
       </div>
-      <div style={{ backgroundColor: '#f5f5f5' }} className="border-b border-gray-200">
+      <div style={{ backgroundColor: 'var(--bg-alt)' }} className="border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-2 flex items-center gap-2 text-xs text-gray-500">
           <Link href="/" className="hover:text-teal-700">Home</Link>
           <span>/</span>

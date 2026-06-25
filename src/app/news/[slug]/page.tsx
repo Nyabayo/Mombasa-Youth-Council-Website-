@@ -93,7 +93,7 @@ export default function ArticlePage() {
       <div style={{ backgroundColor: '#003087' }} className="py-8">
         <div className="max-w-4xl mx-auto px-4">
           <Link href="/news" className="text-blue-200 text-xs hover:underline mb-3 block">← Back to News</Link>
-          <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-widest mb-3" style={{ backgroundColor: 'white', color: '#003087' }}>
+          <span className="inline-block px-3 py-1 text-xs font-bold uppercase tracking-widest mb-3" style={{ backgroundColor: 'var(--bg-card)', color: '#003087' }}>
             {post.category}
           </span>
           <h1 className="text-white text-2xl sm:text-3xl font-black leading-tight">{post.title}</h1>

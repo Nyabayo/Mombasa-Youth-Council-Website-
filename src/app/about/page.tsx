@@ -16,7 +16,7 @@ export default function AboutPage() {
           <p className="text-[#00A8C8] text-sm">A structured space where young people lead</p>
         </div>
       </div>
-      <div style={{ backgroundColor: '#f5f5f5' }} className="border-b border-gray-200">
+      <div style={{ backgroundColor: 'var(--bg-alt)' }} className="border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-2 flex items-center gap-2 text-xs text-gray-500">
           <Link href="/" className="hover:text-teal-700">Home</Link>
           <span>/</span>
@@ -78,7 +78,7 @@ export default function AboutPage() {
 
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div style={{ backgroundColor: 'white' }} className="w-1 h-7" />
+                <div style={{ backgroundColor: 'var(--primary)' }} className="w-1 h-7" />
                 <h2 className="text-2xl font-black text-gray-900">Our Mission</h2>
               </div>
               <p className="text-gray-700 leading-relaxed">
