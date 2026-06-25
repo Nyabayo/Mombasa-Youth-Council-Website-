@@ -39,7 +39,7 @@ const TICKETS = [
   },
 ]
 
-const WA_LINK = 'https://wa.link/i8lfuo'
+const WA_PHONE = '254791625444'
 
 function buildWhatsAppMessage(fields: {
   name: string; phone: string; email: string
@@ -93,8 +93,8 @@ export default function TicketsPage() {
       mpesaRef: form.mpesaRef.trim(),
     })
 
-    // Open WhatsApp chat in new tab
-    const waUrl = `${WA_LINK}`
+    // Open WhatsApp with message pre-filled — user just taps Send
+    const waUrl = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message)}`
     window.open(waUrl, '_blank', 'noopener,noreferrer')
 
     // Auto-copy message to clipboard so user can paste into WhatsApp
@@ -174,9 +174,9 @@ export default function TicketsPage() {
             </pre>
           </div>
 
-          {/* Open WhatsApp again */}
+          {/* Open WhatsApp again with message pre-filled */}
           <a
-            href={WA_LINK}
+            href={`https://wa.me/${WA_PHONE}?text=${encodeURIComponent(whatsappMessage)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-3 w-full py-4 rounded-xl font-black text-sm mb-6 transition-opacity hover:opacity-90"
