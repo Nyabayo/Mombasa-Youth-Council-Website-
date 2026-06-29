@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import type { Ticket } from '@/lib/db'
 
 const TICKETS = [
   { id: 'regular', name: 'Regular', price: 500,  tagline: 'Access. Connect. Inspire.',   perks: ['Full festival access', 'Networking sessions', 'Gala dinner entry'] },
@@ -9,24 +10,11 @@ const TICKETS = [
   { id: 'vvip',    name: 'VVIP',    price: 2000, tagline: 'Exclusive. Premium. Impact.', perks: ['All VIP benefits', 'Premium table placement', 'Meet & greet with speakers', 'Exclusive gift pack'] },
 ]
 
-const WA_PHONE = '254791625444'
+const WA_PHONE   = '254791625444'
+type PayState    = 'form' | 'initiating' | 'waiting' | 'creating' | 'done' | 'timeout' | 'cancelled' | 'error'
 
-type PayState = 'form' | 'initiating' | 'waiting' | 'success' | 'timeout' | 'cancelled' | 'error'
-
-function buildWhatsAppMessage(f: { name: string; phone: string; email: string; ticket: string; qty: number; total: number; receipt: string }) {
-  return (
-    `🎟 *MYIF 2026 Ticket Booking*\n` +
-    `━━━━━━━━━━━━━━━━━━━━━\n` +
-    `*Name:* ${f.name}\n` +
-    `*Phone:* ${f.phone}\n` +
-    `*Email:* ${f.email}\n` +
-    `*Ticket:* ${f.ticket} × ${f.qty} — KSH ${f.total.toLocaleString()}\n` +
-    `*M-Pesa Receipt:* ${f.receipt}\n` +
-    `━━━━━━━━━━━━━━━━━━━━━\n` +
-    `_Mombasa Youth Innovation Festival 2026_\n` +
-    `_Gala Dinner & Awards · 11th July 2026, 6:00 PM_`
-  )
-}
+const TYPE_COLOR: Record<string, string> = { regular: '#e2e8f0', vip: '#4ade80', vvip: '#c9a84c' }
+const TYPE_TEXT:  Record<string, string> = { regular: '#1a1a1a', vip: '#064e3b', vvip: '#0f2419' }
 
 export default function TicketsPage() {
   const [ticketId, setTicketId]   = useState('regular')
@@ -34,16 +22,15 @@ export default function TicketsPage() {
   const [form, setForm]           = useState({ name: '', phone: '', email: '' })
   const [payState, setPayState]   = useState<PayState>('form')
   const [error, setError]         = useState('')
-  const [txId, setTxId]           = useState('')
-  const [receipt, setReceipt]     = useState('')
+  const [ticket, setTicket]       = useState<Ticket | null>(null)
   const [countdown, setCountdown] = useState(60)
 
-  const pollRef      = useRef<ReturnType<typeof setInterval> | null>(null)
-  const timerRef     = useRef<ReturnType<typeof setInterval> | null>(null)
-  const attemptsRef  = useRef(0)
+  const pollRef     = useRef<ReturnType<typeof setInterval> | null>(null)
+  const timerRef    = useRef<ReturnType<typeof setInterval> | null>(null)
+  const attemptsRef = useRef(0)
 
-  const ticket = TICKETS.find((t) => t.id === ticketId)!
-  const total  = ticket.price * qty
+  const tier  = TICKETS.find((t) => t.id === ticketId)!
+  const total = tier.price * qty
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }))
@@ -55,102 +42,73 @@ export default function TicketsPage() {
 
   useEffect(() => () => stopPolling(), [])
 
-  const startPolling = (id: string) => {
-    attemptsRef.current = 0
-    setCountdown(60)
-
-    timerRef.current = setInterval(() => {
-      setCountdown((c) => Math.max(0, c - 1))
-    }, 1000)
-
-    pollRef.current = setInterval(async () => {
-      attemptsRef.current++
-      if (attemptsRef.current > 20) {
-        stopPolling()
-        setPayState('timeout')
-        return
-      }
-
-      try {
-        const res  = await fetch('/api/pay/status', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ transactionRequestId: id }),
-        })
-        const data = await res.json()
-
-        const code   = String(data.ResultCode ?? data.result_code ?? '')
-        const status = String(data.TransactionStatus ?? data.transaction_status ?? '').toLowerCase()
-
-        if (code === '0' || status === 'completed') {
-          stopPolling()
-          const ref = data.TransactionReceipt ?? data.receipt ?? 'N/A'
-          setReceipt(ref)
-          setPayState('success')
-        } else if (code === '1032' || status === 'cancelled') {
-          stopPolling()
-          setPayState('cancelled')
-        }
-        // pending → keep polling
-      } catch { /* network hiccup — keep trying */ }
-    }, 3000)
-  }
-
-  const handlePay = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!form.name.trim())                                { setError('Enter your full name.'); return }
-    if (!form.phone.trim())                               { setError('Enter your M-Pesa phone number.'); return }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) { setError('Enter a valid email address.'); return }
-
-    setError('')
-    setPayState('initiating')
-
-    const res  = await fetch('/api/pay/initiate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+  const createTicket = async (confirmedTxId: string) => {
+    setPayState('creating')
+    const res  = await fetch('/api/tickets/create', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        phone:     form.phone,
-        amount:    total,
-        reference: `TKT-${Date.now()}`,
+        name: form.name.trim(), phone: form.phone.trim(), email: form.email.trim(),
+        ticketType: ticketId, qty, transactionRequestId: confirmedTxId,
       }),
     })
     const data = await res.json()
+    if (res.ok && data.ticket) {
+      setTicket(data.ticket)
+      setPayState('done')
+    } else {
+      setError(data.error ?? 'Ticket creation failed. Contact mombasayouthcouncil@gmail.com')
+      setPayState('error')
+    }
+  }
 
+  const startPolling = (id: string) => {
+    attemptsRef.current = 0
+    setCountdown(60)
+    timerRef.current = setInterval(() => setCountdown((c) => Math.max(0, c - 1)), 1000)
+    pollRef.current  = setInterval(async () => {
+      attemptsRef.current++
+      if (attemptsRef.current > 20) { stopPolling(); setPayState('timeout'); return }
+      try {
+        const res  = await fetch('/api/pay/status', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ transactionRequestId: id }),
+        })
+        const data = await res.json()
+        const code   = String(data.ResultCode        ?? data.result_code          ?? '')
+        const status = String(data.TransactionStatus ?? data.transaction_status   ?? '').toLowerCase()
+        if (code === '0' || status === 'completed') { stopPolling(); await createTicket(id) }
+        else if (code === '1032' || status === 'cancelled') { stopPolling(); setPayState('cancelled') }
+      } catch { /* keep polling */ }
+    }, 3000)
+  }
+
+  const handlePay = async (e: React.SyntheticEvent) => {
+    e.preventDefault()
+    if (!form.name.trim())                               { setError('Enter your full name.'); return }
+    if (!form.phone.trim())                              { setError('Enter your M-Pesa phone number.'); return }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) { setError('Enter a valid email address.'); return }
+    setError('')
+    setPayState('initiating')
+    const res  = await fetch('/api/pay/initiate', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone: form.phone, amount: total, reference: `TKT-${Date.now()}` }),
+    })
+    const data = await res.json()
     if (!res.ok || !data.transactionRequestId) {
       setError(data.error ?? 'Could not reach MegaPay. Try again.')
-      setPayState('form')
-      return
+      setPayState('form'); return
     }
-
-    setTxId(data.transactionRequestId)
     setPayState('waiting')
     startPolling(data.transactionRequestId)
   }
 
-  const reset = () => {
-    stopPolling()
-    setPayState('form')
-    setError('')
-    setTxId('')
-    setReceipt('')
-  }
+  const reset = () => { stopPolling(); setPayState('form'); setError('') }
 
-  const waMessage = buildWhatsAppMessage({
-    name:   form.name.trim(),
-    phone:  form.phone.trim(),
-    email:  form.email.trim(),
-    ticket: ticket.name,
-    qty,
-    total,
-    receipt,
-  })
-
-  /* ─── Waiting screen ─────────────────────────────────────────── */
-  if (payState === 'waiting' || payState === 'initiating') {
+  /* ─── Waiting / Initiating screen ───────────────────────────── */
+  if (payState === 'waiting' || payState === 'initiating' || payState === 'creating') {
     return (
       <div className="min-h-screen bg-[#0f2419] flex items-center justify-center px-4 py-16">
         <div className="w-full max-w-sm text-center">
-          {/* Pulse ring */}
           <div className="relative w-24 h-24 mx-auto mb-8">
             <span className="absolute inset-0 rounded-full animate-ping bg-[#c9a84c] opacity-20" />
             <span className="absolute inset-2 rounded-full animate-ping bg-[#c9a84c] opacity-15" style={{ animationDelay: '0.3s' }} />
@@ -160,111 +118,182 @@ export default function TicketsPage() {
               </svg>
             </div>
           </div>
-
           <h2 className="text-2xl font-black text-white mb-2">
-            {payState === 'initiating' ? 'Sending request…' : 'Check your phone'}
+            {payState === 'initiating' ? 'Sending request...' : payState === 'creating' ? 'Generating your ticket...' : 'Check your phone'}
           </h2>
-          <p className="text-white/60 mb-2">
-            {payState === 'initiating'
-              ? 'Contacting MegaPay…'
-              : `An M-Pesa PIN prompt has been sent to`}
-          </p>
-          {payState === 'waiting' && (
-            <p className="text-[#c9a84c] font-black text-lg mb-6">{form.phone}</p>
-          )}
-
-          <div className="bg-[#1a4731] rounded-2xl p-5 mb-6 text-left space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-white/50">Ticket</span>
-              <span className="text-white font-bold">{ticket.name} × {qty}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-white/50">Amount</span>
-              <span className="text-[#c9a84c] font-black">KSH {total.toLocaleString()}</span>
-            </div>
-          </div>
-
           {payState === 'waiting' && (
             <>
-              <p className="text-white/40 text-sm mb-6">
-                Enter your M-Pesa PIN on your phone to complete payment.
-                <br />Expires in <span className="text-white font-bold">{countdown}s</span>
-              </p>
-              <button onClick={reset} className="text-white/40 text-sm hover:text-white/70 transition-colors underline">
-                Cancel
-              </button>
+              <p className="text-white/60 mb-1">M-Pesa PIN prompt sent to</p>
+              <p className="text-[#c9a84c] font-black text-lg mb-4">{form.phone}</p>
+              <div className="bg-[#1a4731] rounded-2xl p-4 mb-5 text-left space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-white/50">Ticket</span>
+                  <span className="text-white font-bold">{tier.name} x{qty}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-white/50">Amount</span>
+                  <span className="text-[#c9a84c] font-black">KSH {total.toLocaleString()}</span>
+                </div>
+              </div>
+              <p className="text-white/40 text-sm mb-6">Enter your PIN on your phone. Expires in <span className="text-white font-bold">{countdown}s</span></p>
+              <button onClick={reset} className="text-white/40 text-sm underline hover:text-white/60">Cancel</button>
             </>
+          )}
+          {payState === 'creating' && (
+            <p className="text-white/60 text-sm">Payment confirmed. Creating your unique ticket...</p>
           )}
         </div>
       </div>
     )
   }
 
-  /* ─── Success screen ─────────────────────────────────────────── */
-  if (payState === 'success') {
+  /* ─── Ticket Card (success) ──────────────────────────────────── */
+  if (payState === 'done' && ticket) {
+    const verifyUrl = typeof window !== 'undefined'
+      ? `${window.location.origin}/verify/${ticket.ticketCode}`
+      : `https://myc.co.ke/verify/${ticket.ticketCode}`
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=0f2419&bgcolor=ffffff&data=${encodeURIComponent(verifyUrl)}`
+    const tierColor = TYPE_COLOR[ticket.ticketType] ?? '#e2e8f0'
+    const tierText  = TYPE_TEXT[ticket.ticketType]  ?? '#1a1a1a'
+    const waMessage =
+      `🎟 *MYIF 2026 Ticket Confirmation*\n` +
+      `Ticket: ${ticket.ticketCode}\n` +
+      `Holder: ${ticket.holderName}\n` +
+      `Type: ${tier.name} x${ticket.quantity}\n` +
+      `Paid: KSH ${ticket.totalPaid.toLocaleString()}\n` +
+      `M-Pesa: ${ticket.mpesaReceipt}\n` +
+      `Verify: ${verifyUrl}`
+
     return (
-      <div className="min-h-screen bg-[#0f2419] flex items-center justify-center px-4 py-16">
-        <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <div className="w-20 h-20 bg-[#25D366] rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="min-h-screen bg-[#0f2419] py-12 px-4">
+        <div className="max-w-md mx-auto">
+
+          <div className="text-center mb-6">
+            <div className="w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center mx-auto mb-3">
+              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h1 className="text-3xl font-black text-white mb-1">Payment Confirmed!</h1>
-            <p className="text-white/50 text-sm">KSH {total.toLocaleString()} received via M-Pesa</p>
+            <h1 className="text-2xl font-black text-white">Your Ticket is Ready</h1>
+            <p className="text-white/50 text-sm">Screenshot or save this ticket to your phone</p>
           </div>
 
-          <div className="bg-white/10 rounded-xl p-5 mb-5 space-y-2.5">
-            {[
-              { label: 'Name',         value: form.name },
-              { label: 'Phone',        value: form.phone },
-              { label: 'Email',        value: form.email },
-              { label: 'Ticket',       value: `${ticket.name} × ${qty} — KSH ${total.toLocaleString()}`, gold: true },
-              { label: 'M-Pesa Ref',   value: receipt, mono: true },
-            ].map((row) => (
-              <div key={row.label} className="flex justify-between items-center gap-4">
-                <span className="text-white/50 text-sm flex-shrink-0">{row.label}</span>
-                <span className={`text-sm text-right break-all ${row.gold ? 'text-[#c9a84c] font-black' : row.mono ? 'font-mono font-bold text-white tracking-wider' : 'text-white font-semibold'}`}>
-                  {row.value}
-                </span>
+          {/* The actual ticket */}
+          <div id="ticket-card" className="rounded-2xl overflow-hidden shadow-2xl mb-6">
+
+            {/* Ticket header */}
+            <div className="bg-[#0f2419] border-b-4 border-[#c9a84c] px-6 py-5">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-[#c9a84c] text-xs font-bold tracking-widest uppercase mb-0.5">Official Ticket</p>
+                  <h2 className="text-white text-xl font-black leading-tight">Mombasa Youth</h2>
+                  <h3 className="text-white text-xl font-black leading-tight">Innovation Festival 2026</h3>
+                  <p className="text-white/60 text-xs mt-1">Gala Dinner and Awards</p>
+                </div>
+                {/* Tier badge */}
+                <div className="flex-shrink-0 text-right">
+                  <span
+                    className="inline-block px-3 py-1.5 rounded-lg text-sm font-black"
+                    style={{ backgroundColor: tierColor, color: tierText }}
+                  >
+                    {(tier.name ?? ticket.ticketType).toUpperCase()}
+                  </span>
+                  <p className="text-white/50 text-xs mt-1">x{ticket.quantity}</p>
+                </div>
               </div>
-            ))}
+            </div>
+
+            {/* Ticket body */}
+            <div className="bg-white px-6 py-5">
+              <div className="flex gap-5">
+                {/* Left: details */}
+                <div className="flex-1 space-y-3 min-w-0">
+                  <div>
+                    <p className="text-gray-400 text-xs uppercase tracking-wide font-bold">Holder</p>
+                    <p className="text-gray-900 font-black text-lg leading-tight truncate">{ticket.holderName}</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <p className="text-gray-400 text-xs uppercase tracking-wide font-bold">Date</p>
+                      <p className="text-gray-800 font-bold text-sm">11 July 2026</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-400 text-xs uppercase tracking-wide font-bold">Time</p>
+                      <p className="text-gray-800 font-bold text-sm">6:00 PM</p>
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-gray-400 text-xs uppercase tracking-wide font-bold">Amount Paid</p>
+                    <p className="text-gray-900 font-black">KSH {ticket.totalPaid.toLocaleString()}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-400 text-xs uppercase tracking-wide font-bold">M-Pesa Receipt</p>
+                    <p className="text-gray-900 font-mono font-bold tracking-wider text-sm">{ticket.mpesaReceipt}</p>
+                  </div>
+                </div>
+                {/* Right: QR */}
+                <div className="flex-shrink-0 flex flex-col items-center gap-1">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={qrUrl} alt="Ticket QR Code" width={100} height={100} className="rounded-lg border border-gray-200" />
+                  <p className="text-gray-400 text-xs text-center">Scan to verify</p>
+                </div>
+              </div>
+
+              {/* Ticket code */}
+              <div className="mt-4 pt-4 border-t-2 border-dashed border-gray-200">
+                <p className="text-gray-400 text-xs uppercase tracking-wide font-bold text-center mb-1">Ticket Code</p>
+                <p className="text-center font-mono font-black text-xl tracking-widest text-[#0f2419]">{ticket.ticketCode}</p>
+              </div>
+            </div>
+
+            {/* Ticket footer */}
+            <div className="bg-[#1a4731] px-6 py-3 flex items-center justify-between">
+              <p className="text-white/60 text-xs">Mombasa Youth Council</p>
+              <p className="text-[#c9a84c] text-xs font-bold">mombasayouthcouncil@gmail.com</p>
+            </div>
           </div>
 
-          <p className="text-white/50 text-xs text-center mb-4">
-            Send the booking details below to WhatsApp to receive your confirmation.
-          </p>
+          {/* Action buttons */}
+          <div className="space-y-3">
+            <a
+              href={`https://wa.me/${WA_PHONE}?text=${encodeURIComponent(waMessage)}`}
+              target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center gap-3 w-full py-4 rounded-xl font-black text-sm transition-opacity hover:opacity-90"
+              style={{ backgroundColor: '#25D366', color: 'white' }}
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+              Send Ticket to WhatsApp
+            </a>
 
-          <a
-            href={`https://wa.me/${WA_PHONE}?text=${encodeURIComponent(waMessage)}`}
-            target="_blank" rel="noopener noreferrer"
-            className="flex items-center justify-center gap-3 w-full py-4 rounded-xl font-black text-sm mb-4 transition-opacity hover:opacity-90"
-            style={{ backgroundColor: '#25D366', color: 'white' }}
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-            </svg>
-            Send Booking to WhatsApp
-          </a>
+            <a
+              href={verifyUrl}
+              target="_blank" rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-bold text-sm border-2 transition-colors hover:bg-white/5"
+              style={{ borderColor: '#c9a84c', color: '#c9a84c' }}
+            >
+              Verify this Ticket Online
+            </a>
+          </div>
 
-          <p className="text-center text-white/30 text-xs mb-3">
+          <p className="text-center text-white/30 text-xs mt-6">
             Questions? <a href="mailto:mombasayouthcouncil@gmail.com" className="text-[#c9a84c] underline">mombasayouthcouncil@gmail.com</a>
           </p>
-          <div className="text-center">
-            <Link href="/" className="text-white/25 text-xs hover:text-white/50 transition-colors">← Back to Homepage</Link>
+          <div className="text-center mt-3">
+            <Link href="/" className="text-white/25 text-xs hover:text-white/50 transition-colors">Back to Homepage</Link>
           </div>
         </div>
       </div>
     )
   }
 
-  /* ─── Timeout / Cancelled / Error screens ────────────────────── */
+  /* ─── Timeout / Cancelled / Error ────────────────────────────── */
   if (payState === 'timeout' || payState === 'cancelled' || payState === 'error') {
     const info = {
-      timeout:   { icon: '⏱', title: 'Payment timed out',  msg: 'No PIN was entered in time. You can try again.' },
-      cancelled: { icon: '✕',  title: 'Payment cancelled',  msg: 'You cancelled the M-Pesa PIN prompt. Try again when ready.' },
-      error:     { icon: '!',  title: 'Something went wrong', msg: 'An unexpected error occurred. Please try again.' },
+      timeout:   { icon: '⏱', title: 'Payment timed out',   msg: 'No PIN was entered in time. Please try again.' },
+      cancelled: { icon: '✕',  title: 'Payment cancelled',   msg: 'You cancelled the M-Pesa prompt. Try again when ready.' },
+      error:     { icon: '!',  title: 'Something went wrong', msg: error || 'An error occurred. Please try again or contact support.' },
     }[payState]
 
     return (
@@ -275,11 +304,7 @@ export default function TicketsPage() {
           </div>
           <h2 className="text-2xl font-black text-white mb-3">{info.title}</h2>
           <p className="text-white/50 mb-8">{info.msg}</p>
-          <button
-            onClick={reset}
-            className="px-8 py-3 rounded-xl font-black text-sm hover:opacity-90 transition-opacity"
-            style={{ backgroundColor: '#c9a84c', color: '#0f2419' }}
-          >
+          <button onClick={reset} className="px-8 py-3 rounded-xl font-black text-sm hover:opacity-90 transition-opacity" style={{ backgroundColor: '#c9a84c', color: '#0f2419' }}>
             Try Again
           </button>
         </div>
@@ -325,7 +350,7 @@ export default function TicketsPage() {
           </div>
           <div className="mt-4">
             <span className="inline-block bg-[#c9a84c] text-[#0f2419] text-xs font-black px-4 py-1.5 rounded-full tracking-wide uppercase">
-              Gala Dinner &amp; Awards · Celebrating Youth. Honouring Excellence.
+              Gala Dinner and Awards - Celebrating Youth. Honouring Excellence.
             </span>
           </div>
         </div>
@@ -351,15 +376,13 @@ export default function TicketsPage() {
           </div>
         </div>
 
-        {/* Ticket tier cards */}
+        {/* Tier cards */}
         <h2 className="text-white text-2xl font-black text-center mb-2">Choose Your Ticket</h2>
-        <p className="text-white/50 text-center text-sm mb-6">Click a tier to select it, then fill in your details below</p>
+        <p className="text-white/50 text-center text-sm mb-6">Select a tier below, then fill your details to pay</p>
         <div className="grid sm:grid-cols-3 gap-4 mb-10">
           {TICKETS.map((t) => (
             <button
-              key={t.id}
-              type="button"
-              onClick={() => setTicketId(t.id)}
+              key={t.id} type="button" onClick={() => setTicketId(t.id)}
               className={`text-left rounded-2xl border-2 p-5 transition-all ${
                 ticketId === t.id
                   ? t.id === 'vvip' ? 'border-[#c9a84c] ring-2 ring-[#c9a84c]/40 bg-[#c9a84c]/10'
@@ -393,43 +416,33 @@ export default function TicketsPage() {
         {/* Booking form */}
         <div className="rounded-2xl overflow-hidden shadow-2xl border border-white/10" style={{ backgroundColor: 'var(--bg-card)' }}>
           <div className="bg-[#1a4731] px-6 py-5">
-            <h2 className="text-white text-xl font-black">Book Your Seat — Pay via M-Pesa</h2>
-            <p className="text-white/60 text-sm mt-1">Fill in your details and we will send an M-Pesa PIN prompt to your phone</p>
+            <h2 className="text-white text-xl font-black">Book Your Seat - Pay via M-Pesa</h2>
+            <p className="text-white/60 text-sm mt-1">Fill your details and we will send an M-Pesa PIN prompt to your phone instantly</p>
           </div>
-
           <div className="p-6 space-y-5">
 
-            {/* Ticket selector + qty */}
+            {/* Selector + qty */}
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-muted)' }}>Ticket Type</label>
-                <select
-                  value={ticketId}
-                  onChange={(e) => setTicketId(e.target.value)}
+                <select value={ticketId} onChange={(e) => setTicketId(e.target.value)}
                   className="w-full border rounded-lg px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#c9a84c]"
-                  style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-alt)', color: 'var(--text)' }}
-                >
+                  style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-alt)', color: 'var(--text)' }}>
                   {TICKETS.map((t) => (
-                    <option key={t.id} value={t.id}>{t.name} — KSH {t.price.toLocaleString()}</option>
+                    <option key={t.id} value={t.id}>{t.name} - KSH {t.price.toLocaleString()}</option>
                   ))}
                 </select>
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-muted)' }}>Number of Tickets</label>
                 <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setQty((q) => Math.max(1, q - 1))}
+                  <button type="button" onClick={() => setQty((q) => Math.max(1, q - 1))}
                     className="w-11 h-11 rounded-lg border-2 text-xl font-black flex items-center justify-center transition-colors hover:border-[#c9a84c] hover:text-[#c9a84c]"
-                    style={{ borderColor: 'var(--border)', color: 'var(--text)' }}
-                  >−</button>
+                    style={{ borderColor: 'var(--border)', color: 'var(--text)' }}>-</button>
                   <span className="text-2xl font-black w-10 text-center" style={{ color: 'var(--text)' }}>{qty}</span>
-                  <button
-                    type="button"
-                    onClick={() => setQty((q) => Math.min(10, q + 1))}
+                  <button type="button" onClick={() => setQty((q) => Math.min(10, q + 1))}
                     className="w-11 h-11 rounded-lg border-2 text-xl font-black flex items-center justify-center transition-colors hover:border-[#c9a84c] hover:text-[#c9a84c]"
-                    style={{ borderColor: 'var(--border)', color: 'var(--text)' }}
-                  >+</button>
+                    style={{ borderColor: 'var(--border)', color: 'var(--text)' }}>+</button>
                   <div className="flex-1 text-right">
                     <span className="text-xs" style={{ color: 'var(--text-light)' }}>Total</span>
                     <div className="text-xl font-black text-[#c9a84c]">KSH {total.toLocaleString()}</div>
@@ -438,60 +451,42 @@ export default function TicketsPage() {
               </div>
             </div>
 
-            {/* Personal details */}
             <form onSubmit={handlePay} className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-muted)' }}>Full Name *</label>
-                  <input
-                    type="text" name="name" value={form.name} onChange={handleChange}
-                    placeholder="Your full name" autoComplete="name"
+                  <input type="text" name="name" value={form.name} onChange={handleChange} placeholder="Your full name" autoComplete="name"
                     className="w-full border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#c9a84c]"
-                    style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-alt)', color: 'var(--text)' }}
-                  />
+                    style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-alt)', color: 'var(--text)' }} />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-muted)' }}>M-Pesa Phone Number *</label>
-                  <input
-                    type="tel" name="phone" value={form.phone} onChange={handleChange}
-                    placeholder="07XX XXX XXX" autoComplete="tel"
+                  <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-muted)' }}>M-Pesa Phone *</label>
+                  <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="07XX XXX XXX" autoComplete="tel"
                     className="w-full border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#c9a84c]"
-                    style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-alt)', color: 'var(--text)' }}
-                  />
-                  <p className="text-xs mt-1" style={{ color: 'var(--text-light)' }}>The PIN prompt will go to this number</p>
+                    style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-alt)', color: 'var(--text)' }} />
+                  <p className="text-xs mt-1" style={{ color: 'var(--text-light)' }}>PIN prompt will be sent here</p>
                 </div>
               </div>
-
               <div>
                 <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-muted)' }}>Email Address *</label>
-                <input
-                  type="email" name="email" value={form.email} onChange={handleChange}
-                  placeholder="your@email.com" autoComplete="email"
+                <input type="email" name="email" value={form.email} onChange={handleChange} placeholder="your@email.com" autoComplete="email"
                   className="w-full border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#c9a84c]"
-                  style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-alt)', color: 'var(--text)' }}
-                />
+                  style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-alt)', color: 'var(--text)' }} />
               </div>
-
-              {error && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">{error}</div>
-              )}
-
-              <button
-                type="submit"
+              {error && <div className="p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">{error}</div>}
+              <button type="submit"
                 className="w-full py-4 font-black rounded-xl transition-all flex flex-col items-center justify-center gap-0.5 hover:opacity-90 active:scale-[0.98]"
-                style={{ backgroundColor: '#c9a84c', color: '#0f2419' }}
-              >
+                style={{ backgroundColor: '#c9a84c', color: '#0f2419' }}>
                 <span className="flex items-center gap-2 text-sm">
                   <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                   </svg>
                   Pay via M-Pesa
                 </span>
-                <span className="text-xs font-semibold opacity-75">{ticket.name} × {qty} — KSH {total.toLocaleString()}</span>
+                <span className="text-xs font-semibold opacity-75">{tier.name} x{qty} - KSH {total.toLocaleString()}</span>
               </button>
-
               <p className="text-center text-xs" style={{ color: 'var(--text-light)' }}>
-                You will receive an M-Pesa PIN prompt. Enter your PIN to complete payment instantly.
+                You will receive an M-Pesa PIN prompt. Enter your PIN to pay - your unique ticket is generated instantly.
               </p>
             </form>
           </div>
@@ -499,12 +494,10 @@ export default function TicketsPage() {
 
         <div className="text-center mt-10">
           <p className="text-white/40 text-sm mb-1">Need help?</p>
-          <a href="mailto:mombasayouthcouncil@gmail.com" className="text-[#c9a84c] font-semibold hover:underline text-sm">
-            mombasayouthcouncil@gmail.com
-          </a>
+          <a href="mailto:mombasayouthcouncil@gmail.com" className="text-[#c9a84c] font-semibold hover:underline text-sm">mombasayouthcouncil@gmail.com</a>
         </div>
         <div className="text-center mt-6">
-          <Link href="/" className="text-white/30 text-xs hover:text-white/60 transition-colors">← Back to MYC Homepage</Link>
+          <Link href="/" className="text-white/30 text-xs hover:text-white/60 transition-colors">Back to MYC Homepage</Link>
         </div>
       </div>
     </div>

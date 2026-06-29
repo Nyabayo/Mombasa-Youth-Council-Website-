@@ -208,6 +208,73 @@ export async function findCommentById(id: string): Promise<Comment | null> {
 }
 
 // ─────────────────────────────────────────────────────────────────
+// TICKETS
+// ─────────────────────────────────────────────────────────────────
+
+export interface Ticket {
+  id: string
+  ticketCode: string
+  holderName: string
+  holderPhone: string
+  holderEmail: string
+  ticketType: string
+  ticketPrice: number
+  quantity: number
+  totalPaid: number
+  mpesaReceipt: string
+  transactionRequestId: string
+  status: string
+  createdAt: string
+  checkedInAt?: string
+  checkedInBy?: string
+}
+
+export async function createTicket(t: Omit<Ticket, 'id' | 'createdAt' | 'status'>): Promise<Ticket> {
+  const { data, error } = await adminDb
+    .from('tickets')
+    .insert({
+      ticket_code:             t.ticketCode,
+      holder_name:             t.holderName,
+      holder_phone:            t.holderPhone,
+      holder_email:            t.holderEmail,
+      ticket_type:             t.ticketType,
+      ticket_price:            t.ticketPrice,
+      quantity:                t.quantity,
+      total_paid:              t.totalPaid,
+      mpesa_receipt:           t.mpesaReceipt,
+      transaction_request_id:  t.transactionRequestId,
+      status:                  'valid',
+    })
+    .select()
+    .single()
+  if (error) throw new Error(error.message)
+  return rowToTicket(data)
+}
+
+export async function findTicketByCode(code: string): Promise<Ticket | null> {
+  const { data, error } = await adminDb
+    .from('tickets').select('*').eq('ticket_code', code).single()
+  if (error || !data) return null
+  return rowToTicket(data)
+}
+
+export async function findTicketByTransactionId(txId: string): Promise<Ticket | null> {
+  const { data, error } = await adminDb
+    .from('tickets').select('*').eq('transaction_request_id', txId).single()
+  if (error || !data) return null
+  return rowToTicket(data)
+}
+
+export async function checkInTicket(code: string, staffName: string): Promise<boolean> {
+  const { error } = await adminDb
+    .from('tickets')
+    .update({ status: 'used', checked_in_at: new Date().toISOString(), checked_in_by: staffName })
+    .eq('ticket_code', code)
+    .eq('status', 'valid')
+  return !error
+}
+
+// ─────────────────────────────────────────────────────────────────
 // Row mappers
 // ─────────────────────────────────────────────────────────────────
 
@@ -257,6 +324,27 @@ function rowToUser(r: any): User {
     status:    r.status ?? 'approved',
     mpesaRef:  r.mpesa_ref ?? undefined,
     createdAt: r.created_at,
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function rowToTicket(r: any): Ticket {
+  return {
+    id:                   r.id,
+    ticketCode:           r.ticket_code,
+    holderName:           r.holder_name,
+    holderPhone:          r.holder_phone,
+    holderEmail:          r.holder_email,
+    ticketType:           r.ticket_type,
+    ticketPrice:          r.ticket_price,
+    quantity:             r.quantity,
+    totalPaid:            r.total_paid,
+    mpesaReceipt:         r.mpesa_receipt,
+    transactionRequestId: r.transaction_request_id,
+    status:               r.status,
+    createdAt:            r.created_at,
+    checkedInAt:          r.checked_in_at ?? undefined,
+    checkedInBy:          r.checked_in_by ?? undefined,
   }
 }
 
