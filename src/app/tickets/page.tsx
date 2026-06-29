@@ -369,7 +369,7 @@ export default function TicketsPage() {
       {/* Event flyer image — save your flyer as /public/myif2026-flyer.jpg */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/myif2026-flyer.jpg"
+        src="/myif2026-flyer.jpeg"
         alt="MYIF 2026 — Gala Dinner & Awards"
         className="w-full object-cover object-top"
         style={{ maxHeight: '520px', display: 'block' }}
