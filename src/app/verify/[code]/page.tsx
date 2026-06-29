@@ -13,21 +13,15 @@ interface TicketInfo {
   status: string
   createdAt: string
   checkedInAt?: string
-  checkedInBy?: string
 }
 
 const TYPE_LABEL: Record<string, string> = { regular: 'Regular', vip: 'VIP', vvip: 'VVIP' }
 
 export default function VerifyPage() {
   const { code } = useParams<{ code: string }>()
-  const [ticket, setTicket]     = useState<TicketInfo | null>(null)
-  const [loading, setLoading]   = useState(true)
+  const [ticket, setTicket]   = useState<TicketInfo | null>(null)
+  const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
-
-  const [staffCode, setStaffCode]   = useState('')
-  const [checking, setChecking]     = useState(false)
-  const [checkMsg, setCheckMsg]     = useState('')
-  const [checkOk, setCheckOk]       = useState(false)
 
   useEffect(() => {
     if (!code) return
@@ -39,26 +33,6 @@ export default function VerifyPage() {
       .catch(() => setNotFound(true))
       .finally(() => setLoading(false))
   }, [code])
-
-  const handleCheckIn = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setChecking(true)
-    setCheckMsg('')
-    const res  = await fetch('/api/tickets/verify', {
-      method:  'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: code.toUpperCase(), staffCode }),
-    })
-    const data = await res.json()
-    if (res.ok) {
-      setCheckOk(true)
-      setCheckMsg('Checked in successfully.')
-      setTicket((t) => t ? { ...t, status: 'used', checkedInAt: new Date().toISOString() } : t)
-    } else {
-      setCheckMsg(data.error ?? 'Check-in failed.')
-    }
-    setChecking(false)
-  }
 
   if (loading) {
     return (
@@ -90,9 +64,9 @@ export default function VerifyPage() {
     )
   }
 
-  const isValid    = ticket?.status === 'valid'
-  const isUsed     = ticket?.status === 'used'
-  const typeLabel  = TYPE_LABEL[ticket?.ticketType ?? ''] ?? ticket?.ticketType ?? ''
+  const isValid   = ticket?.status === 'valid'
+  const isUsed    = ticket?.status === 'used'
+  const typeLabel = TYPE_LABEL[ticket?.ticketType ?? ''] ?? ticket?.ticketType ?? ''
 
   return (
     <div className="min-h-screen py-12 px-4" style={{ backgroundColor: 'var(--bg)' }}>
@@ -121,11 +95,11 @@ export default function VerifyPage() {
           </div>
           <div className="p-5 space-y-3">
             {[
-              { label: 'Ticket Code',   value: ticket?.ticketCode,                mono: true },
-              { label: 'Holder',        value: ticket?.holderName },
-              { label: 'Ticket Type',   value: `${typeLabel} x${ticket?.quantity}`, highlight: true },
-              { label: 'Amount Paid',   value: `KSH ${ticket?.totalPaid?.toLocaleString()}` },
-              { label: 'Event Date',    value: '11th July 2026, 6:00 PM' },
+              { label: 'Ticket No.',  value: ticket?.ticketCode,                          mono: true },
+              { label: 'Holder',      value: ticket?.holderName },
+              { label: 'Ticket Type', value: `${typeLabel} x${ticket?.quantity}`,          highlight: true },
+              { label: 'Amount Paid', value: `KSH ${ticket?.totalPaid?.toLocaleString()}` },
+              { label: 'Event Date',  value: '11th July 2026, 6:00 PM' },
             ].map((row) => (
               <div key={row.label} className="flex justify-between items-center gap-4 text-sm">
                 <span style={{ color: 'var(--text-light)' }}>{row.label}</span>
@@ -136,35 +110,6 @@ export default function VerifyPage() {
             ))}
           </div>
         </div>
-
-        {/* Staff check-in */}
-        {isValid && (
-          <div className="rounded-2xl border p-5" style={{ backgroundColor: 'var(--bg-alt)', borderColor: 'var(--border)' }}>
-            <h3 className="font-black mb-3" style={{ color: 'var(--text)' }}>Event Staff Check-In</h3>
-            {checkOk ? (
-              <p className="text-green-600 font-bold">{checkMsg}</p>
-            ) : (
-              <form onSubmit={handleCheckIn} className="space-y-3">
-                <input
-                  type="password"
-                  value={staffCode}
-                  onChange={(e) => setStaffCode(e.target.value)}
-                  placeholder="Staff code"
-                  className="w-full border rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                  style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-card)', color: 'var(--text)' }}
-                />
-                {checkMsg && <p className="text-red-600 text-sm">{checkMsg}</p>}
-                <button
-                  type="submit"
-                  disabled={checking || !staffCode}
-                  className="w-full py-2.5 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
-                >
-                  {checking ? 'Checking in...' : 'Mark as Checked In'}
-                </button>
-              </form>
-            )}
-          </div>
-        )}
 
         <div className="text-center mt-8">
           <Link href="/" className="text-sm hover:underline" style={{ color: 'var(--text-light)' }}>

@@ -54,23 +54,21 @@ export default function TicketsPage() {
       color: { dark: '#0f2419', light: '#ffffff' },
     }).then((url) => {
       setQrDataUrl(url)
-      // Give React one frame to render the QR into the card, then auto-download
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          const el = document.getElementById('ticket-card')
-          if (!el) return
-          import('html2canvas').then(({ default: html2canvas }) => {
-            html2canvas(el, { scale: 2, useCORS: true, allowTaint: false, backgroundColor: null, logging: false })
-              .then((canvas) => {
-                const link = document.createElement('a')
-                link.download = `MYIF2026-${ticket.ticketCode}.png`
-                link.href = canvas.toDataURL('image/png')
-                link.click()
-              })
-              .catch(() => {})
-          })
-        }, 150)
-      })
+      // 800ms gives React time to re-render the QR into the card before capturing
+      setTimeout(() => {
+        const el = document.getElementById('ticket-card')
+        if (!el) return
+        import('html2canvas').then(({ default: html2canvas }) => {
+          html2canvas(el, { scale: 3, useCORS: true, allowTaint: false, backgroundColor: '#0f2419', logging: false })
+            .then((canvas) => {
+              const link = document.createElement('a')
+              link.download = `MYIF2026-${ticket.ticketCode}.jpg`
+              link.href = canvas.toDataURL('image/jpeg', 0.95)
+              link.click()
+            })
+            .catch(() => {})
+        })
+      }, 800)
     }).catch(() => {})
   }, [ticket])
 
@@ -80,10 +78,10 @@ export default function TicketsPage() {
     setDownloading(true)
     try {
       const { default: html2canvas } = await import('html2canvas')
-      const canvas = await html2canvas(el, { scale: 2, useCORS: true, allowTaint: false, backgroundColor: null, logging: false })
+      const canvas = await html2canvas(el, { scale: 3, useCORS: true, allowTaint: false, backgroundColor: '#0f2419', logging: false })
       const link = document.createElement('a')
-      link.download = `MYIF2026-${ticket.ticketCode}.png`
-      link.href = canvas.toDataURL('image/png')
+      link.download = `MYIF2026-${ticket.ticketCode}.jpg`
+      link.href = canvas.toDataURL('image/jpeg', 0.95)
       link.click()
     } catch { /* silent */ }
     setDownloading(false)
@@ -199,118 +197,135 @@ export default function TicketsPage() {
   if (payState === 'done' && ticket) {
     const tierColor = TYPE_COLOR[ticket.ticketType] ?? '#e2e8f0'
     const tierText  = TYPE_TEXT[ticket.ticketType]  ?? '#1a1a1a'
+    const tierLabel = TICKETS.find((t) => t.id === ticket.ticketType)?.name ?? ticket.ticketType
+
     return (
-      <div className="min-h-screen bg-[#0f2419] py-12 px-4">
+      <div className="min-h-screen bg-[#0b1e12] py-10 px-4">
         <div className="max-w-md mx-auto">
 
-          <div className="text-center mb-6">
-            <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
-              <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          {/* Success badge */}
+          <div className="text-center mb-7">
+            <div className="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+              <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h1 className="text-2xl font-black text-white">Your Ticket is Ready</h1>
-            <p className="text-white/50 text-sm">{qrDataUrl ? 'Downloading your ticket image...' : 'Generating your ticket...'}</p>
+            <h1 className="text-2xl font-black text-white">Payment Confirmed!</h1>
+            <p className="text-white/50 text-sm mt-1">
+              {qrDataUrl ? 'Downloading your ticket...' : 'Generating your ticket...'}
+            </p>
           </div>
 
-          {/* The actual ticket */}
-          <div id="ticket-card" className="rounded-2xl overflow-hidden shadow-2xl mb-6">
+          {/* ══════════ TICKET CARD ══════════ */}
+          <div
+            id="ticket-card"
+            style={{
+              width: '100%',
+              backgroundColor: '#0f2419',
+              borderRadius: '16px',
+              overflow: 'hidden',
+              border: '2px solid #c9a84c',
+              fontFamily: 'system-ui, -apple-system, Arial, sans-serif',
+              marginBottom: '24px',
+              boxShadow: '0 25px 60px rgba(0,0,0,0.6)',
+            }}
+          >
+            {/* Gold top bar */}
+            <div style={{ height: '6px', background: 'linear-gradient(90deg, #6b4c0f, #c9a84c, #f5d87e, #c9a84c, #6b4c0f)' }} />
 
-            {/* Ticket header */}
-            <div className="bg-[#0f2419] border-b-4 border-[#c9a84c] px-6 py-5">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-[#c9a84c] text-xs font-bold tracking-widest uppercase mb-0.5">Official Ticket</p>
-                  <h2 className="text-white text-xl font-black leading-tight">Mombasa Youth</h2>
-                  <h3 className="text-white text-xl font-black leading-tight">Innovation Festival 2026</h3>
-                  <p className="text-white/60 text-xs mt-1">Gala Dinner and Awards</p>
+            {/* Header */}
+            <div style={{ padding: '20px 22px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid rgba(201,168,76,0.25)' }}>
+              <div>
+                <div style={{ color: '#c9a84c', fontSize: '9px', fontWeight: '800', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '8px' }}>
+                  ✦ Official Ticket ✦
                 </div>
-                {/* Tier badge */}
-                <div className="flex-shrink-0 text-right">
-                  <span
-                    className="inline-block px-3 py-1.5 rounded-lg text-sm font-black"
-                    style={{ backgroundColor: tierColor, color: tierText }}
-                  >
-                    {(tier.name ?? ticket.ticketType).toUpperCase()}
-                  </span>
-                  <p className="text-white/50 text-xs mt-1">x{ticket.quantity}</p>
+                <div style={{ color: 'white', fontSize: '18px', fontWeight: '900', lineHeight: 1.1 }}>Mombasa Youth</div>
+                <div style={{ color: 'white', fontSize: '18px', fontWeight: '900', lineHeight: 1.1 }}>Innovation Festival</div>
+                <div style={{ color: '#c9a84c', fontSize: '21px', fontWeight: '900', lineHeight: 1.3 }}>2026</div>
+                <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '10px', marginTop: '4px', fontStyle: 'italic' }}>Gala Dinner and Awards</div>
+              </div>
+              {/* Tier badge */}
+              <div style={{ textAlign: 'center', flexShrink: 0 }}>
+                <div style={{ backgroundColor: tierColor, color: tierText, padding: '10px 16px', borderRadius: '10px', fontWeight: '900', fontSize: '15px', letterSpacing: '2px' }}>
+                  {tierLabel.toUpperCase()}
+                </div>
+                <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px', marginTop: '6px' }}>
+                  {ticket.quantity > 1 ? `×${ticket.quantity}` : 'ADMIT ONE'}
                 </div>
               </div>
             </div>
 
-            {/* Ticket body */}
-            <div className="bg-white px-6 py-5">
-              <div className="flex gap-5">
-                {/* Left: details */}
-                <div className="flex-1 space-y-3 min-w-0">
-                  <div>
-                    <p className="text-gray-400 text-xs uppercase tracking-wide font-bold">Holder</p>
-                    <p className="text-gray-900 font-black text-lg leading-tight truncate">{ticket.holderName}</p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <p className="text-gray-400 text-xs uppercase tracking-wide font-bold">Date</p>
-                      <p className="text-gray-800 font-bold text-sm">11 July 2026</p>
+            {/* White details + QR section */}
+            <div style={{ backgroundColor: '#ffffff', padding: '18px 22px' }}>
+              <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  {([
+                    { label: 'Holder',      value: ticket.holderName,                          size: '15px', weight: '900', color: '#111827' },
+                    { label: 'Date',        value: '11 July 2026',                             size: '13px', weight: '700', color: '#374151' },
+                    { label: 'Time',        value: '6:00 PM',                                  size: '13px', weight: '700', color: '#374151' },
+                    { label: 'Paid',        value: `KSH ${ticket.totalPaid.toLocaleString()}`, size: '13px', weight: '900', color: '#0f2419' },
+                    { label: 'M-Pesa',      value: ticket.mpesaReceipt,                        size: '12px', weight: '700', color: '#374151', mono: true },
+                  ] as {label:string;value:string;size:string;weight:string;color:string;mono?:boolean}[]).map((row) => (
+                    <div key={row.label} style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '9px' }}>
+                      <span style={{ color: '#9ca3af', fontSize: '9px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', minWidth: '52px', flexShrink: 0 }}>
+                        {row.label}
+                      </span>
+                      <span style={{ color: row.color, fontSize: row.size, fontWeight: row.weight, fontFamily: row.mono ? 'monospace' : 'inherit', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {row.value}
+                      </span>
                     </div>
-                    <div>
-                      <p className="text-gray-400 text-xs uppercase tracking-wide font-bold">Time</p>
-                      <p className="text-gray-800 font-bold text-sm">6:00 PM</p>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-xs uppercase tracking-wide font-bold">Amount Paid</p>
-                    <p className="text-gray-900 font-black">KSH {ticket.totalPaid.toLocaleString()}</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-400 text-xs uppercase tracking-wide font-bold">M-Pesa Receipt</p>
-                    <p className="text-gray-900 font-mono font-bold tracking-wider text-sm">{ticket.mpesaReceipt}</p>
-                  </div>
+                  ))}
                 </div>
-                {/* Right: QR */}
-                <div className="flex-shrink-0 flex flex-col items-center gap-1">
+                {/* QR */}
+                <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
                   {qrDataUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={qrDataUrl} alt="Ticket QR Code" width={100} height={100} className="rounded-lg border border-gray-200" />
+                    <img src={qrDataUrl} width={100} height={100} alt="QR" style={{ display: 'block', borderRadius: '8px', border: '2px solid #e5e7eb' }} />
                   ) : (
-                    <div className="w-[100px] h-[100px] rounded-lg border border-gray-200 bg-gray-50 flex items-center justify-center">
+                    <div style={{ width: '100px', height: '100px', borderRadius: '8px', border: '2px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f9fafb' }}>
                       <div className="w-6 h-6 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
                     </div>
                   )}
-                  <p className="text-gray-400 text-xs text-center">Scan to verify</p>
+                  <span style={{ color: '#9ca3af', fontSize: '9px' }}>Scan to verify</span>
                 </div>
               </div>
+            </div>
 
-              {/* Ticket code */}
-              <div className="mt-4 pt-4 border-t-2 border-dashed border-gray-200">
-                <p className="text-gray-400 text-xs uppercase tracking-wide font-bold text-center mb-1">Ticket Code</p>
-                <p className="text-center font-mono font-black text-xl tracking-widest text-[#0f2419]">{ticket.ticketCode}</p>
+            {/* Dashed gold divider */}
+            <div style={{ borderTop: '2px dashed rgba(201,168,76,0.4)' }} />
+
+            {/* HUGE Ticket Number */}
+            <div style={{ padding: '20px 22px 18px', textAlign: 'center' }}>
+              <div style={{ color: 'rgba(201,168,76,0.6)', fontSize: '9px', fontWeight: '800', letterSpacing: '4px', textTransform: 'uppercase', marginBottom: '10px' }}>
+                Ticket No.
+              </div>
+              <div style={{ color: '#c9a84c', fontSize: '28px', fontWeight: '900', fontFamily: 'monospace', letterSpacing: '5px', textShadow: '0 0 30px rgba(201,168,76,0.45)' }}>
+                {ticket.ticketCode}
               </div>
             </div>
 
-            {/* Ticket footer */}
-            <div className="bg-[#1a4731] px-6 py-3 flex items-center justify-between">
-              <p className="text-white/60 text-xs">Mombasa Youth Council</p>
-              <p className="text-[#c9a84c] text-xs font-bold">mombasayouthcouncil@gmail.com</p>
+            {/* Footer */}
+            <div style={{ backgroundColor: '#1a4731', padding: '10px 22px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>Mombasa Youth Council</span>
+              <span style={{ color: '#c9a84c', fontSize: '10px', fontWeight: '700' }}>mombasayouthcouncil@gmail.com</span>
             </div>
+
+            {/* Gold bottom bar */}
+            <div style={{ height: '6px', background: 'linear-gradient(90deg, #6b4c0f, #c9a84c, #f5d87e, #c9a84c, #6b4c0f)' }} />
           </div>
 
-          {/* Action buttons */}
-          <div className="space-y-3">
-            {/* Download as image */}
-            <button
-              onClick={downloadTicket}
-              disabled={downloading || !qrDataUrl}
-              className="flex items-center justify-center gap-3 w-full py-4 rounded-xl font-black text-sm transition-opacity hover:opacity-90 disabled:opacity-50"
-              style={{ backgroundColor: '#c9a84c', color: '#0f2419' }}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              {downloading ? 'Saving...' : !qrDataUrl ? 'Preparing download...' : 'Download Ticket Again'}
-            </button>
-
-
-          </div>
+          {/* Download button */}
+          <button
+            onClick={downloadTicket}
+            disabled={downloading || !qrDataUrl}
+            className="flex items-center justify-center gap-3 w-full py-4 rounded-xl font-black text-sm transition-opacity hover:opacity-90 disabled:opacity-50"
+            style={{ backgroundColor: '#c9a84c', color: '#0f2419' }}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
+            {downloading ? 'Saving...' : !qrDataUrl ? 'Preparing...' : 'Download Ticket Again'}
+          </button>
 
           <p className="text-center text-white/30 text-xs mt-6">
             Questions? <a href="mailto:mombasayouthcouncil@gmail.com" className="text-[#c9a84c] underline">mombasayouthcouncil@gmail.com</a>
@@ -350,6 +365,16 @@ export default function TicketsPage() {
   /* ─── Main form ──────────────────────────────────────────────── */
   return (
     <div className="min-h-screen bg-[#0f2419]">
+
+      {/* Event flyer image — save your flyer as /public/myif2026-flyer.jpg */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/myif2026-flyer.jpg"
+        alt="MYIF 2026 — Gala Dinner & Awards"
+        className="w-full object-cover object-top"
+        style={{ maxHeight: '520px', display: 'block' }}
+        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+      />
 
       {/* Hero */}
       <div className="relative overflow-hidden">
