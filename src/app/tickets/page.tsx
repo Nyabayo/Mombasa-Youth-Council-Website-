@@ -248,10 +248,9 @@ export default function TicketsPage() {
   const reset = () => { stopPolling(); setPayState('form'); setError('') }
 
   // ════════════════════════════════════════════════════════════════════════════
-  // TICKET CARD — full-width text, QR centred separately, no M-Pesa row
+  // TICKET CARD — landscape 550×200 px (→ 1650×600 at scale 3 = 5.5″×2″)
   // ════════════════════════════════════════════════════════════════════════════
   const TicketCard = ({ t }: { t: Ticket }) => {
-    const badge = TIER_BADGE[t.ticketType] ?? { bg: '#ffffff', color: '#0f2419' }
     const label = TIERS.find(x => x.id === t.ticketType)?.name ?? t.ticketType
     const qr    = qrDataUrls[t.ticketCode]
 
@@ -259,143 +258,129 @@ export default function TicketsPage() {
       <div
         id={`tc-${t.ticketCode}`}
         style={{
-          width: '100%',
-          maxWidth: '400px',
-          margin: '0 auto',
+          width: '550px',
+          height: '200px',
+          display: 'flex',
+          flexDirection: 'column',
           backgroundColor: '#0f2419',
-          borderRadius: '18px',
+          borderRadius: '12px',
           overflow: 'hidden',
           border: '2px solid #c9a84c',
           fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.7)',
         }}
       >
-        {/* Gold top bar */}
-        <div style={{ height: '7px', background: 'linear-gradient(90deg,#5c3d08,#c9a84c,#f5d87e,#e8c96a,#c9a84c,#5c3d08)' }} />
+        {/* ── Gold top bar ── */}
+        <div style={{ height: '6px', flexShrink: 0, background: 'linear-gradient(90deg,#5c3d08,#c9a84c,#f5d87e,#e8c96a,#c9a84c,#5c3d08)' }} />
 
-        {/* ── Header ── */}
-        <div style={{
-          padding: '18px 22px 14px',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-start',
-          borderBottom: '1px solid rgba(201,168,76,0.2)',
-        }}>
-          <div style={{ flex: 1, paddingRight: '12px' }}>
-            <div style={{ color: '#c9a84c', fontSize: '9px', fontWeight: '800', letterSpacing: '3px', textTransform: 'uppercase', marginBottom: '9px' }}>
+        {/* ── Three-column body ── */}
+        <div style={{ flex: 1, display: 'flex', minHeight: 0 }}>
+
+          {/* LEFT — event branding */}
+          <div style={{
+            width: '152px',
+            flexShrink: 0,
+            backgroundColor: '#0f2419',
+            padding: '12px 14px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            borderRight: '1px solid rgba(201,168,76,0.25)',
+          }}>
+            <div style={{ color: '#c9a84c', fontSize: '7px', fontWeight: '800', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '7px' }}>
               ✦ Official Ticket ✦
             </div>
-            <div style={{ color: '#ffffff', fontSize: '16px', fontWeight: '900', lineHeight: '1.2' }}>Mombasa Youth</div>
-            <div style={{ color: '#ffffff', fontSize: '16px', fontWeight: '900', lineHeight: '1.2', marginBottom: '3px' }}>Innovation Festival</div>
-            <div style={{ color: '#c9a84c', fontSize: '20px', fontWeight: '900', lineHeight: '1.25', marginBottom: '5px' }}>2026</div>
-            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px', fontStyle: 'italic' }}>Gala Dinner and Awards</div>
-          </div>
-          {/* Tier badge */}
-          <div style={{ flexShrink: 0, textAlign: 'center' }}>
-            <div style={{
-              backgroundColor: badge.bg,
-              color: badge.color,
-              padding: '7px 14px',
-              borderRadius: '8px',
-              fontWeight: '900',
-              fontSize: '13px',
-              letterSpacing: '1px',
-              whiteSpace: 'nowrap',
-            }}>
-              {label.toUpperCase()}
+            <div style={{ color: '#ffffff', fontSize: '11px', fontWeight: '900', lineHeight: '1.25' }}>
+              Mombasa Youth
             </div>
-            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px', marginTop: '6px' }}>ADMIT ONE</div>
-          </div>
-        </div>
-
-        {/* ── White details section — full width, no QR competing ── */}
-        <div style={{ backgroundColor: '#ffffff', padding: '18px 22px 14px' }}>
-
-          {/* Holder name — big and prominent */}
-          <div style={{ marginBottom: '14px', paddingBottom: '12px', borderBottom: '1px solid #e5e7eb' }}>
-            <div style={{ color: '#9ca3af', fontSize: '8px', fontWeight: '800', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '5px' }}>
-              Ticket Holder
+            <div style={{ color: '#ffffff', fontSize: '11px', fontWeight: '900', lineHeight: '1.25', marginBottom: '5px' }}>
+              Innovation Festival
             </div>
-            <div style={{ color: '#0f2419', fontSize: '22px', fontWeight: '900', lineHeight: '1.15' }}>
-              {t.holderName}
+            <div style={{ color: '#c9a84c', fontSize: '20px', fontWeight: '900', lineHeight: '1.1', marginBottom: '5px' }}>
+              2026
+            </div>
+            <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '8px', fontStyle: 'italic', lineHeight: '1.3' }}>
+              Gala Dinner &amp; Awards
+            </div>
+            <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '8px', marginTop: '2px' }}>
+              11 July 2026 · 6:00 PM
             </div>
           </div>
 
-          {/* Grid: Date / Time / Type / Paid */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px 20px' }}>
-            {([
-              { label: 'Date',         value: '11 July 2026',                        color: '#111827', size: '14px', bold: false },
-              { label: 'Time',         value: '6:00 PM',                             color: '#111827', size: '14px', bold: false },
-              { label: 'Ticket Type',  value: label,                                 color: '#374151', size: '14px', bold: false },
-              { label: 'Amount Paid',  value: `KSH ${t.totalPaid.toLocaleString()}`, color: '#0f2419', size: '15px', bold: true  },
-            ] as { label: string; value: string; color: string; size: string; bold: boolean }[]).map(row => (
-              <div key={row.label}>
-                <div style={{ color: '#9ca3af', fontSize: '8px', fontWeight: '800', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '4px' }}>
-                  {row.label}
-                </div>
-                <div style={{ color: row.color, fontSize: row.size, fontWeight: row.bold ? '900' : '700', lineHeight: '1.2' }}>
-                  {row.value}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── QR code — own centred dark section ── */}
-        <div style={{
-          backgroundColor: '#0d2016',
-          padding: '16px 22px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '7px',
-          borderTop: '1px solid rgba(201,168,76,0.15)',
-        }}>
-          {qr ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={qr}
-              width={112}
-              height={112}
-              alt="QR Code"
-              style={{ display: 'block', borderRadius: '10px', border: '3px solid rgba(201,168,76,0.5)', backgroundColor: '#fff', padding: '3px' }}
-            />
-          ) : (
-            <div style={{ width: '112px', height: '112px', borderRadius: '10px', border: '3px solid rgba(201,168,76,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.05)' }}>
-              <div className="w-6 h-6 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
-            </div>
-          )}
-          <span style={{ color: 'rgba(255,255,255,0.35)', fontSize: '9px', letterSpacing: '1px', textTransform: 'uppercase' }}>
-            Scan to verify authenticity
-          </span>
-        </div>
-
-        {/* ── Ticket number ── */}
-        <div style={{ borderTop: '2px dashed rgba(201,168,76,0.3)', padding: '16px 22px', textAlign: 'center', backgroundColor: '#0b1e10' }}>
-          <div style={{ color: 'rgba(201,168,76,0.5)', fontSize: '8px', fontWeight: '800', letterSpacing: '5px', textTransform: 'uppercase', marginBottom: '8px' }}>
-            Ticket No.
-          </div>
+          {/* MIDDLE — holder + details */}
           <div style={{
-            color: '#c9a84c',
-            fontSize: '20px',
-            fontWeight: '900',
-            fontFamily: 'monospace',
-            letterSpacing: '2px',
-            whiteSpace: 'nowrap',
-            textShadow: '0 0 16px rgba(201,168,76,0.3)',
+            flex: 1,
+            backgroundColor: '#ffffff',
+            padding: '12px 16px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
           }}>
-            {t.ticketCode}
+            {/* Holder name */}
+            <div style={{ marginBottom: '9px', paddingBottom: '9px', borderBottom: '1px solid #d1d5db' }}>
+              <div style={{ color: '#374151', fontSize: '7.5px', fontWeight: '800', letterSpacing: '2.5px', textTransform: 'uppercase', marginBottom: '3px' }}>
+                Ticket Holder
+              </div>
+              <div style={{ color: '#0f2419', fontSize: '17px', fontWeight: '900', lineHeight: '1.15', letterSpacing: '-0.2px' }}>
+                {t.holderName}
+              </div>
+            </div>
+
+            {/* Details grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px 14px' }}>
+              {([
+                { label: 'Date',        value: '11 July 2026' },
+                { label: 'Time',        value: '6:00 PM'      },
+                { label: 'Ticket Type', value: label          },
+                { label: 'Amount Paid', value: `KSH ${t.totalPaid.toLocaleString()}` },
+              ]).map(row => (
+                <div key={row.label}>
+                  <div style={{ color: '#374151', fontSize: '7px', fontWeight: '800', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '2px' }}>
+                    {row.label}
+                  </div>
+                  <div style={{ color: '#111827', fontSize: '11.5px', fontWeight: '700', lineHeight: '1.2' }}>
+                    {row.value}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
+
+          {/* RIGHT — QR + ticket no. (separated by dashed tear-line) */}
+          <div style={{
+            width: '152px',
+            flexShrink: 0,
+            backgroundColor: '#112b1c',
+            padding: '10px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '5px',
+            borderLeft: '2px dashed rgba(201,168,76,0.4)',
+          }}>
+            {qr ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={qr} width={102} height={102} alt="QR"
+                style={{ display: 'block', borderRadius: '8px', border: '2px solid rgba(201,168,76,0.55)', backgroundColor: '#fff', padding: '3px' }}
+              />
+            ) : (
+              <div style={{ width: '102px', height: '102px', borderRadius: '8px', border: '2px solid rgba(201,168,76,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255,255,255,0.04)' }}>
+                <div className="w-5 h-5 border-2 border-white/20 border-t-white/50 rounded-full animate-spin" />
+              </div>
+            )}
+            <div style={{ color: 'rgba(255,255,255,0.38)', fontSize: '6.5px', letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center' }}>
+              Scan to verify
+            </div>
+            <div style={{ color: '#c9a84c', fontSize: '8.5px', fontWeight: '900', fontFamily: 'monospace', letterSpacing: '1.5px', whiteSpace: 'nowrap', textAlign: 'center' }}>
+              {t.ticketCode}
+            </div>
+          </div>
+
         </div>
 
-        {/* ── Footer ── */}
-        <div style={{ backgroundColor: '#1a4731', padding: '9px 22px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: '10px' }}>Mombasa Youth Council</span>
-          <span style={{ color: '#c9a84c', fontSize: '10px', fontWeight: '700' }}>mombasayouthcouncil@gmail.com</span>
-        </div>
-
-        {/* Gold bottom bar */}
-        <div style={{ height: '7px', background: 'linear-gradient(90deg,#5c3d08,#c9a84c,#f5d87e,#e8c96a,#c9a84c,#5c3d08)' }} />
+        {/* ── Gold bottom bar ── */}
+        <div style={{ height: '6px', flexShrink: 0, background: 'linear-gradient(90deg,#5c3d08,#c9a84c,#f5d87e,#e8c96a,#c9a84c,#5c3d08)' }} />
       </div>
     )
   }
@@ -455,7 +440,7 @@ export default function TicketsPage() {
   if (payState === 'done' && tickets.length > 0) {
     return (
       <div className="min-h-screen py-10 px-4" style={{ backgroundColor: '#061010' }}>
-        <div className="max-w-md mx-auto">
+        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
 
           <div className="text-center mb-8">
             <div className="w-14 h-14 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
@@ -478,7 +463,10 @@ export default function TicketsPage() {
           <div className="space-y-6 mb-8">
             {tickets.map(t => (
               <div key={t.ticketCode}>
-                <TicketCard t={t} />
+                {/* Scrollable on small screens so the 550px ticket is never clipped */}
+                <div style={{ overflowX: 'auto', paddingBottom: '4px' }}>
+                  <TicketCard t={t} />
+                </div>
                 <button
                   onClick={() => downloadSingleTicket(t)}
                   className="mt-3 w-full py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:opacity-80 transition-opacity"
@@ -740,14 +728,14 @@ export default function TicketsPage() {
 
         {/* Apply first holder to all */}
         {totalTickets > 1 && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 4px', marginBottom: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '14px 16px', marginBottom: '20px', borderRadius: '12px', border: '1px solid rgba(201,168,76,0.35)', backgroundColor: 'rgba(201,168,76,0.06)' }}>
             <input
               type="checkbox"
               id="applyAll"
-              style={{ width: '16px', height: '16px', cursor: 'pointer', accentColor: '#c9a84c', flexShrink: 0 }}
-              onChange={e => { if (e.target.checked) { applyFirstToAll(); setTimeout(() => { e.target.checked = false }, 50) } }}
+              style={{ width: '18px', height: '18px', cursor: 'pointer', accentColor: '#c9a84c', flexShrink: 0 }}
+              onChange={e => { if (e.target.checked) { applyFirstToAll(); setTimeout(() => { e.target.checked = false }, 80) } }}
             />
-            <label htmlFor="applyAll" style={{ color: 'rgba(255,255,255,0.55)', fontSize: '13px', fontWeight: '600', cursor: 'pointer', userSelect: 'none' }}>
+            <label htmlFor="applyAll" style={{ color: 'rgba(255,255,255,0.9)', fontSize: '14px', fontWeight: '700', cursor: 'pointer', userSelect: 'none', lineHeight: '1.3' }}>
               Apply first ticket holder&apos;s details to all tickets
             </label>
           </div>
