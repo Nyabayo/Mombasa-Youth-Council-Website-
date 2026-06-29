@@ -260,9 +260,16 @@ export async function findTicketByCode(code: string): Promise<Ticket | null> {
 
 export async function findTicketByTransactionId(txId: string): Promise<Ticket | null> {
   const { data, error } = await adminDb
-    .from('tickets').select('*').eq('transaction_request_id', txId).single()
+    .from('tickets').select('*').eq('transaction_request_id', txId).limit(1).single()
   if (error || !data) return null
   return rowToTicket(data)
+}
+
+export async function findTicketsByTransactionId(txId: string): Promise<Ticket[]> {
+  const { data, error } = await adminDb
+    .from('tickets').select('*').eq('transaction_request_id', txId)
+  if (error || !data) return []
+  return data.map(rowToTicket)
 }
 
 export async function checkInTicket(code: string, staffName: string): Promise<boolean> {

@@ -5,6 +5,13 @@ import { checkRateLimit } from '@/lib/rate-limit'
 
 const PRICES: Record<string, number> = { regular: 500, vip: 1000, vvip: 2000 }
 
+interface HolderInput {
+  holderName: string
+  holderPhone: string
+  holderEmail: string
+  ticketType: string
+}
+
 export async function POST(request: NextRequest) {
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown'
   const rl = checkRateLimit(`ticket-create:${ip}`, 5, 60 * 60_000)
@@ -13,16 +20,16 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { name, phone, email, ticketType, qty, transactionRequestId } = await request.json()
+    const { transactionRequestId, tickets: holders } = await request.json()
 
-    if (!name || !phone || !email || !ticketType || !qty || !transactionRequestId) {
-      return NextResponse.json({ error: 'All fields are required.' }, { status: 400 })
+    if (!transactionRequestId || !Array.isArray(holders) || holders.length === 0) {
+      return NextResponse.json({ error: 'Invalid request.' }, { status: 400 })
     }
 
-    // Idempotent: return existing ticket for the same payment
-    const existing = await db.findTicketByTransactionId(transactionRequestId)
-    if (existing) {
-      return NextResponse.json({ ticket: existing })
+    // Idempotent: return all existing tickets for this payment
+    const existing = await db.findTicketsByTransactionId(transactionRequestId)
+    if (existing.length > 0) {
+      return NextResponse.json({ tickets: existing })
     }
 
     // Server independently verifies payment with MegaPay
@@ -34,30 +41,33 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const price = PRICES[ticketType]
-    if (!price) return NextResponse.json({ error: 'Invalid ticket type.' }, { status: 400 })
+    const created = []
+    for (const holder of holders as HolderInput[]) {
+      const price = PRICES[holder.ticketType]
+      if (!price) continue
 
-    // Collision-safe unique code
-    let ticketCode = generateTicketCode()
-    for (let i = 0; i < 5; i++) {
-      if (!(await db.findTicketByCode(ticketCode))) break
-      ticketCode = generateTicketCode()
+      let ticketCode = generateTicketCode()
+      for (let i = 0; i < 5; i++) {
+        if (!(await db.findTicketByCode(ticketCode))) break
+        ticketCode = generateTicketCode()
+      }
+
+      const ticket = await db.createTicket({
+        ticketCode,
+        holderName:           holder.holderName.trim(),
+        holderPhone:          holder.holderPhone.trim(),
+        holderEmail:          holder.holderEmail.trim().toLowerCase(),
+        ticketType:           holder.ticketType,
+        ticketPrice:          price,
+        quantity:             1,
+        totalPaid:            price,
+        mpesaReceipt:         payment.receipt ?? 'N/A',
+        transactionRequestId,
+      })
+      created.push(ticket)
     }
 
-    const ticket = await db.createTicket({
-      ticketCode,
-      holderName:           name.trim(),
-      holderPhone:          phone.trim(),
-      holderEmail:          email.trim().toLowerCase(),
-      ticketType,
-      ticketPrice:          price,
-      quantity:             Number(qty),
-      totalPaid:            price * Number(qty),
-      mpesaReceipt:         payment.receipt ?? 'N/A',
-      transactionRequestId,
-    })
-
-    return NextResponse.json({ ticket }, { status: 201 })
+    return NextResponse.json({ tickets: created }, { status: 201 })
   } catch (err) {
     console.error('ticket:create', err)
     return NextResponse.json({ error: 'Internal server error.' }, { status: 500 })
