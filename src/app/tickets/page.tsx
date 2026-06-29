@@ -372,8 +372,13 @@ export default function TicketsPage() {
             <div style={{ color: 'rgba(255,255,255,0.38)', fontSize: '6.5px', letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center' }}>
               Scan to verify
             </div>
-            <div style={{ color: '#c9a84c', fontSize: '8.5px', fontWeight: '900', fontFamily: 'monospace', letterSpacing: '1.5px', whiteSpace: 'nowrap', textAlign: 'center' }}>
-              {t.ticketCode}
+            <div style={{ textAlign: 'center', marginTop: '2px' }}>
+              <div style={{ color: 'rgba(201,168,76,0.6)', fontSize: '6.5px', fontWeight: '800', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '2px' }}>
+                Ticket No.
+              </div>
+              <div style={{ color: '#c9a84c', fontSize: '10px', fontWeight: '900', fontFamily: 'monospace', letterSpacing: '1px', whiteSpace: 'nowrap' }}>
+                {t.ticketCode}
+              </div>
             </div>
           </div>
 
