@@ -51,14 +51,33 @@ export default function TicketsPage() {
 
   useEffect(() => () => stopPolling(), [])
 
-  // Generate QR code client-side when ticket is ready
+  // Generate QR code then auto-download the ticket image
   useEffect(() => {
     if (!ticket || typeof window === 'undefined') return
     const verifyUrl = `${window.location.origin}/verify/${ticket.ticketCode}`
     QRCode.toDataURL(verifyUrl, {
       width: 220, margin: 1,
       color: { dark: '#0f2419', light: '#ffffff' },
-    }).then(setQrDataUrl).catch(() => {})
+    }).then((url) => {
+      setQrDataUrl(url)
+      // Give React one frame to render the QR into the card, then auto-download
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          const el = document.getElementById('ticket-card')
+          if (!el) return
+          import('html2canvas').then(({ default: html2canvas }) => {
+            html2canvas(el, { scale: 2, useCORS: true, allowTaint: false, backgroundColor: null, logging: false })
+              .then((canvas) => {
+                const link = document.createElement('a')
+                link.download = `MYIF2026-${ticket.ticketCode}.png`
+                link.href = canvas.toDataURL('image/png')
+                link.click()
+              })
+              .catch(() => {})
+          })
+        }, 150)
+      })
+    }).catch(() => {})
   }, [ticket])
 
   const downloadTicket = async () => {
@@ -90,20 +109,6 @@ export default function TicketsPage() {
       const t = data.ticket
       setTicket(t)
       setPayState('done')
-      // Auto-send ticket to payer's WhatsApp immediately
-      const verifyUrl = `${window.location.origin}/verify/${t.ticketCode}`
-      const tierName  = TICKETS.find((x) => x.id === t.ticketType)?.name ?? t.ticketType
-      const waMessage =
-        `🎟 *Your MYIF 2026 Ticket*\n\n` +
-        `Ticket Code: *${t.ticketCode}*\n` +
-        `Holder: ${t.holderName}\n` +
-        `Type: ${tierName} x${t.quantity}\n` +
-        `Paid: KSH ${t.totalPaid.toLocaleString()}\n` +
-        `M-Pesa: ${t.mpesaReceipt}\n\n` +
-        `Verify your ticket:\n${verifyUrl}\n\n` +
-        `_Mombasa Youth Innovation Festival 2026_\n` +
-        `_Gala Dinner and Awards | 11th July 2026, 6:00 PM_`
-      window.open(`https://wa.me/${toIntlPhone(form.phone)}?text=${encodeURIComponent(waMessage)}`, '_blank', 'noopener,noreferrer')
     } else {
       setError(data.error ?? 'Ticket creation failed. Contact mombasayouthcouncil@gmail.com')
       setPayState('error')
@@ -220,13 +225,13 @@ export default function TicketsPage() {
         <div className="max-w-md mx-auto">
 
           <div className="text-center mb-6">
-            <div className="w-16 h-16 bg-[#25D366] rounded-full flex items-center justify-center mx-auto mb-3">
+            <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
               </svg>
             </div>
             <h1 className="text-2xl font-black text-white">Your Ticket is Ready</h1>
-            <p className="text-white/50 text-sm">Screenshot or save this ticket to your phone</p>
+            <p className="text-white/50 text-sm">{qrDataUrl ? 'Downloading your ticket image...' : 'Generating your ticket...'}</p>
           </div>
 
           {/* The actual ticket */}
@@ -335,7 +340,7 @@ export default function TicketsPage() {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
               </svg>
-              {downloading ? 'Saving...' : 'Download Ticket as Image'}
+              {downloading ? 'Saving...' : !qrDataUrl ? 'Preparing download...' : 'Download Ticket Again'}
             </button>
 
             <a
