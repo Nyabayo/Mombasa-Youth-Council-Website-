@@ -26,6 +26,7 @@ export default function TicketsPage() {
   const [countdown, setCountdown] = useState(60)
   const [qrDataUrl, setQrDataUrl] = useState('')
   const [downloading, setDownloading] = useState(false)
+  const [customAmount, setCustomAmount] = useState('')
 
   const pollRef     = useRef<ReturnType<typeof setInterval> | null>(null)
   const timerRef    = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -138,7 +139,7 @@ export default function TicketsPage() {
     setPayState('initiating')
     const res  = await fetch('/api/pay/initiate', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone: form.phone, amount: total, reference: `TKT-${Date.now()}` }),
+      body: JSON.stringify({ phone: form.phone, amount: customAmount ? Number(customAmount) : total, reference: `TKT-${Date.now()}` }),
     })
     const data = await res.json()
     if (!res.ok || !data.transactionRequestId) {
@@ -507,6 +508,18 @@ export default function TicketsPage() {
                   className="w-full border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#c9a84c]"
                   style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-alt)', color: 'var(--text)' }} />
               </div>
+              {/* Test amount override */}
+              <div>
+                <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-muted)' }}>Other Amount (testing only)</label>
+                <input
+                  type="number" min="1" value={customAmount}
+                  onChange={(e) => setCustomAmount(e.target.value)}
+                  placeholder={`Leave blank to use KSH ${total.toLocaleString()}`}
+                  className="w-full border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#c9a84c]"
+                  style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-alt)', color: 'var(--text)' }}
+                />
+              </div>
+
               {error && <div className="p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">{error}</div>}
               <button type="submit"
                 className="w-full py-4 font-black rounded-xl transition-all flex flex-col items-center justify-center gap-0.5 hover:opacity-90 active:scale-[0.98]"

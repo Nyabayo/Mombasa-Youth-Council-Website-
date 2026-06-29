@@ -14,6 +14,7 @@ export default function RegisterPage() {
 
   const [payState, setPayState]   = useState<PayState>('idle')
   const [countdown, setCountdown] = useState(60)
+  const [customAmount, setCustomAmount] = useState('')
 
   const pollRef     = useRef<ReturnType<typeof setInterval> | null>(null)
   const timerRef    = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -108,7 +109,7 @@ export default function RegisterPage() {
     setPayState('initiating')
     const res  = await fetch('/api/pay/initiate', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone: form.phone, amount: 200, reference: `REG-${Date.now()}` }),
+      body: JSON.stringify({ phone: form.phone, amount: customAmount ? Number(customAmount) : 200, reference: `REG-${Date.now()}` }),
     })
     const data = await res.json()
     if (!res.ok || !data.transactionRequestId) {
@@ -329,11 +330,22 @@ export default function RegisterPage() {
                 {(payState === 'idle' || payState === 'timeout' || payState === 'cancelled') && (
                   <>
                     <div className="rounded-lg p-4 space-y-2" style={{ backgroundColor: 'var(--bg-alt)', border: '1px solid var(--border)' }}>
-                      <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Sending <strong style={{ color: 'var(--text)' }}>KES 200</strong> to:</p>
+                      <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Sending <strong style={{ color: 'var(--text)' }}>KES {customAmount || '200'}</strong> to:</p>
                       <p className="text-xl font-black" style={{ color: 'var(--text)' }}>{form.phone}</p>
                       <p className="text-xs" style={{ color: 'var(--text-light)' }}>
                         An M-Pesa PIN prompt will appear on your phone immediately.
                       </p>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold mb-1.5" style={{ color: 'var(--text-muted)' }}>Other Amount (testing only)</label>
+                      <input
+                        type="number" min="1" value={customAmount}
+                        onChange={(e) => setCustomAmount(e.target.value)}
+                        placeholder="Leave blank to use KES 200"
+                        className="w-full border rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+                        style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-alt)', color: 'var(--text)' }}
+                      />
                     </div>
 
                     <button
@@ -347,7 +359,7 @@ export default function RegisterPage() {
                         </svg>
                         {payState === 'idle' ? 'Send M-Pesa Request' : 'Try Again'}
                       </span>
-                      <span className="text-xs font-semibold opacity-75">KES 200 to {form.phone}</span>
+                      <span className="text-xs font-semibold opacity-75">KES {customAmount || '200'} to {form.phone}</span>
                     </button>
 
                     <button
