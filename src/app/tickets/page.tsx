@@ -196,12 +196,8 @@ export default function TicketsPage() {
 
   /* ─── Ticket Card (success) ──────────────────────────────────── */
   if (payState === 'done' && ticket) {
-    const verifyUrl = typeof window !== 'undefined'
-      ? `${window.location.origin}/verify/${ticket.ticketCode}`
-      : `https://myc.co.ke/verify/${ticket.ticketCode}`
     const tierColor = TYPE_COLOR[ticket.ticketType] ?? '#e2e8f0'
     const tierText  = TYPE_TEXT[ticket.ticketType]  ?? '#1a1a1a'
-    const tierName  = TICKETS.find((x) => x.id === ticket.ticketType)?.name ?? ticket.ticketType
     return (
       <div className="min-h-screen bg-[#0f2419] py-12 px-4">
         <div className="max-w-md mx-auto">
@@ -312,14 +308,7 @@ export default function TicketsPage() {
               {downloading ? 'Saving...' : !qrDataUrl ? 'Preparing download...' : 'Download Ticket Again'}
             </button>
 
-            <a
-              href={verifyUrl}
-              target="_blank" rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-bold text-sm border-2 transition-colors hover:bg-white/5"
-              style={{ borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c' }}
-            >
-              Verify this Ticket Online
-            </a>
+
           </div>
 
           <p className="text-center text-white/30 text-xs mt-6">
