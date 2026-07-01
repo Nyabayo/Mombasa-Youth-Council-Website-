@@ -38,7 +38,6 @@ export default function TicketsPage() {
   const [quantities,    setQuantities]    = useState<Record<string, number>>({ regular: 0, vip: 0, vvip: 0 })
   const [holders,       setHolders]       = useState<Record<string, HolderForm[]>>({ regular: [], vip: [], vvip: [] })
   const [payerPhone,    setPayerPhone]    = useState('')
-  const [customAmount,  setCustomAmount]  = useState('')
   const [payState,      setPayState]      = useState<PayState>('form')
   const [error,         setError]         = useState('')
   const [tickets,       setTickets]       = useState<Ticket[]>([])
@@ -131,43 +130,6 @@ export default function TicketsPage() {
     setDownloading(false)
   }
 
-  // ── Test download (bypass payment) ─────────────────────────────────────────
-  const testDownload = () => {
-    setError('')
-    const base = TIERS.flatMap(tier =>
-      Array.from({ length: quantities[tier.id] ?? 0 }, (_, i) => {
-        const h = holders[tier.id]?.[i]
-        const code = 'MYIF26-' + Math.random().toString(36).slice(2, 10).toUpperCase()
-        return {
-          id: `test-${tier.id}-${i}`,
-          ticketCode:           code,
-          holderName:           (h?.firstName && h?.lastName) ? `${h.firstName.trim()} ${h.lastName.trim()}` : `Test Holder ${i + 1}`,
-          holderPhone:          h?.phone || '0700000000',
-          holderEmail:          h?.email || 'test@example.com',
-          ticketType:           tier.id,
-          ticketPrice:          tier.price,
-          quantity:             1,
-          totalPaid:            tier.price,
-          mpesaReceipt:         'TKT0TEST12X',
-          transactionRequestId: 'TEST-TX',
-          status:               'valid',
-          createdAt:            new Date().toISOString(),
-        } satisfies Ticket
-      })
-    )
-    const result: Ticket[] = base.length > 0 ? base : [{
-      id: 'test-0',
-      ticketCode: 'MYIF26-' + Math.random().toString(36).slice(2, 10).toUpperCase(),
-      holderName: 'Test Attendee', holderPhone: '0700000000', holderEmail: 'test@example.com',
-      ticketType: 'regular', ticketPrice: 500, quantity: 1, totalPaid: 500,
-      mpesaReceipt: 'TKT0TEST12X', transactionRequestId: 'TEST-TX', status: 'valid',
-      createdAt: new Date().toISOString(),
-    }]
-    downloadedRef.current = false
-    setTickets(result)
-    setPayState('done')
-  }
-
   // ── Create tickets after payment ────────────────────────────────────────────
   const createTickets = async (txId: string) => {
     setPayState('creating')
@@ -231,7 +193,7 @@ export default function TicketsPage() {
     }
     setError('')
     setPayState('initiating')
-    const amount = customAmount ? Number(customAmount) : total
+    const amount = total
     const res  = await fetch('/api/pay/initiate', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ phone: payerPhone, amount, reference: `TKT-${Date.now()}` }),
@@ -453,11 +415,7 @@ export default function TicketsPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h1 className="text-2xl font-black text-white">
-              {tickets[0]?.ticketCode.startsWith('MYIF26-') && tickets[0]?.mpesaReceipt === 'TKT0TEST12X'
-                ? 'Test Mode — Tickets Ready'
-                : 'Payment Confirmed!'}
-            </h1>
+            <h1 className="text-2xl font-black text-white">Payment Confirmed!</h1>
             <p className="text-white/50 text-sm mt-1">
               {allQrsReady
                 ? `${tickets.length} ticket${tickets.length !== 1 ? 's are' : ' is'} downloading…`
@@ -768,21 +726,6 @@ export default function TicketsPage() {
             </p>
           </div>
 
-          {/* Test amount */}
-          <div>
-            <label style={{ display: 'block', color: 'rgba(255,255,255,0.4)', fontSize: '13px', fontWeight: '600', marginBottom: '7px' }}>
-              Other Amount (testing only)
-            </label>
-            <input
-              type="number"
-              min="1"
-              value={customAmount}
-              onChange={e => setCustomAmount(e.target.value)}
-              placeholder={`Leave blank — KES ${total.toLocaleString()}`}
-              style={{ ...inputStyle, backgroundColor: 'rgba(255,255,255,0.04)', color: '#ffffff', border: '1px solid rgba(255,255,255,0.1)' }}
-            />
-          </div>
-
           {/* Order summary */}
           {totalTickets > 0 && (
             <div style={{ backgroundColor: 'rgba(201,168,76,0.07)', border: '1px solid rgba(201,168,76,0.2)', borderRadius: '12px', padding: '16px 18px' }}>
@@ -794,7 +737,7 @@ export default function TicketsPage() {
               ))}
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '10px', marginTop: '8px', borderTop: '1px solid rgba(201,168,76,0.15)', fontSize: '15px', fontWeight: '900' }}>
                 <span style={{ color: 'rgba(255,255,255,0.8)' }}>Total ({totalTickets} ticket{totalTickets !== 1 ? 's' : ''})</span>
-                <span style={{ color: '#c9a84c' }}>KES {(customAmount ? Number(customAmount) : total).toLocaleString()}</span>
+                <span style={{ color: '#c9a84c' }}>KES {total.toLocaleString()}</span>
               </div>
             </div>
           )}
@@ -826,35 +769,8 @@ export default function TicketsPage() {
             onMouseLeave={e => { (e.target as HTMLElement).style.opacity = '1' }}
           >
             {totalTickets
-              ? `Get ${totalTickets} Ticket${totalTickets !== 1 ? 's' : ''} — Pay KES ${(customAmount ? Number(customAmount) : total).toLocaleString()} via M-Pesa`
+              ? `Get ${totalTickets} Ticket${totalTickets !== 1 ? 's' : ''} — Pay KES ${total.toLocaleString()} via M-Pesa`
               : 'Select tickets to continue'}
-          </button>
-
-          {/* Test download button */}
-          <button
-            onClick={testDownload}
-            style={{
-              width: '100%',
-              padding: '13px',
-              borderRadius: '12px',
-              backgroundColor: 'transparent',
-              color: 'rgba(255,255,255,0.35)',
-              fontWeight: '600',
-              fontSize: '13px',
-              border: '1px solid rgba(255,255,255,0.1)',
-              cursor: 'pointer',
-              transition: 'color 0.2s, border-color 0.2s',
-            }}
-            onMouseEnter={e => {
-              (e.target as HTMLElement).style.color = 'rgba(255,255,255,0.7)'
-              ;(e.target as HTMLElement).style.borderColor = 'rgba(255,255,255,0.25)'
-            }}
-            onMouseLeave={e => {
-              (e.target as HTMLElement).style.color = 'rgba(255,255,255,0.35)'
-              ;(e.target as HTMLElement).style.borderColor = 'rgba(255,255,255,0.1)'
-            }}
-          >
-            ⚙ Test Download (skip payment)
           </button>
 
           {totalTickets > 0 && (
